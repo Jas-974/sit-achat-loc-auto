@@ -1,0 +1,140 @@
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 150px;
+    background-color: white;
+    color: white;
+    display: flex;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    z-index: 1000;
+    display : flex;
+  }
+
+
+
+
+
+.container_bouton_cnxn_creacompte {
+display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 10px;
+  margin-right: 10px;
+  margin-left: auto;
+  /*border: 2px solid yellowgreen; */
+}
+
+/* Style pour la liste */
+.ul-custom {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+/* Style pour le premier item */
+.li-connexion {
+  font-size: 10px;
+  padding: 200px 30px;
+  margin-right: 0.09%;
+}
+
+/* Style pour le deuxième item */
+.li-creer {
+  font-size: 20px;
+  padding: 200px 30px;
+}
+
+
+.box_body {
+  display: flex; /* Utilise Flexbox */
+  border-radius: 10px; /*arrondir le bord */
+  /*border: 2px solid #595959;  La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
+  padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
+  justify-content: center; /* center les élement de la box*/
+  margin: 20px 0; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+  gap: 20px; /* Espace entre les boîtes*/
+}
+
+
+/* Style pour le conteneur présentation*/
+.container_presentation {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    border-radius: 10px; /*arrondir le bord*/
+    /*border: 2px solid #000; /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
+    text-align: center;
+    width: 100%; /* La boîte occupe toute la largeur du conteneur parent */
+    box-sizing: border-box; /* Inclut la bordure et le padding dans la largeur totale */
+    padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
+    padding-top: 150px;
+    margin: 20px; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+    /*gap: 20px;*/ /* Espace entre les boîtes, optionnel */
+}
+
+
+/* Style pour le conteneur */
+.container_one {
+  display: flex; /* Utilise Flexbox */
+  border-radius: 10px; /*arrondir le bord */
+  /*border: 2px solid #000; /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
+  padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
+  justify-content: center; /* center les élement de la box*/
+  margin: 20px; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+  gap: 20px; /* Espace entre les boîtes, optionnel */
+}
+
+/* la galerie pour afficher le photos de voiture */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /*5 par ligne */
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+/* la carte qui entoure la photo de voiture */
+.card {
+  background: #FFC000;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+}
+
+/* cadre des images de la page d'accueil*/
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/*définition de la taille des images de la page d'accueil */
+.taille_image_voiture_page_accueil{
+  width: 150px;
+  height: 95px; /* ou une hauteur fixe si besoin */
+}
+
+/* box du titre des images de la page d'accueil*/
+.card-titre-photo-voiture {
+  background: #FFC000;
+  font-family: Arial, sans-serif;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 2rem;   /* 32px*/
+  text-align: center;
+  color: white;
+}*/
+
+/*Css du footer*/
+footer {
+  width: 100%;
+  background: #555;
+  color: yellow;
+  padding: 30px;
+}
+
