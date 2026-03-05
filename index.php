@@ -14,7 +14,7 @@ session_start();
 
 <header>
   <!-- Image du logo-->
-  <img src="Logo_AchatLoc.png" alt="Logo"
+  <img src="logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
 
@@ -26,18 +26,18 @@ session_start();
         <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
-          <a href="/dev_web_locachat/logout.php" class="btn-nav">Déconnexion</a>
+          <a href="logout.php" class="btn-nav">Déconnexion</a>
 
         <?php else: ?>
 
-          <a href="/dev_web_locachat/index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
+          <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
 
         <?php endif; ?>
       </li>
       <!-- si la session est ouvert on affiche pas le bouton-->
       <?php if (!isset($_SESSION["user_id"])): ?>
         <li>
-          <a href="/dev_web_locachat/index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
+          <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
       <?php endif; ?>
 
@@ -77,13 +77,9 @@ session_start();
     <div class="container_one">
       <!--<p> je suis dans conteneur one</p>-->
       <!--Ajout du bouton dans la box-->
-      <div class="box1"><button
-          style="width: 200px; height: 50px; background-color: #595959; color: white; border: none; border-radius: 10px;">Achat</button>
-      </div>
-      <div class="box2"><button
-          style="width: 200px; height: 50px; background-color: #595959; color: white; border: none; border-radius: 10px;">Location</button>
-      </div>
-
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
+      <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
     </div>
 
     <div class="card-titre-photo-voiture">

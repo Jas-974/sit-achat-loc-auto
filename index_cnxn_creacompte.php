@@ -11,7 +11,7 @@
   <!-- Image du logo-->
 
   <div class="logo">
-    <img src="Logo_AchatLoc.png" alt="Logo">
+    <img src="logo.png" alt="Logo">
   </div>
 
 
@@ -20,11 +20,11 @@
     <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap : 10px;">
       
       <li>
-        <a href="/dev_web_locachat/index.php" class="btn-nav">Accueil</a>
+        <a href="index.php" class="btn-nav">Accueil</a>
       </li>
       </li>
       <li>
-        <a href="C:\Dossier de Jasmin\Studi\Bloc 3 Développement d'une solution digitale\Evaluations\Dépot 1\conception du site\conception site\Page cnxn_création compte V1.2/index.html" class="btn-nav">Connexion</a>
+        <a href="index.php" class="btn-nav">Recherche de véhicule</a>
       </li>
       </li>
     </ul>
