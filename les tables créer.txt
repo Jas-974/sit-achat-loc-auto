@@ -1,0 +1,45 @@
+INSERT INTO vehicule 
+(marque, modele, annee, kilometrage, boite, couleur, puissance, carburant, prix, type_offre, statut, image, description) 
+VALUES
+('Renault', 'Clio V', 2022, 25000, 'Manuelle', 'Rouge', 100, 'Essence', 16990, 'achat', 'disponible', 'clio.jpg', 'Citadine économique et fiable'),
+('Peugeot', '208', 2021, 30500, 'Manuelle', 'Bleu', 110, 'Essence', 15990, 'location', 'disponible', '208.jpg', 'Compacte moderne et confortable'),
+('Toyota', 'C-HR', 2020, 42000, 'Automatique', 'Gris', 122, 'Hybride', 21990, 'achat', 'disponible', 'chr.jpg', 'SUV hybride économique'),
+('Citroën', 'C3', 2022, 18200, 'Manuelle', 'Blanc', 83, 'Essence', 13990, 'location', 'disponible', 'c3.jpg', 'Citadine pratique pour la ville'),
+('Volkswagen', 'Golf 8', 2021, 35000, 'Automatique', 'Noir', 150, 'Diesel', 25990, 'achat', 'disponible', 'golf8.jpg', 'Compacte premium polyvalente'),
+('BMW', 'Série 1', 2019, 55000, 'Automatique', 'Gris foncé', 140, 'Diesel', 23990, 'achat', 'disponible', 'serie1.jpg', 'Compacte sportive et confortable'),
+('Audi', 'A3', 2020, 40000, 'Automatique', 'Noir', 150, 'Essence', 24990, 'location', 'disponible', 'a3.jpg', 'Berline compacte premium'),
+('Mercedes', 'Classe A', 2021, 28000, 'Automatique', 'Blanc', 136, 'Essence', 27990, 'achat', 'disponible', 'classea.jpg', 'Compacte premium technologique'),
+('Ford', 'Focus', 2020, 38000, 'Manuelle', 'Bleu foncé', 125, 'Essence', 17990, 'location', 'disponible', 'focus.jpg', 'Compacte dynamique'),
+('Nissan', 'Qashqai', 2021, 27000, 'Automatique', 'Gris', 140, 'Essence', 22990, 'achat', 'disponible', 'qashqai.jpg', 'SUV familial polyvalent'),
+('Hyundai', 'Tucson', 2022, 19500, 'Automatique', 'Blanc', 150, 'Hybride', 29990, 'location', 'disponible', 'tucson.jpg', 'SUV moderne et spacieux'),
+('Kia', 'Sportage', 2021, 31000, 'Manuelle', 'Noir', 136, 'Diesel', 25990, 'achat', 'disponible', 'sportage.jpg', 'SUV confortable et fiable'),
+('Opel', 'Corsa', 2020, 45000, 'Manuelle', 'Rouge', 100, 'Essence', 12990, 'location', 'disponible', 'corsa.jpg', 'Citadine économique'),
+('Skoda', 'Octavia', 2019, 60000, 'Automatique', 'Gris clair', 150, 'Diesel', 20990, 'achat', 'disponible', 'octavia.jpg', 'Berline familiale spacieuse'),
+('Seat', 'Leon', 2021, 29000, 'Manuelle', 'Blanc', 130, 'Essence', 19990, 'location', 'disponible', 'leon.jpg', 'Compacte sportive'),
+('Dacia', 'Sandero', 2022, 12000, 'Manuelle', 'Bleu', 90, 'Essence', 11990, 'achat', 'disponible', 'sandero.jpg', 'Citadine économique'),
+('Volvo', 'XC40', 2020, 36000, 'Automatique', 'Noir', 163, 'Essence', 31990, 'location', 'disponible', 'xc40.jpg', 'SUV premium sécurisé'),
+('Mazda', 'CX-5', 2021, 24000, 'Automatique', 'Rouge', 165, 'Essence', 30990, 'achat', 'disponible', 'cx5.jpg', 'SUV élégant et confortable'),
+('Honda', 'Civic', 2021, 22000, 'Manuelle', 'Noir', 126, 'Essence', 20990, 'location', 'disponible', 'civic.jpg', 'Berline compacte fiable'),
+('Jeep', 'Compass', 2020, 41000, 'Automatique', 'Gris', 140, 'Diesel', 24990, 'achat', 'disponible', 'compass.jpg', 'SUV robuste'),
+('Tesla', 'Model 3', 2022, 15000, 'Automatique', 'Blanc', 325, 'Electrique', 44990, 'achat', 'disponible', 'model3.jpg', 'Berline électrique performante'),
+('Mini', 'Cooper', 2021, 26000, 'Manuelle', 'Vert', 136, 'Essence', 22990, 'location', 'disponible', 'cooper.jpg', 'Citadine premium'),
+('Fiat', '500X', 2020, 39000, 'Manuelle', 'Rouge', 120, 'Essence', 17990, 'achat', 'disponible', '500x.jpg', 'SUV compact urbain');
+
+sql création de la table
+
+CREATE TABLE vehicule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    marque VARCHAR(50) NOT NULL,
+    modele VARCHAR(100) NOT NULL,
+    annee INT NOT NULL,
+    kilometrage INT NOT NULL,
+    boite VARCHAR(30) NOT NULL,
+    couleur VARCHAR(50) NOT NULL,
+    puissance INT NOT NULL,
+    carburant VARCHAR(30) NOT NULL,
+    prix DECIMAL(10,2) NOT NULL,
+    type_offre ENUM('achat','location') NOT NULL,
+    statut ENUM('disponible','reserve','vendu','loue') DEFAULT 'disponible',
+    image VARCHAR(255),
+    description TEXT
+);

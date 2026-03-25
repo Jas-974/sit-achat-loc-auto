@@ -1,0 +1,163 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- appel au fichier CSS-->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<header>
+  <!-- Image du logo-->
+  <img src="logo.png" alt="Logo"
+    style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
+
+
+
+  <!-- contener  avec  les boutons Connexion et création de compte-->
+  <div class="container_bouton_cnxn_creacompte">
+    <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap: 10px;">
+      <li>
+        <!-- si la session est ouvert on affiche "Déconnexion"-->
+        <?php if (isset($_SESSION["user_id"])): ?>
+
+          <a href="logout.php" class="btn-nav">Déconnexion</a>
+
+        <?php else: ?>
+
+          <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
+
+        <?php endif; ?>
+      </li>
+      <!-- si la session est ouvert on affiche pas le bouton-->
+      <?php if (!isset($_SESSION["user_id"])): ?>
+        <li>
+          <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
+        </li>
+      <?php else: ?>
+
+      <li>
+        <a href="index_espace_client.php" class="btn-nav">Espace client</a>
+      </li>
+      <?php endif; ?>
+    </ul>
+  </div>
+
+</header>
+
+
+<body>
+  <main>
+    <div class="container_presentation">
+      <h1>LocAchat</h1>
+
+      <h1>Vous cherche des véhicules entre deux options achat/location?</h1><br>
+      <h1>Vous ètes au bon endroit</h1>
+
+      <h2>Découvrez notre nouveau service de location longue durée et vente</h2>
+      Avec notre formule d’abonnement, vous bénéficiez d’un ensemble de services pensés pour vous simplifier la vie et
+      rouler <br>
+      l’esprit tranquille.<br>
+
+      Ce qui est inclus (ou disponible en option) dans votre abonnement :<br>
+      <ul>
+        <a><strong>Assurance tous risques</strong></a><br>
+        <a><strong>Assistance dépannage 24/7</strong></a><br>
+        <a><strong>Entretien et service après-vente (SAV)</strong></a><br>
+        <a><strong>Contrôle technique</strong></a><br>
+      </ul>
+
+    </div>
+
+
+    <div class="container_one">
+      <!--<p> je suis dans conteneur one</p>-->
+      <!--Ajout du bouton dans la box-->
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
+      <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
+    </div>
+
+    <div class="card-titre-photo-voiture">
+      <p>Les voitures du moments</p>
+    </div>
+
+    <!--La gallery des photos du parc de voiture-->
+    <div class="box_body">
+      <!--<p>box_body</p>-->
+
+
+      <div class="gallery">
+        <div class="card">
+          <img src="voiture 1.png" alt="">
+          <p>Ceci est un petit texte sous l'image 0</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+
+
+
+  <!--<p>je suis sortie de  la box_body</p>-->
+
+  <br>
+
+  <footer style="background-color: #595959; borde-radius: 10px; padding: 10px; text-align: center; color: yellow;">
+    <p>&copy; 2026 Tous droits réservés. LocAchat</p>
+    <nav>
+
+      <a href="#" ; style="color: yellow;">Accueil</a>
+      <a href="#" ; style="color: yellow;">À propos</a>
+      <a href="#" ; style="color: yellow;">Contact</a>
+      <a href="#" ; style="color: yellow;">Mentions légales</a>
+
+
+
+    </nav>
+  </footer>
+
+</body>
+
+</html>
