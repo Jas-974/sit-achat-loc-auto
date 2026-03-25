@@ -2,6 +2,7 @@
 session_start();
 require "config.php";
 ?>
+
 <?php
 // récupere les informations de l'utilisateur connecté
 if (!isset($_SESSION["user_id"])) {
@@ -20,7 +21,7 @@ if (!$user) {
 }
 
 
-
+// le champs recherche
 if (isset($_GET["champ_recherche"])) {
   $recherche = $_GET["champ_recherche"];
 } else {
@@ -47,7 +48,6 @@ if (!empty($recherche)) {
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -98,12 +98,6 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <?php endif; ?>
       </li>
-
-    
-      
-      
-
-
     </ul>
   </div>
 
@@ -200,6 +194,8 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php if (!empty($vehicules)) : ?>
         <!-- la barre de recherche-->
         <?php foreach ($vehicules as $vehicule) : ?>
+           <!-- rendre la carte comme un lien-->
+          <a href="vehicule.php?id=<?= $vehicule['id'] ?>" class="card-link">
           <div class="card">
             <img src="<?= htmlspecialchars($vehicule['fichier']) ?>" alt="">
             <p><?= htmlspecialchars($vehicule['titre']) ?></p>

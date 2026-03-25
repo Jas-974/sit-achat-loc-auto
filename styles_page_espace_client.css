@@ -190,7 +190,7 @@ header {
 }
 
 
-          /* la carte qui entoure la photo de voiture */
+/* la carte qui entoure la photo de voiture */
 .card {
   background: #FFC000;
   border-radius: 15px;
@@ -198,6 +198,9 @@ header {
   text-align: center;
   color: white;
 }
+
+
+
 /* Fin de la galerie pour afficher le photos de voiture */
 .footer {
   background-color: #595959;
