@@ -3,6 +3,35 @@ session_start();
 require "config.php";
 ?>
 
+
+
+
+
+<?php
+
+//pour test 
+$id = 3;
+//$id = $_GET["id"] ?? null;
+
+if ($id === null) {
+  die("ID manquant");
+}
+// récupere les informations caractéristique de la voiture
+// reqête de recupération des informations dans la base de donnée
+$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, image 
+FROM vehicule 
+WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $id]);
+
+$donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$donnee_vehicule) {
+  die("Véhicule introuvable");
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -49,70 +78,82 @@ require "config.php";
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
-    <div class="container_bouton_cnxn_creacompte">
+    <div class="container_bouton">
       <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap : 10px;">
-        <li>
-          <!-- la barre de recherche-->
-          <form method="GET" action="">
-            <div class="barre-recherche">
-              <input type="text" name="champ_recherche" placeholder="Rechercher un véhicule, achat, location...">
-              <button type="submit">🔍</button>
-            </div>
-          </form>
-        </li>
         <li>
           <a href="index.php" class="btn-nav">Accueil</a>
         </li>
         <li>
           <!-- si la session est ouvert on affiche "Déconnexion"-->
           <?php if (isset($_SESSION["user_id"])): ?>
-          <a href="logout.php" class="btn-nav">Déconnexion</a>
+            <a href="logout.php" class="btn-nav">Déconnexion</a>
           <?php else: ?>
-          <a href="index.php" class="btn-nav">Connexion</a>
+            <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
           <?php endif; ?>
         </li>
       </ul>
     </div>
   </header>
 
-  <div class="containertitre">Renault Clio V</div>
+  <div class="containertitre"><?= htmlspecialchars($donnee_vehicule["marque"] . " " . $donnee_vehicule["modele"]) ?></div>
   <!--container globale image et le descriptif-->
   <div class="container_img_descriptif">
     <!--box de l'image-->
     <div class="box_img">
-      <img src="voiture 2.png" alt="image" class="box_image_vehicule">
+      <img src="<?= htmlspecialchars($donnee_vehicule["image"]); ?>" alt="image" class="box_image_vehicule">
     </div>
 
     <!--grande box du descriptif du véhicule -->
     <div class="container_descriptif">
       <div class="box_descriptif" style="text-align : left" ;>
-        <H1 style="color:#595959; display:inline" ;>19 000</H1>
-        <img src="img_disponible.png" style="display: inline; vertical-align: middle" ;><br><br>
+        <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix"]) ?>&euro;</H1>
+        <H2 style="color:#588888; display:inline" ;><?= htmlspecialchars($donnee_vehicule["statut"]) ?></H2>
 
-        <!--bouton commander-->
-        <a class="btn-comm">Passer Commande</a><br><br>
+    
+<?php
+//vérifie si le user est conncté
+if (isset($_SESSION["user_id"])) {
+    echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
+} else {
+    echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a><br><br>';
+}
+?>
+
+
+
+      
+        
         <strong>Informations du véhicule</strong><br>
-        Marques : Renault<br>
-        Modèle : Clio<br>
-        Année : 2025<br>
-        Energie : Essence <br>
-        Kilometrage : 65000 Km <br>
-        Boite de vitesse : Automatique<br>
+        Marques : <?= htmlspecialchars($donnee_vehicule["marque"]) ?><br>
+        Modèle : <?= htmlspecialchars($donnee_vehicule["modele"]) ?><br>
+        Année : <?= htmlspecialchars($donnee_vehicule["annee"]) ?><br>
+        Energie : <?= htmlspecialchars($donnee_vehicule["carburant"]) ?><br>
+        Kilometrage : <?= htmlspecialchars($donnee_vehicule["kilometrage"]) ?> Km<br>
+        Boite de vitesse : <?= htmlspecialchars($donnee_vehicule["boite"]) ?><br>
       </div>
       <!--box affichage du prix-->
-      <div class="box_prix" style ="line-height: 2";  >
+      <div class="box_prix" style="line-height: 2" ;>
         <strong>Acheter ce véhicule</strong><br>
-        Prix du céhicule : 19 000&euro;<br>
-        Frais de dossiers : 250&euro;<br>
-        <strong>Total TTC 19 000&euro;</strong><br>
+        Prix du véhicule : <?= htmlspecialchars($donnee_vehicule["prix"]) ?> €<br>
+        Frais de dossiers : 250 €<br>
+        <strong>Total TTC : <?= htmlspecialchars($donnee_vehicule["prix"]) + 250 ?> €</strong><br>
       </div>
       <!--Affichage des garanties-->
-      <div class="box_garantie"  style ="line-height: 2";>
-        <a class="btn-comm">Passer Commande</a><br><br>
+      <div class="box_garantie" style="line-height: 2" ;>
+
+
+        <?php
+//vérifie si le user est conncté
+if (isset($_SESSION["user_id"])) {
+    echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
+} else {
+    echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a><br><br>';
+}
+?>
         <span>&#10003;Garanti 12 mois</span><br>
         <span>&#10003;Historique vérifié</span><br>
         <span>&#10003;Kilométrage certifié</span><br><br>
-        <span>&#128222;+262 46 78 25</span><br>
+        <span>&#128222;+262 46 78 24</span><br>
         Disponible lun - Ven 9h-18h
       </div>
     </div>
@@ -120,7 +161,7 @@ require "config.php";
 
   <div class="footer">
     <footer>
-      <p>&copy; 2023 Tous droits réservés. Conçu par Jane Doe.</p>
+      <p>&copy; 2026 Tous droits réservés. Conçu par LocAchat.</p>
       <nav>
 
         <a href="#">Accueil</a>

@@ -11,9 +11,11 @@ header {
   z-index: 1000;
   display: flex;
 }
+
 body {
   font-family: Arial, sans-serif;
 }
+
 .logo {
   height: 60px;
   margin-right: 20px;
@@ -97,7 +99,7 @@ body {
 
 /*Fin CSS Recherche*/
 
-.container_bouton_cnxn_creacompte {
+.container_bouton {
   /*display: flex;*/
   flex: 1;
   justify-content: flex-end;
@@ -106,7 +108,6 @@ body {
   margin: 10px;
   margin-right: 10px;
   margin-left: auto;
-  /*border: 2px solid yellowgreen;*/
 }
 
 
@@ -133,18 +134,16 @@ body {
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
-  background-color: lightblue;
+
   color: black;
   gap: 20px;
   padding: 10px;
-  border: 3px solid black;
 }
 
 /* CSS de la grille description*/
 .container_descriptif {
   width: 50%;
   height: auto;
-  border: 1px solid #000;
   display: grid;
   grid-template-areas:
     "box_descriptif  box_prix box_prix"
@@ -162,25 +161,23 @@ body {
 .box_descriptif {
   grid-area: box_descriptif;
   justify-items: start;
-  /* alignement à gauche */
   padding: 20px;
-  border: 3px solid blue;
   border-radius: 10px;
   text-align: left;
-   font-size: 16px;
+  font-size: 16px;
 }
 
 
 .box_prix {
   grid-area: box_prix;
-  border: 3px solid blue;
-   font-size: 16px;
+  /*border: 3px solid blue;*/
+  font-size: 16px;
 }
 
 .box_garantie {
   grid-area: box_garantie;
-  border: 3px solid blue;
-   font-size: 16px;
+  /*border: 3px solid blue;*/
+  font-size: 16px;
 }
 
 
@@ -193,7 +190,7 @@ body {
   width: 200px;
   height: auto;
   padding: 20px;
-  border: 3px solid blue;
+  /*border: 3px solid blue;*/
   border-radius: 10px;
   overflow: hidden;
   box-sizing: border-box;
