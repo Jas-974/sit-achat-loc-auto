@@ -6,8 +6,8 @@ require "config.php";
 <?php
 // récupere les informations de l'utilisateur connecté
 if (!isset($_SESSION["user_id"])) {
- header("Location: cnxn.php?message=connexion_necessaire");
-    exit;
+  header("Location: cnxn.php?message=connexion_necessaire");
+  exit;
 }
 // reqête de recupération des informations dans la base de donnée
 $sql = "SELECT numero_client, pseudo, email FROM users WHERE id = :id";
@@ -76,7 +76,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </li>
 
       <li>
-         <!-- si la session est ouvert on affiche "Déconnexion"-->
+        <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
           <a href="logout.php" class="btn-nav">Déconnexion</a>
@@ -107,7 +107,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="box_body_espace_client">
       <!--<a>BOX B</a>-->
       <div class="box_body_mes_commandes">
-       
+
         <h1>Mes commandes</h1>
 
         <h3>Commande #4587 -Renault Clio - Achat - En attente</h3>
@@ -116,11 +116,11 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       <!--<a>BOX D</a>-->
       <div class="box_body_mes_documents">
-       
+
 
         <h1>Mes documents</h1>
         <p></p>
-        
+
         <?php
         $conn = new mysqli("localhost", "root", "", "bd_locachat");
         //Connexion à la base de donnée
@@ -152,7 +152,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
       <div class="box_body_mes_commandes">
 
-       
+
         <h1>Mes informations</h1>
 
         <p><strong>Numero client</strong></p>
@@ -178,25 +178,35 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- la boucle d'affichage-->
         <?php foreach ($vehicules as $vehicule) : ?>
-           <div class="card">
 
-           <!-- rendre la carte comme un lien-->
-          <a href="index_detail_voiture.php?id=<?= $vehicule['id'] ?>" class="card-link">
+          <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+          ?>
+
           <div class="card">
-            <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
-            </a> 
+            <!-- rendre la carte comme un lien-->
+            <a href="<?= $detail_v ?>" class="card-link">
+              <div class="card">
+                <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+            </a>
             <p><?= htmlspecialchars($vehicule['modele']) ?></p>
             <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
             <p><?= htmlspecialchars($vehicule['description']) ?></p>
           </div>
-          </div>
-        </a>
-        <?php endforeach; ?>
-      <?php else : ?>
-        <p>Aucun véhicule trouvé.</p>
-      <?php endif; ?>
-
     </div>
+    </a>
+  <?php endforeach; ?>
+<?php else : ?>
+  <p>Aucun véhicule trouvé.</p>
+<?php endif; ?>
+
+  </div>
   </div>
   </div>
 

@@ -17,10 +17,9 @@ if (isset($_GET['id'])) {
 ?>
 
 <?php
-
 // récupere les informations caractéristique de la voiture
 // reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, status_command, image, loyer_mois, apport 
+$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, status_command, image, loyer_mois, apport, prix_loc_jour,forfait_par_mois, caution 
 FROM vehicule 
 WHERE id = :id";
 $stmt = $pdo->prepare($sql);
@@ -32,7 +31,6 @@ if (!$donnee_vehicule) {
   die("Véhicule introuvable");
 }
 ?>
-
 
 <?php
 if (isset($_POST['maj_status_command'])) {
@@ -219,9 +217,9 @@ echo "insertion OK !";
         Boite de vitesse : <?= htmlspecialchars($donnee_vehicule["boite"]) ?><br><br>
 
         <strong>Acheter ce véhicule</strong><br>
-        Prix : <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix"]) ?>&euro;</H1><br><br>
-        Loyer/mois : <?= htmlspecialchars($donnee_vehicule["loyer_mois"]) ?>&euro;<br><br>
-        Apport : <?= htmlspecialchars($donnee_vehicule["apport"]) ?>&euro;
+        Prix de la location par jours: <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix_loc_jour"]) ?>&euro;</H1><br><br>
+        Forfait/mois : <?= htmlspecialchars($donnee_vehicule["forfait_par_mois"]) ?>&euro;<br><br>
+        Caution : <?= htmlspecialchars($donnee_vehicule["caution"]) ?>&euro;
       </div>
 
 

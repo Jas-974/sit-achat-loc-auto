@@ -10,10 +10,10 @@ $dbname = "bd_locachat";
 $username = "root";
 $password = "";
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Erreur connexion BDD : " . $e->getMessage());
+  die("Erreur connexion BDD : " . $e->getMessage());
 }
 ?>
 
@@ -154,21 +154,31 @@ if (!$donnee_vehicule) {
     <div class="box_body">
       <!--<p>box_body</p>-->
 
-  <!--affichage des image dans les diffèrentes vignettes-->
+      <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
         <?php foreach ($donnee_vehicule as $image_vehicule): ?>
-        
-        <div class="card">
-          <a href="index_detail_voiture.php?id=<?= $image_vehicule['id'] ?>" class="card-link">
-            <img src="<?= htmlspecialchars($image_vehicule['image']) ?>"
-                 alt="<?= htmlspecialchars($image_vehicule['marque'] ?? $image_vehicule['modele']) ?>"
-                 class="image">
-        </a>
+
+          <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($image_vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $image_vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $image_vehicule['id'];
+          }
+          ?>
+
+          <div class="card">
+            <a href="<?= $detail_v ?>" class="card-link">
+              <img src="<?= htmlspecialchars($image_vehicule['image']) ?>"
+                alt="<?= htmlspecialchars($image_vehicule['marque'] ?? $image_vehicule['modele']) ?>"
+                class="image">
+            </a>
             <p><?= htmlspecialchars($image_vehicule['marque']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['modele']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['type_offre']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['statut']) ?></p>
-        </div>
+          </div>
         <?php endforeach; ?>
       </div>
     </div>

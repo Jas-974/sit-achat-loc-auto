@@ -85,8 +85,19 @@ if (!empty($_GET['champ_recherche'])) {
       <!-- Affiche la gallerie-->
       <?php foreach ($vehicules as $vehicule): ?>
         
+         <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+          ?>
+
+
         <div class="card">
-          <a href="index_detail_voiture.php?id=<?= $vehicule['id'] ?>" class="card-link">
+          <a href="<?=  $detail_v ?>" class="card-link">
               
           <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
           </a>
