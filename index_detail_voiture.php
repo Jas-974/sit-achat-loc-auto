@@ -39,7 +39,7 @@ if (!$donnee_vehicule) {
   <!--Responsive-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- appel au fichier CSS-->
-  <link rel="stylesheet" href="styles_page_detail_voiture.css">
+  <link rel="stylesheet" href="styles_page_detail_voiture_news.css">
 
   <style>
     .btn-comm {
@@ -73,7 +73,7 @@ if (!$donnee_vehicule) {
   <header>
     <!-- Image du logo-->
     <div class="logo">
-      <img src="Logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
@@ -119,7 +119,7 @@ if (!$donnee_vehicule) {
 //vérifie si le user est conncté
 if (isset($_SESSION["user_id"])) {
     //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
-    echo '<a class="btn-comm" href="index_commande _voiture_achat.php?id=' . $donnee_vehicule['id'] . '">
+    echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
     Passer Commande
 </a>';
 } else {
@@ -152,7 +152,7 @@ if (isset($_SESSION["user_id"])) {
 //vérifie si le user est conncté
 if (isset($_SESSION["user_id"])) {
     //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
-    echo '<a class="btn-comm" href="index_commande _voiture_achat.php?id=' . $donnee_vehicule['id'] . '">
+    echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
     Passer Commande
 </a>';
 } else {

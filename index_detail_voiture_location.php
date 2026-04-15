@@ -5,7 +5,6 @@ require "config.php";
 
 
 <?php
-$id = 5;
 if (!isset($_GET['id'])) {
   die("ID manquant");
 }
@@ -35,12 +34,14 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" >
   <!--Responsive-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <!-- appel au fichier CSS-->
-  <link rel="stylesheet" href="styles_page_detail_voiture.css">
+  <link rel="stylesheet" href="styles_page_detail_voiture_news.css">
 
+    
+    
   <style>
     .btn-comm {
       display: inline-block;
@@ -73,7 +74,7 @@ if (!$donnee_vehicule) {
   <header>
     <!-- Image du logo-->
     <div class="logo">
-      <img src="Logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
@@ -97,6 +98,7 @@ if (!$donnee_vehicule) {
   <!--container globale image et le descriptif-->
   <div class="container_img_descriptif">
     <!--box de l'image-->
+      
     <div class="box_img">
       <img src="<?= htmlspecialchars($donnee_vehicule["image"]); ?>" alt="image" class="box_image_vehicule">
     </div>
@@ -110,7 +112,7 @@ if (!$donnee_vehicule) {
         <?php
         //vérifie si le user est conncté
         if (isset($_SESSION["user_id"])) {
-          echo '<a class="btn-comm" href="index_commande _voiture_location.php?id=' . $donnee_vehicule['id'] . '">
+          echo '<a class="btn-comm" href="commande_voiture_location.php?id=' . $donnee_vehicule['id'] . '">
 Réserver
 </a>';
         } else {
@@ -142,7 +144,7 @@ Réserver
         //vérifie si le user est conncté
         if (isset($_SESSION["user_id"])) {
           //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
-          echo '<a class="btn-comm" href="index_commande _voiture_location.php?id=' . $donnee_vehicule['id'] . '">
+          echo '<a class="btn-comm" href="commande_voiture_location.php?id=' . $donnee_vehicule['id'] . '">
    Réserver
 </a>';
         } else {

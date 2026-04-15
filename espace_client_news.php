@@ -38,7 +38,7 @@ if (!empty($recherche)) {
               OR locachat LIKE :recherche)";
   $params['recherche'] = '%' . $recherche . '%';
 } else {
-  $sql = "SELECT * FROM vehicule LIMIT 4";
+  $sql = "SELECT * FROM vehicule LIMIT 6";
 }
 // pour test 
 //echo $sql;
@@ -59,41 +59,47 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="styles_page_espace_client.css">
 </head>
 
-<header>
-  <!-- Image du logo-->
-
-  <div class="logo">
-    <img src="Logo.png" alt="Logo">
-  </div>
-
-
-  <!-- contener  qui abrite les boutons Connexion et création de compte-->
-  <div class="container_bouton_cnxn_creacompte">
-    <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap : 10px;">
-
-      <li>
-        <a href="index.php" class="btn-nav">Accueil</a>
-      </li>
-
-      <li>
-        <!-- si la session est ouvert on affiche "Déconnexion"-->
-        <?php if (isset($_SESSION["user_id"])): ?>
-
-          <a href="logout.php" class="btn-nav">Déconnexion</a>
-
-        <?php else: ?>
-
-          <a href="index.php" class="btn-nav">Connexion</a>
-
-        <?php endif; ?>
-      </li>
-    </ul>
-  </div>
-
-</header>
-
 
 <body>
+
+  <header>
+    <!-- Image du logo-->
+
+    <div class="logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+
+
+    <!-- contener  qui abrite les boutons Connexion et création de compte-->
+    <div class="container_bouton_cnxn_creacompte">
+      <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap : 10px;">
+
+        <li>
+          <a href="index.php" class="btn-nav">Accueil</a>
+        </li>
+
+        <li>
+          <!-- si la session est ouvert on affiche "Déconnexion"-->
+          <?php if (isset($_SESSION["user_id"])): ?>
+
+            <a href="logout.php" class="btn-nav">Déconnexion</a>
+
+          <?php else: ?>
+
+            <a href="index.php" class="btn-nav">Connexion</a>
+
+          <?php endif; ?>
+        </li>
+      </ul>
+    </div>
+
+  </header>
+
+
+
+
+
+
 
   <div class="box_titre">
     <h2>Votre Espace Client</h2>
@@ -192,23 +198,21 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div class="card">
             <!-- rendre la carte comme un lien-->
             <a href="<?= $detail_v ?>" class="card-link">
-              <div class="card">
-                <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+              <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+              <p><?= htmlspecialchars($vehicule['modele']) ?></p>
+              <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
+              <p><?= htmlspecialchars($vehicule['description']) ?></p>
             </a>
-            <p><?= htmlspecialchars($vehicule['modele']) ?></p>
-            <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
-            <p><?= htmlspecialchars($vehicule['description']) ?></p>
           </div>
-    </div>
-    </a>
-  <?php endforeach; ?>
-<?php else : ?>
-  <p>Aucun véhicule trouvé.</p>
-<?php endif; ?>
 
+        <?php endforeach; ?>
+
+      <?php else : ?>
+        <p>Aucun véhicule trouvé.</p>
+      <?php endif; ?>
+    </div>
   </div>
-  </div>
-  </div>
+
 
   <br>
   <div class="footer">

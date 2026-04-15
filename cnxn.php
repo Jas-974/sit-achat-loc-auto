@@ -57,5 +57,5 @@ $_SESSION["user_id"] = $user["id"];
 $_SESSION["pseudo"] = $user["pseudo"];
 $_SESSION["email"] = $user["email"];
 // je revien a la page d'accueil
-header("Location: index.php?login=1");
+header("Location: espace_client_news.php?login=1");
 exit;

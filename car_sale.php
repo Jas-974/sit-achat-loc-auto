@@ -2,56 +2,8 @@
 session_start();
 require "config.php";
 
-$pdo = new PDO("mysql:host=localhost;dbname=bd_locachat;charset=utf8", "root", "");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 ?>
-
-<?php
-//je recupére l'Id de la page détail_véhicule
-if (isset($_GET['id'])) {
-  $id = (int) $_GET['id'];
-} else {
-  echo "ID manquant";
-}
-?>
-
-<?php
-// récupere les informations caractéristique de la voiture
-// reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, status_command, image, loyer_mois, apport, prix_loc_jour,forfait_par_mois, caution 
-FROM vehicule 
-WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $id]);
-
-$donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$donnee_vehicule) {
-  die("Véhicule introuvable");
-}
-?>
-
-<?php
-if (isset($_POST['maj_status_command'])) {
-  $id = (int) $_POST['id'];
-  $status_command = $_POST['maj_status_command'];
-
-  $sql = "UPDATE vehicule 
-            SET status_command = :status_command,
-            statut = :statut
-            WHERE id = :id";
-
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute([
-  ':status_command' => $status_command,
-  ':statut' => 'reserve', 
-  ':id' => $id
-  ]);
-}
-?>
-
-
 <?php
 if (!isset($_SESSION["user_id"])) {
   header("Location: cnxn.php?message=connexion_necessaire");
@@ -74,7 +26,52 @@ if (!$donnee_user) {
 ?>
 
 <?php
-// insertion des donnée de la validation de la commande dans la table table_statu_command
+//je recupére l'Id de la page détail_véhicule
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+  die("ID manquant");
+}
+
+$id = (int) $_GET['id'];
+?>
+
+<?php
+
+// récupere les informations caractéristique de la voiture
+// reqête de recupération des informations dans la base de donnée
+$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, status_command, image, loyer_mois, apport 
+FROM vehicule 
+WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $id]);
+
+$donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$donnee_vehicule) {
+  die("Véhicule introuvable");
+}
+?>
+
+
+
+<?php
+//mise a jours de la table vehicule avec la reservation en cours
+if (isset($_POST['maj_status_command'])) {
+  $id = (int) $_POST['id'];
+  $status_command = $_POST['maj_status_command'];
+
+  $sql = "UPDATE vehicule 
+            SET status_command = :status_command,
+            statut = :statut
+            WHERE id = :id";
+
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute([
+  ':status_command' => $status_command,
+  ':statut' => 'reserve', 
+  ':id' => $id
+  ]);
+    
+    // insertion des donnée de la validation de la commande dans la table table_statu_command
 $sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command )
 VALUES (:nom, :prenom, :email, :type_offre, :status_command)";
 
@@ -84,9 +81,10 @@ $stmt_status_command ->execute([
   ":prenom" => $donnee_user["prenom"],
   ":email" => $donnee_user["email"],
   ":type_offre" => $donnee_vehicule["type_offre"],
-  ":status_command" => $donnee_vehicule["status_command"]
+  ":status_command" => $_POST["maj_status_command"]
 ]);
 echo "insertion OK !";
+}
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +129,7 @@ echo "insertion OK !";
   <header>
     <!-- Image du logo-->
     <div class="logo">
-      <img src="Logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
@@ -217,9 +215,9 @@ echo "insertion OK !";
         Boite de vitesse : <?= htmlspecialchars($donnee_vehicule["boite"]) ?><br><br>
 
         <strong>Acheter ce véhicule</strong><br>
-        Prix de la location par jours: <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix_loc_jour"]) ?>&euro;</H1><br><br>
-        Forfait/mois : <?= htmlspecialchars($donnee_vehicule["forfait_par_mois"]) ?>&euro;<br><br>
-        Caution : <?= htmlspecialchars($donnee_vehicule["caution"]) ?>&euro;
+        Prix : <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix"]) ?>&euro;</H1><br><br>
+        Loyer/mois : <?= htmlspecialchars($donnee_vehicule["loyer_mois"]) ?>&euro;<br><br>
+        Apport : <?= htmlspecialchars($donnee_vehicule["apport"]) ?>&euro;
       </div>
 
 

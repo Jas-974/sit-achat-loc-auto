@@ -2,13 +2,21 @@
 session_start();
 ?>
 
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 
 <?php
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
 $host = "localhost";
-$dbname = "bd_locachat";
+$dbname = "bd_locachat";   
 $username = "root";
 $password = "";
+$dsn = "mysql:host=$host;dbname=$dbname";
+
+
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,8 +28,7 @@ try {
 <?php
 // récupere les images et les informations
 $sql = "SELECT id, image, marque, modele, type_offre, statut 
-FROM vehicule 
-WHERE visibilite = 1";
+FROM vehicule LIMIT 5" ;
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 // recupérer plusieur ligne avec fetchAll
@@ -36,8 +43,8 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -61,27 +68,28 @@ if (!$donnee_vehicule) {
           </div>
         </form>
         <!--Gestion du champs de la recherche-->
-        <?php
-        try {
-          $pdo = new PDO('mysql:host=localhost;dbname=pdo_application', 'root', '');
 
-          // Vérifie si l'utilisateur a tapé quelque chose
-          if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
-            // on vérifie que ca commence oar quoi avec %
-            $search = $_GET['champ_recherche'] . '%';
-            // requete de recherche sur plusieurs critères
-            $sql = "SELECT image, modele, marque, type_offre FROM vehicule WHERE marque LIKE ? OR modele LIKE ? OR type_offre LIKE ?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$search, $search, $search]);
-            // ajout dans un tableau associatif
-            while ($recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo $recherche['image'] . ' ' . $recherche['modele'] . ' ' . $recherche['marque'] . ' ' . $recherche['marque'] . '<br>';
-            }
-          }
-        } catch (PDOException $e) {
-          echo "Erreur de connexion";
-        }
-        ?>
+      <?php
+if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
+  try {
+    $search = $_GET['champ_recherche'] . '%';
+    $sql = "SELECT image, modele, marque, type_offre 
+            FROM vehicule 
+            WHERE marque LIKE ? OR modele LIKE ? OR type_offre LIKE ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$search, $search, $search]);
+
+    while ($recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      echo htmlspecialchars($recherche['image']) . ' '
+         . htmlspecialchars($recherche['modele']) . ' '
+         . htmlspecialchars($recherche['marque']) . ' '
+         . htmlspecialchars($recherche['type_offre']) . '<br>';
+    }
+  } catch (PDOException $e) {
+    echo "Erreur SQL : " . $e->getMessage();
+  }
+}
+?>
 
       </li>
 
@@ -106,7 +114,7 @@ if (!$donnee_vehicule) {
       <?php else: ?>
 
         <li>
-          <a href="index_espace_client.php" class="btn-nav">Espace client</a>
+          <a href="espace_client_news.php" class="btn-nav">Espace client</a>
         </li>
       <?php endif; ?>
     </ul>
