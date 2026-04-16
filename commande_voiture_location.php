@@ -8,6 +8,28 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
 <?php
+// vérification si user connecté
+if (!isset($_SESSION["user_id"])) {
+  header("Location: cnxn.php?message=connexion_necessaire");
+  exit;
+}
+//definir la variable $user_id
+// Je recupère les données de l'utilisateur
+$user_id =$_SESSION["user_id"];
+// récupere les informations du user
+// reqête de recupération des informations dans la base de donnée
+$sql = "SELECT id, nom, prenom, email 
+FROM users 
+WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $user_id]);
+$donnee_user = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$donnee_user) {
+  die("utilisateur introuvable");
+}
+?>
+
+<?php
 //je recupére l'Id de la page détail_véhicule
 if (isset($_GET['id'])) {
   $id = (int) $_GET['id'];
@@ -50,6 +72,20 @@ if (isset($_POST['maj_status_command'])) {
   ':statut' => 'reserve', 
   ':id' => $id
   ]);
+
+  
+    // insertion des donnée de la validation de la commande dans la table table_statu_command
+$sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command )
+VALUES (:nom, :prenom, :email, :type_offre, :status_command)";
+
+$stmt_status_command  = $pdo->prepare($sql_insert_status_command);
+$stmt_status_command ->execute([
+  ":nom" => $donnee_user["nom"],
+  ":prenom" => $donnee_user["prenom"],
+  ":email" => $donnee_user["email"],
+  ":type_offre" => $donnee_vehicule["type_offre"],
+  ":status_command" => $_POST["maj_status_command"]
+]);
 }
 ?>
 

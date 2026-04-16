@@ -21,6 +21,7 @@ if (!$user) {
 }
 
 
+
 // le champs recherche
 if (isset($_GET["champ_recherche"])) {
   $recherche = $_GET["champ_recherche"];
@@ -48,6 +49,15 @@ if (!empty($recherche)) {
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Requête pour récupérer les information dans la table table_status_command et afficher dans la rubrique "mes commandes"
+$sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, date, numero_command FROM table_statu_command WHERE email = :email";
+$stmtTcommand = $pdo->prepare($sqlTcommand);
+$stmtTcommand->execute(['email' => $user['email']]);
+
+$info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -115,9 +125,28 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="box_body_mes_commandes">
 
         <h1>Mes commandes</h1>
+        <!--Affichage des information de la commande en cours-->
 
-        <h3>Commande #4587 -Renault Clio - Achat - En attente</h3>
-        <h3>Commande #4589 -Renault Clio - Location En attente</h3>
+        <!--parcours la table pour trouver s'il y a des commande en cours-->
+        <?php if (!empty($info_command)) : ?>
+
+      
+          <?php foreach ($info_command as $info_commands) : ?>
+    
+              <p><strong>Numero de commande: </strong><?= htmlspecialchars($info_commands["numero_command"]) ?></p>
+
+              <p><strong>Date: </strong><?= htmlspecialchars($info_commands["date"]) ?></p>
+              <p><strong>La commande: </strong><?= htmlspecialchars($info_commands["type_offre"]) ?></p>
+              
+
+              <p><strong>Status de la commande: </strong><?= htmlspecialchars($info_commands["status_command"]) ?></p>
+
+         
+          <?php endforeach; ?>
+        <?php else : ?>
+          <p>Aucune commande en cours.</p>
+        <?php endif; ?>
+
       </div>
 
       <!--<a>BOX D</a>-->

@@ -83,7 +83,6 @@ $stmt_status_command ->execute([
   ":type_offre" => $donnee_vehicule["type_offre"],
   ":status_command" => $_POST["maj_status_command"]
 ]);
-echo "insertion OK !";
 }
 ?>
 
