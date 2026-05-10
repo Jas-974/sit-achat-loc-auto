@@ -1,0 +1,119 @@
+header {
+  /*position: fixed;*/
+  top: 0;
+  width: 100%;
+  height: 150px;
+  background-color: white;
+  color: white;
+  display: flex;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  z-index: 1000;
+  display: flex;
+}
+
+.logo {
+  height: 60px;
+  margin-right: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+
+/*les boutons dans le head*/
+.btn-nav {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  line-height: 50px; /* centre le texte verticalement */
+  background-color: #595959;
+  color: white;
+  text-align: center;
+  text-decoration: none; /* enlève le soulignement du lien */
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.btn-nav:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+}
+/*Fin designe les boutons dans le head*/
+
+/*box qui contient les boutons retour a l'accueil et cnxn*/
+.container_bouton_accueilcnxn {
+  /*display: flex;*/
+  flex: 1;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 10px;
+  margin-right: 10px;
+  margin-left: auto;
+}
+.box_body {
+  display: flex;/*Flexbox */
+  min-height: 50px;
+  border-radius: 10px;
+  margin: 20px;/* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+  padding: 20px;/* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
+  justify-content: center;
+  gap: 20px; /* Espace entre les boîtes, optionnel */
+}
+
+/*box qui contient la galerie de voiture disponible*/
+.box_titre_catalogue_vehicule {
+  /*display: flex;*/
+  flex: 1;
+  justify-content: flex-end;
+  border-radius: 10px;
+  justify-content: center;
+  background: #FFC000;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  text-align: center;
+  list-style: none;
+  padding: 10px;
+  margin: 10px;
+  margin-right: 10px;
+  margin-left: auto;
+}
+
+/* la galerie pour afficher le photos de voiture */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /*6 par ligne */
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* la carte qui entoure la photo de voiture */
+.card {
+  text-decoration: none;
+  display: block;   
+  background: #FFC000;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+
+}
+/*le footer*/
+.footer {
+  background-color: #595959;
+  borde-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: yellow;
+  "
+
+}

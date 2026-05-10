@@ -1,0 +1,225 @@
+header {
+  /*position: fixed;*/
+  width: 100%;
+  min-height: 120px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  height: 60px;
+  margin-right: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+
+/*les boutons dans le head*/
+.btn-nav {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  /* centre le texte verticalement */
+  background-color: #595959;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  /* enlève le soulignement du lien */
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.btn-nav:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+}
+
+.btn-com {
+  display: inline-block;
+  width: 250px;
+  height: 55px;
+  line-height: 55px;
+  background-color: orange;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-com:hover {
+  background-color: darkorange;
+  transform: scale(1.05);
+}
+
+
+
+/*Fin designe les boutons dans le head*/
+
+/*début CSS Recherche*/
+.barre-recherche {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.barre-recherche input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 16px;
+}
+
+.barre-recherche button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/*Fin CSS Recherche*/
+
+.container_bouton {
+  /*display: flex;*/
+      background: red;
+  flex: 1;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 10px;
+  margin-right: 10px;
+  margin-left: auto;
+}
+
+
+
+.containertitre {
+
+  display: block;
+  border-radius: 10px;
+  background: #FFC000;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  color: black;
+}
+
+/*container qui contient l'image et le descriptif du véhicule*/
+.container_img_descriptif {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  color: black;
+  box-sizing: border-box;
+  background-color: #b7d7e5;
+  border: 1px solid #333;
+
+}
+
+/* CSS de la grille description*/
+.container_descriptif {
+  width: 40%;
+  display: grid;
+  grid-template-areas:
+    "box_descriptif box_prix"
+    "box_descriptif box_garantie";
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: start;
+}
+
+/*box qui contient l'image et dox du descriptif du véhicule*/
+.box_descriptif {
+  grid-area: box_descriptif;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.box_prix {
+  grid-area: box_prix;
+  font-size: 16px;
+}
+
+.box_garantie {
+  grid-area: box_garantie;
+  font-size: 16px;
+}
+
+
+/*box de l'image*/
+.box_img {
+  width: 60%;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/*box affichage de l'image*/
+.box_image_vehicule {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.footer {
+  background-color: #595959;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: yellow;
+}
+@media screen and (max-width: 900px) {
+  .container_img_descriptif {
+    flex-direction: column;
+  }
+
+  .box_img,
+  .container_descriptif {
+    width: 100%;
+  }
+
+  .container_descriptif {
+    grid-template-areas:
+      "box_descriptif"
+      "box_prix"
+      "box_garantie";
+    grid-template-columns: 1fr;
+  }
+
+  .btn-nav {
+    width: 140px;
+  }
+}
