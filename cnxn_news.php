@@ -3,10 +3,6 @@
 require "config.php";
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-  header("Location: cnxn.php");
-  exit;
-}
 
 
 
@@ -14,7 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 //  header("Location: index.php");
  // exit;
 //}
-
+function ConnexUser(PDO $pdo, string $identifiant, string $pwd): bool
+{
 
  if (isset($_POST["email"])) {
         $identifiant = trim($_POST["email"]);
@@ -30,17 +27,15 @@ if (isset($_POST["pwd"])) {
  // vérification si les champs sont vides   
 if ($identifiant === "" || $pwd === "") {
   die("Veuillez remplir tous les champs.");
-  //pour test PHPUnit
-  //die("Veuillez remplir tous les champs.");
 }
-// vérifie si l'utilisateur est dirigé vers la page avce le bon message
+
+
 if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
     echo "<p>Veuillez vous connecter pour accéder à votre espace client.</p>";
 }
 
 
 //Chercher l'utilisateur par email OU pseudo
-$sql = "SELECT id, pseudo, email, pwd_hash
 $sql = "SELECT id, pseudo, email, pwd_hash, role
         FROM users
         WHERE email = :id OR pseudo = :id
@@ -50,7 +45,7 @@ $stmt->execute([":id" => $identifiant]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 //je vérifie l'identifiant
 if (!$user) {
-  die("Identifiants incorrects.");
+ return false;
 }
 
 //Vérification du mot de pass haché
@@ -58,12 +53,6 @@ if (!password_verify($pwd, $user["pwd_hash"])) {
   die("Identifiants incorrects.");
 }
 
-//Connexion à la session OK
-$_SESSION["user_id"] = $user["id"];
-$_SESSION["pseudo"] = $user["pseudo"];
-// je revien a la page d'accueil
-header("Location: index.php?login=1");
-exit;
 
 
 
@@ -73,6 +62,9 @@ $_SESSION["pseudo"] = $user["pseudo"];
 $_SESSION["email"] = $user["email"];
 $_SESSION["role"] = $user["role"];
 
+ return true;
+
+ 
 if ($user["role"] === "admin") {
   // si c'est l'admin on ouvre la page admin
     header("Location: dashboard_admin.php");
@@ -81,4 +73,5 @@ if ($user["role"] === "admin") {
   // si non je revien a la page d'accueil
     header("Location: espace_client_news.php?login=1");
     exit;
+}
 }

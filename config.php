@@ -7,6 +7,8 @@ $user = "root";
 $pass = "";
 $dsn = "mysql:host=$host;dbname=$dbname";
 
+
+
 // utilisation de pdo pour se connecter à la base de donnée
 try {
     // le DSN, le DataSourceName

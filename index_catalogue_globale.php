@@ -25,6 +25,31 @@ else {
 $stmt = $pdo->query($sql);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$pdo = new PDO('mysql:host=localhost;dbname=bd_locachat', 'root', '');
+
+if (!empty($_GET['champ_recherche'])) {
+
+    $search = '%' . $_GET['champ_recherche'] . '%';
+
+    $sql = "SELECT * FROM vehicule 
+            WHERE marque LIKE ? 
+            OR modele LIKE ? 
+            OR type_offre LIKE ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$search, $search, $search]);
+
+    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// affichage par defaut
+} else {
+    $sql = "SELECT * FROM vehicule";
+    $stmt = $pdo->query($sql);
+    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 
@@ -35,6 +60,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="utf-8" />
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles_page_catalogue_globale.css">
+  <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
 </head>
 
 <header>
@@ -57,6 +83,17 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <li>
         <a href="index_cnxn_creacompte.php"
           class="btn-nav">Connexion</a>
+         <!-- si la session est ouvert on affiche "Déconnexion"-->
+        <?php if (isset($_SESSION["user_id"])): ?>
+
+          <a href="logout.php" class="btn-nav">Déconnexion</a>
+
+        <?php else: ?>
+
+          <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
+
+        <?php endif; ?>
+       
       </li>
       </li>
     </ul>
@@ -82,6 +119,28 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <p><?= htmlspecialchars($vehicule['description']) ?></p>
           <p><?= htmlspecialchars($vehicule['locachat']) ?></p>
         </div>
+        
+         <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+          ?>
+
+
+        <div class="card">
+          <a href="<?=  $detail_v ?>" class="card-link">
+              
+          <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+          </a>
+          <p><?= htmlspecialchars($vehicule['marque']) ?></p>
+          <p><?= htmlspecialchars($vehicule['modele']) ?></p>
+          <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
+        </div>
+    
       <?php endforeach; ?>
     </div>
   </div>

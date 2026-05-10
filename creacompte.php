@@ -1,5 +1,16 @@
 <?php
 require "config.php";
+
+// Fonction pour généré le numéro client
+function genererNumeroClient()
+{
+
+    $lettres = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 2);
+    $chiffres = rand(1000, 9999);
+
+    return $lettres . $chiffres;
+}
+
 // si la methode http utilisé  de la requète est POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -89,6 +100,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo $pseudo;
         echo $pwd;
         echo $confirmation_pwd;
+        echo htmlspecialchars($nom);
+        echo htmlspecialchars($prenom);
+        echo htmlspecialchars($date_naissance);
+        echo htmlspecialchars($email);
+        echo htmlspecialchars($telephone);
+        echo htmlspecialchars($permis_b);
+        echo htmlspecialchars($adresse);
+        echo htmlspecialchars($code_postal);
+        echo htmlspecialchars($pseudo);
+        echo htmlspecialchars($pwd);
+        echo htmlspecialchars($confirmation_pwd);
         die("Tous les champs doivent ètres saisies");
     }
 
@@ -111,6 +133,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         $stmt->execute([
+    // génération du numéro client
+    $numero_client = genererNumeroClient();
+
+
+    // Insertion en base (SANS hash)
+    $insertionBD = "INSERT INTO users
+            (numero_client,nom, prenom, date_naissance, email, telephone, permis_b, adresse, code_postal, pseudo, pwd_hash)
+            VALUES
+            (:numero_client, :nom, :prenom, :date_naissance, :email, :telephone, :permis_b, :adresse, :code_postal, :pseudo, :pwd_hash)";
+
+    $stmt = $pdo->prepare($insertionBD);
+    //execute le code 
+    try {
+        $stmt->execute([
+            ":numero_client" => $numero_client,
             ":nom" => $nom,
             ":prenom" => $prenom,
             ":date_naissance" => $date_naissance,

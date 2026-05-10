@@ -12,6 +12,14 @@ header {
     display : flex;
   }
 
+.barre-recherche{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    padding: 8px 12px;
+}
 /*les boutons dans le head*/
   .btn-nav {
   display: inline-block;
