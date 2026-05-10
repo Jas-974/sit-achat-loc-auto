@@ -2,18 +2,35 @@
 session_start();
 require "config.php";
 
-$pdo = new PDO("mysql:host=localhost;dbname=bd_locachat;charset=utf8", "root", "");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+?>
+<?php
+if (!isset($_SESSION["user_id"])) {
+  header("Location: cnxn_news.php?message=connexion_necessaire");
+  exit;
+}
+// Je recupère les données de l'utilisateur
+$user_id =$_SESSION["user_id"];
+// récupere les informations du user
+// reqête de recupération des informations dans la base de donnée
+$sql = "SELECT id, nom, prenom, email 
+FROM users 
+WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $user_id]);
+$donnee_user = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$donnee_user) {
+  die("utilisateur introuvable");
+}
 ?>
 
 <?php
 //je recupére l'Id de la page détail_véhicule
-if (isset($_GET['id'])) {
-  $id = (int) $_GET['id'];
-} else {
-  echo "ID manquant";
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+  die("ID manquant");
 }
+
+$id = (int) $_GET['id'];
 ?>
 
 <?php
@@ -34,7 +51,9 @@ if (!$donnee_vehicule) {
 ?>
 
 
+
 <?php
+//mise a jours de la table vehicule avec la reservation en cours
 if (isset($_POST['maj_status_command'])) {
   $id = (int) $_POST['id'];
   $status_command = $_POST['maj_status_command'];
@@ -50,6 +69,19 @@ if (isset($_POST['maj_status_command'])) {
   ':statut' => 'reserve', 
   ':id' => $id
   ]);
+    
+    // insertion des donnée de la validation de la commande dans la table table_statu_command
+$sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command )
+VALUES (:nom, :prenom, :email, :type_offre, :status_command)";
+
+$stmt_status_command  = $pdo->prepare($sql_insert_status_command);
+$stmt_status_command ->execute([
+  ":nom" => $donnee_user["nom"],
+  ":prenom" => $donnee_user["prenom"],
+  ":email" => $donnee_user["email"],
+  ":type_offre" => $donnee_vehicule["type_offre"],
+  ":status_command" => $_POST["maj_status_command"]
+]);
 }
 ?>
 
@@ -95,7 +127,7 @@ if (isset($_POST['maj_status_command'])) {
   <header>
     <!-- Image du logo-->
     <div class="logo">
-      <img src="Logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
@@ -151,6 +183,7 @@ if (isset($_POST['maj_status_command'])) {
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
           style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="hidden" name="id" value="<?= $id ?>">
           <label for="files">Choisissez des fichiers à téléverser :</label>
           <input type="file" id="files" name="files[]" multiple required>
           <button type="submit">Téléverser</button><br>

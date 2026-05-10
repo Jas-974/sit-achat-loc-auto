@@ -3,6 +3,9 @@ session_start();
 require "config.php";
 
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $pdo = new PDO('mysql:host=localhost;dbname=bd_locachat', 'root', '');
 
@@ -27,13 +30,14 @@ if (!empty($_GET['champ_recherche'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8" />
   <!-- appel au fichier CSS-->
-  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
+  <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
 </head>
 
 <header>
@@ -85,8 +89,19 @@ if (!empty($_GET['champ_recherche'])) {
       <!-- Affiche la gallerie-->
       <?php foreach ($vehicules as $vehicule): ?>
         
+         <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+          ?>
+
+
         <div class="card">
-          <a href="index_detail_voiture.php?id=<?= $vehicule['id'] ?>" class="card-link">
+          <a href="<?=  $detail_v ?>" class="card-link">
               
           <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
           </a>

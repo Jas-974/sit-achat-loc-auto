@@ -2,26 +2,33 @@
 session_start();
 ?>
 
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 
 <?php
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
 $host = "localhost";
-$dbname = "bd_locachat";
+$dbname = "bd_locachat";   
 $username = "root";
 $password = "";
+$dsn = "mysql:host=$host;dbname=$dbname";
+
+
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Erreur connexion BDD : " . $e->getMessage());
+  die("Erreur connexion BDD : " . $e->getMessage());
 }
 ?>
 
 <?php
 // récupere les images et les informations
 $sql = "SELECT id, image, marque, modele, type_offre, statut 
-FROM vehicule 
-WHERE visibilite = 1";
+FROM vehicule LIMIT 5" ;
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 // recupérer plusieur ligne avec fetchAll
@@ -36,15 +43,15 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <header>
   <!-- Image du logo-->
-  <img src="logo.png" alt="Logo"
+  <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
 
@@ -61,27 +68,28 @@ if (!$donnee_vehicule) {
           </div>
         </form>
         <!--Gestion du champs de la recherche-->
-        <?php
-        try {
-          $pdo = new PDO('mysql:host=localhost;dbname=pdo_application', 'root', '');
 
-          // Vérifie si l'utilisateur a tapé quelque chose
-          if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
-            // on vérifie que ca commence oar quoi avec %
-            $search = $_GET['champ_recherche'] . '%';
-            // requete de recherche sur plusieurs critères
-            $sql = "SELECT image, modele, marque, type_offre FROM vehicule WHERE marque LIKE ? OR modele LIKE ? OR type_offre LIKE ?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$search, $search, $search]);
-            // ajout dans un tableau associatif
-            while ($recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo $recherche['image'] . ' ' . $recherche['modele'] . ' ' . $recherche['marque'] . ' ' . $recherche['marque'] . '<br>';
-            }
-          }
-        } catch (PDOException $e) {
-          echo "Erreur de connexion";
-        }
-        ?>
+      <?php
+if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
+  try {
+    $search = $_GET['champ_recherche'] . '%';
+    $sql = "SELECT image, modele, marque, type_offre 
+            FROM vehicule 
+            WHERE marque LIKE ? OR modele LIKE ? OR type_offre LIKE ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$search, $search, $search]);
+
+    while ($recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      echo htmlspecialchars($recherche['image']) . ' '
+         . htmlspecialchars($recherche['modele']) . ' '
+         . htmlspecialchars($recherche['marque']) . ' '
+         . htmlspecialchars($recherche['type_offre']) . '<br>';
+    }
+  } catch (PDOException $e) {
+    echo "Erreur SQL : " . $e->getMessage();
+  }
+}
+?>
 
       </li>
 
@@ -98,15 +106,28 @@ if (!$donnee_vehicule) {
 
         <?php endif; ?>
       </li>
+
+
+       <li>
+        <!-- si la session admin est ouvert on affiche "Dashboard Admin"-->
+        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin"): ?>
+
+          <a href="dashboard_admin.php" class="btn-nav">Dashboard Admin</a>
+
+        <?php endif; ?>
+      </li>
+
+
+
       <!-- si la session est ouvert on affiche pas le bouton-->
       <?php if (!isset($_SESSION["user_id"])): ?>
         <li>
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
-      <?php else: ?>
+      <?php elseif ($_SESSION["role"] !== "admin"): ?>
 
         <li>
-          <a href="index_espace_client.php" class="btn-nav">Espace client</a>
+          <a href="espace_client_news.php" class="btn-nav">Espace client</a>
         </li>
       <?php endif; ?>
     </ul>
@@ -154,21 +175,31 @@ if (!$donnee_vehicule) {
     <div class="box_body">
       <!--<p>box_body</p>-->
 
-  <!--affichage des image dans les diffèrentes vignettes-->
+      <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
         <?php foreach ($donnee_vehicule as $image_vehicule): ?>
-        
-        <div class="card">
-          <a href="index_detail_voiture.php?id=<?= $image_vehicule['id'] ?>" class="card-link">
-            <img src="<?= htmlspecialchars($image_vehicule['image']) ?>"
-                 alt="<?= htmlspecialchars($image_vehicule['marque'] ?? $image_vehicule['modele']) ?>"
-                 class="image">
-        </a>
+
+          <?php
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($image_vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $image_vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $image_vehicule['id'];
+          }
+          ?>
+
+          <div class="card">
+            <a href="<?= $detail_v ?>" class="card-link">
+              <img src="<?= htmlspecialchars($image_vehicule['image']) ?>"
+                alt="<?= htmlspecialchars($image_vehicule['marque'] ?? $image_vehicule['modele']) ?>"
+                class="image">
+            </a>
             <p><?= htmlspecialchars($image_vehicule['marque']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['modele']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['type_offre']) ?></p>
             <p><?= htmlspecialchars($image_vehicule['statut']) ?></p>
-        </div>
+          </div>
         <?php endforeach; ?>
       </div>
     </div>

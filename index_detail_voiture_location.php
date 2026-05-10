@@ -5,7 +5,6 @@ require "config.php";
 
 
 <?php
-//$id = 1;
 if (!isset($_GET['id'])) {
   die("ID manquant");
 }
@@ -17,7 +16,7 @@ $id = (int) $_GET['id'];
 <?php
 // récupere les informations caractéristique de la voiture
 // reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, marque, modele, prix, annee, kilometrage, boite, carburant, type_offre, prix_loc_jour, statut, image, forfait_par_mois
+$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix_loc_jour, statut, image, forfait_par_mois 
 FROM vehicule 
 WHERE id = :id";
 $stmt = $pdo->prepare($sql);
@@ -35,12 +34,14 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" >
   <!--Responsive-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles_page_detail_voiture_news.css">
 
+    
+    
   <style>
     .btn-comm {
       display: inline-block;
@@ -92,13 +93,12 @@ if (!$donnee_vehicule) {
         </li>
       </ul>
     </div>
-
-
   </header>
   <div class="containertitre"><?= htmlspecialchars($donnee_vehicule["marque"] . " " . $donnee_vehicule["modele"]) ?></div>
   <!--container globale image et le descriptif-->
   <div class="container_img_descriptif">
     <!--box de l'image-->
+      
     <div class="box_img">
       <img src="<?= htmlspecialchars($donnee_vehicule["image"]); ?>" alt="image" class="box_image_vehicule">
     </div>
@@ -106,29 +106,22 @@ if (!$donnee_vehicule) {
     <!--grande box du descriptif du véhicule -->
     <div class="container_descriptif">
       <div class="box_descriptif" style="text-align : left" ;>
-<!--pour test-->
+        <H2 style="color:#588888; display:inline" ;><?= htmlspecialchars($donnee_vehicule["statut"]) ?></H2><br><br>
 
-      
-               <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix"]) ?>&euro;</H1>
-        <H2 style="color:#588888; display:inline" ;><?= htmlspecialchars($donnee_vehicule["statut"]) ?></H2>
-        
-     
 
-<!--fin test-->
-<?php
-//vérifie si le user est conncté
-if (isset($_SESSION["user_id"])) {
-    //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
-    echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
-    Passer Commande
+        <?php
+        //vérifie si le user est conncté
+        if (isset($_SESSION["user_id"])) {
+          echo '<a class="btn-comm" href="commande_voiture_location.php?id=' . $donnee_vehicule['id'] . '">
+Réserver
 </a>';
-} else {
-    echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a><br><br>';
-}
-?>
+        } else {
+          echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Réserver</a><br><br>';
+        }
+        ?>
 
-<br><br>     
-        
+        <br><br>
+
         <strong>Informations du véhicule</strong><br>
         Marques : <?= htmlspecialchars($donnee_vehicule["marque"]) ?><br>
         Modèle : <?= htmlspecialchars($donnee_vehicule["modele"]) ?><br>
@@ -137,32 +130,34 @@ if (isset($_SESSION["user_id"])) {
         Kilometrage : <?= htmlspecialchars($donnee_vehicule["kilometrage"]) ?> Km<br>
         Boite de vitesse : <?= htmlspecialchars($donnee_vehicule["boite"]) ?><br>
       </div>
-      <!--box affichage du prix-->
+      <!--box affichage du prix de la location-->
       <div class="box_prix" style="line-height: 2" ;>
-        <strong>Acheter ce véhicule</strong><br>
-        Prix du véhicule : <?= htmlspecialchars($donnee_vehicule["prix"]) ?> €<br>
-        Frais de dossiers : 250 €<br>
-        <strong>Total TTC : <?= htmlspecialchars($donnee_vehicule["prix"]) + 250 ?> €</strong><br>
+        <strong>Louer ce véhicule</strong><br>
+        Prix de la location par jour : <?= htmlspecialchars($donnee_vehicule["prix_loc_jour"]) ?> €<br>
+        <strong>Forfait par mois : <?= htmlspecialchars($donnee_vehicule["forfait_par_mois"]) ?> €</strong><br>
       </div>
       <!--Affichage des garanties-->
       <div class="box_garantie" style="line-height: 2" ;>
 
 
         <?php
-//vérifie si le user est conncté
-if (isset($_SESSION["user_id"])) {
-    //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
-    echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
-    Passer Commande
+        //vérifie si le user est conncté
+        if (isset($_SESSION["user_id"])) {
+          //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
+          echo '<a class="btn-comm" href="commande_voiture_location.php?id=' . $donnee_vehicule['id'] . '">
+   Réserver
 </a>';
-} else {
-    echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a>';
-}
-?>
-<br><br>
-        <span>&#10003;Garanti 12 mois</span><br>
-        <span>&#10003;Historique vérifié</span><br>
-        <span>&#10003;Kilométrage certifié</span><br><br>
+        } else {
+          // si l'utilisateur n'est pas connecter rediriger vers la page de connexion
+          echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Réserver</a>';
+        }
+        ?>
+        <br><br>
+        <span>&#10003;Assurance tous risques</span><br>
+        <span>&#10003;Assistance dépannage 24/7</span><br>
+        <span>&#10003;Entretien et service après-vente (SAV)</span><br>
+        <span>&#10003;Contrôle technique</span><br><br>
+
         <span>&#128222;+262 46 78 24</span><br>
         Disponible lun - Ven 9h-18h
       </div>
