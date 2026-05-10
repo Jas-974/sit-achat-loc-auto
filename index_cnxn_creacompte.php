@@ -11,7 +11,8 @@
   <!-- Image du logo-->
 
   <div class="logo">
-    <img src="logo.png" alt="Logo">
+    <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
+    style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
   </div>
 
 
@@ -118,37 +119,6 @@
 
 
 
-  </div>
-
-  <div class="box_body">
-    <div class="gallery">
-      <div class="card">
-        <img src="voiture 1.png" alt="">
-        <p>Ceci est un petit texte sous l'image 0</p>
-      </div>
-
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-    </div>
   </div>
 
   <br>

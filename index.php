@@ -51,7 +51,7 @@ if (!$donnee_vehicule) {
 
 <header>
   <!-- Image du logo-->
-  <img src="logo.png" alt="Logo"
+  <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
 
@@ -106,12 +106,25 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
         <?php endif; ?>
       </li>
+
+
+       <li>
+        <!-- si la session admin est ouvert on affiche "Dashboard Admin"-->
+        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin"): ?>
+
+          <a href="dashboard_admin.php" class="btn-nav">Dashboard Admin</a>
+
+        <?php endif; ?>
+      </li>
+
+
+
       <!-- si la session est ouvert on affiche pas le bouton-->
       <?php if (!isset($_SESSION["user_id"])): ?>
         <li>
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
-      <?php else: ?>
+      <?php elseif ($_SESSION["role"] !== "admin"): ?>
 
         <li>
           <a href="espace_client_news.php" class="btn-nav">Espace client</a>
