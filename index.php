@@ -43,6 +43,8 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
   <!-- appel au fichier CSS-->
@@ -51,6 +53,7 @@ if (!$donnee_vehicule) {
 
 <header>
   <!-- Image du logo-->
+  <img src="logo.png" alt="Logo"
   <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
@@ -124,6 +127,11 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
         <li>
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
+      <?php endif; ?>
+
+      <li>
+        <a href="/dev_web_locachat/pages/recherche.php" class="btn-nav">Recherche de véhicule</a>
+      </li>
       <?php elseif ($_SESSION["role"] !== "admin"): ?>
 
         <li>
@@ -163,11 +171,14 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
     <div class="container_one">
       <!--<p> je suis dans conteneur one</p>-->
       <!--Ajout du bouton dans la box-->
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
 
       <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
     </div>
 
     <div class="card-titre-photo-voiture">
+      <p>Les voitures du moments</p>
       <p>Les voitures et Offres du moments</p>
     </div>
 
@@ -175,6 +186,58 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
     <div class="box_body">
       <!--<p>box_body</p>-->
 
+
+      <div class="gallery">
+        <div class="card">
+          <img src="voiture 1.png" alt="">
+          <p>Ceci est un petit texte sous l'image 0</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+
+
+
+  <!--<p>je suis sortie de  la box_body</p>-->
+
+  <br>
       <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
         <?php foreach ($donnee_vehicule as $image_vehicule): ?>

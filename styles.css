@@ -6,6 +6,8 @@ header {
     background-color: white;
     color: white;
     display: flex;
+    /*align-items: center;*/
+    /*justify-content: center;*/
     z-index: 1000;
     display : flex;
   }

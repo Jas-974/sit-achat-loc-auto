@@ -89,6 +89,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         // vérification des valeurs des variables
+        echo $nom;
+        echo $prenom;
+        echo $date_naissance;
+        echo $email;
+        echo $telephone;
+        echo $permis_b;
+        echo $adresse;
+        echo $code_postal;
+        echo $pseudo;
+        echo $pwd;
+        echo $confirmation_pwd;
         echo htmlspecialchars($nom);
         echo htmlspecialchars($prenom);
         echo htmlspecialchars($date_naissance);
@@ -111,6 +122,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // pour le hashage du mot de pass
     $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
 
+
+    // Insertion en base (SANS hash)
+    $insertionBD = "INSERT INTO users
+            (nom, prenom, date_naissance, email, telephone, permis_b, adresse, code_postal, pseudo, pwd_hash)
+            VALUES
+            (:nom, :prenom, :date_naissance, :email, :telephone, :permis_b, :adresse, :code_postal, :pseudo, :pwd_hash)";
+
+    $stmt = $pdo->prepare($insertionBD);
+
+    try {
+        $stmt->execute([
     // génération du numéro client
     $numero_client = genererNumeroClient();
 
@@ -143,6 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         //echo "Compte créé et enregistré en base !";
     } catch (PDOException $e) {
+        // Cas classique : doublon email/pseudo/permis_b (UNIQUE)
         echo "Erreur : " . $e->getMessage();
     }
 }

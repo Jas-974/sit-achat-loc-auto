@@ -17,5 +17,7 @@ try {
     // gestion de l'exception
 } catch (PDOException $PDOException) {
     die("Erreur connexion BDD : " . $PDOException->getMessage());
+    // écriture des erreur dans un fichier log
+    file_put_contents('dblogs.log', $PDOException->getMessage().PHP_EOL, FILE_APPEND);
 }
 // Fin du script déconnexion automtatique

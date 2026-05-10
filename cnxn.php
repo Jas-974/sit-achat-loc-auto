@@ -3,6 +3,10 @@
 require "config.php";
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+  header("Location: cnxn.php");
+  exit;
+}
 
 
 
@@ -25,6 +29,7 @@ if (isset($_POST["pwd"])) {
 
  // vérification si les champs sont vides   
 if ($identifiant === "" || $pwd === "") {
+  die("Veuillez remplir tous les champs.");
   //pour test PHPUnit
   //die("Veuillez remplir tous les champs.");
 }
@@ -35,6 +40,7 @@ if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
 
 
 //Chercher l'utilisateur par email OU pseudo
+$sql = "SELECT id, pseudo, email, pwd_hash
 $sql = "SELECT id, pseudo, email, pwd_hash, role
         FROM users
         WHERE email = :id OR pseudo = :id
@@ -52,6 +58,12 @@ if (!password_verify($pwd, $user["pwd_hash"])) {
   die("Identifiants incorrects.");
 }
 
+//Connexion à la session OK
+$_SESSION["user_id"] = $user["id"];
+$_SESSION["pseudo"] = $user["pseudo"];
+// je revien a la page d'accueil
+header("Location: index.php?login=1");
+exit;
 
 
 
