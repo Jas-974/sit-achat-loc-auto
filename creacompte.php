@@ -189,7 +189,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         //echo "Compte créé et enregistré en base !";
     } catch (PDOException $e) {
-        // Cas classique : doublon email/pseudo/permis_b (UNIQUE)
         echo "Erreur : " . $e->getMessage();
     }
 }

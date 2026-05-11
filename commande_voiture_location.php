@@ -7,16 +7,47 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 ?>
 
+
 <?php
 //je recupére l'Id de la page détail_véhicule
 if (isset($_GET['id'])) {
   $id = (int) $_GET['id'];
+
+//pour debug
+
 } else {
   echo "ID manquant";
 }
 ?>
 
+
 <?php
+
+//pour debug
+
+// vérification si user connecté
+if (!isset($_SESSION["user_id"])) {
+  header("Location: cnxn.php?message=connexion_necessaire");
+  exit;
+}
+//definir la variable $user_id
+// Je recupère les données de l'utilisateur
+$user_id =$_SESSION["user_id"];
+// requête de recupération des informations dans la base de donnée
+$sql = "SELECT id, nom, prenom, email 
+FROM users 
+WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([":id" => $user_id]);
+$donnee_user = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$donnee_user) {
+  die("utilisateur introuvable");
+}
+?>
+
+
+<?php
+//pour debug
 
 // récupere les informations caractéristique de la voiture
 // reqête de recupération des informations dans la base de donnée
@@ -25,10 +56,13 @@ FROM vehicule
 WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([":id" => $id]);
+//pour debug
 
 $donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$donnee_vehicule) {
+  //pour debug
+
   die("Véhicule introuvable");
 }
 ?>
@@ -50,6 +84,37 @@ if (isset($_POST['maj_status_command'])) {
   ':statut' => 'reserve', 
   ':id' => $id
   ]);
+
+  
+    // insertion des donnée de la validation de la commande dans la table table_statu_command
+$sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command, user_id)
+VALUES (:nom, :prenom, :email, :type_offre, :status_command, :user_id)";
+
+$stmt_status_command  = $pdo->prepare($sql_insert_status_command);
+$stmt_status_command ->execute([
+  ":nom" => $donnee_user["nom"],
+  ":prenom" => $donnee_user["prenom"],
+  ":email" => $donnee_user["email"],
+  ":type_offre" => $donnee_vehicule["type_offre"],
+  ":status_command" => $_POST["maj_status_command"],
+  ":user_id" => $user_id
+]);
+// insertion dans la table table_commandes
+$sql_insert_table_command =" INSERT INTO table_commandes (user_id, car_id, order_type, documents, adate)
+VALUES (:user_id, :car_id, :order_type, :documents, NOW())";
+
+$stmt_table_command  = $pdo->prepare($sql_insert_table_command);
+$stmt_table_command ->execute([
+  ":car_id" => $donnee_vehicule["id"],
+  ":order_type" => $donnee_vehicule["type_offre"],
+  ":user_id" => $user_id,
+  ":documents" => null
+]);
+
+//retour vers la page commande
+header("Location: commande_voiture_location.php?id=" . $donnee_vehicule["id"]);
+exit;
+
 }
 ?>
 
@@ -151,6 +216,7 @@ if (isset($_POST['maj_status_command'])) {
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
           style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="hidden" name="id" value="<?=  $donnee_vehicule['id'] ?>">
           <label for="files">Choisissez des fichiers à téléverser :</label>
           <input type="file" id="files" name="files[]" multiple required>
           <button type="submit">Téléverser</button><br>
@@ -160,12 +226,13 @@ if (isset($_POST['maj_status_command'])) {
           pour que votre dossier soit constitué et validé</strong>
 
 
-        <!--créer une action dèrrière ce bouton de prise en charge de dossier-->
+        <!-- bouton de prise en charge de dossier-->
         <form method="POST" action="?id=<?= $donnee_vehicule['id'] ?>">
           <input type="hidden" name="id" value="<?= $donnee_vehicule['id'] ?>">
           <!--boite de dialogue pour confirmer la prise en charge du dossier-->
           <button class="btn-comm" type="submit" name="maj_status_command" value="Réservation en cours" onclick="return confirm('Confirmer la prise en charge du dossier ?')">Valider la prise en charge
-          </button>
+
+        </button>
         </form>
 
       </div>

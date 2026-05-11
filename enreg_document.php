@@ -1,4 +1,23 @@
 <?php
+session_start();
+
+// se connecte à la BDD
+$pdo = new PDO("mysql:host=localhost;dbname=bd_locachat;charset=utf8", "root", "");
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+// vérification que l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    die("Utilisateur non connécté");
+}
+
+// vérification de l'ID
+if (!isset($_POST['id'])) {
+    die("id du véhcule est manquant");
+}
+
+$user_id = $_SESSION["user_id"];
+$id = (int) $_POST['id'];
 
 
 if (isset($_FILES['files'])) {
@@ -6,25 +25,50 @@ if (isset($_FILES['files'])) {
     $nom = $_FILES['files']['name'];
     $tmp = $_FILES['files']['tmp_name'];
 
-    $dossier = "uploads/";
-// boucle pour traité plusieur fichier
-   foreach ($_FILES['files']['tmp_name'] as $index => $tmp_name) {
+    $rep_upload = "uploads/";
+    // pas de repertoire on créé
+    if (!is_dir($rep_upload)) {
+        mkdir($rep_upload, 0777, true);
+    }
 
-        if (!empty($tmp_name)) {
+    $fichier_doc = [];
+    // boucle pour traiter plusieurs fichiers
+    foreach ($_FILES['files']['tmp_name'] as $index => $tmp_name) {
+
+        if (!empty($tmp_name) && $_FILES['files']['error'][$index] === UPLOAD_ERR_OK) {
 
             $nom = $_FILES['files']['name'][$index];
+$rename_nom = time() . "_" . uniqid() . "_" . $nom . "_" . $user_id;
+$adress_fichier = $rep_upload . $rename_nom;
 
-            move_uploaded_file($tmp_name, $dossier . $nom);
 
-        
+            move_uploaded_file($tmp_name, $rep_upload . $nom);
+
+
 
             echo "Fichier enregistré : " . htmlspecialchars($nom) . "<br>";
         }
     }
-
-
 } else {
     echo "Aucun fichier reçu";
 }
+// on concatene les documents
+if (!empty($fichier_doc)){
+$doc = implode(",", $fichier_doc);
+$sql = "UPDATE table_commandes SET documents :documents
+WHERE user_id = :user_id
+ORDER_BY id DESC
+LIMIT 1";
 
-?>
+$stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ":documents" => $doc,
+        ":user_id" => $user_id,
+        ":car_id" => $id
+    ]);
+
+}
+
+
+header("Location: commande_voiture_location.php?id=" . $id);
+exit;

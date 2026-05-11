@@ -6,10 +6,9 @@ require "config.php";
 ?>
 <?php
 if (!isset($_SESSION["user_id"])) {
-  header("Location: cnxn.php?message=connexion_necessaire");
+  header("Location: cnxn_news.php?message=connexion_necessaire");
   exit;
 }
-//definir la variable $user_id
 // Je recupère les données de l'utilisateur
 $user_id =$_SESSION["user_id"];
 // récupere les informations du user
@@ -83,7 +82,6 @@ $stmt_status_command ->execute([
   ":type_offre" => $donnee_vehicule["type_offre"],
   ":status_command" => $_POST["maj_status_command"]
 ]);
-echo "insertion OK !";
 }
 ?>
 
@@ -185,6 +183,7 @@ echo "insertion OK !";
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
           style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="hidden" name="id" value="<?= $id ?>">
           <label for="files">Choisissez des fichiers à téléverser :</label>
           <input type="file" id="files" name="files[]" multiple required>
           <button type="submit">Téléverser</button><br>
