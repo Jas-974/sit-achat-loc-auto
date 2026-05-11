@@ -1,5 +1,6 @@
 <?php
 require "config.php";
+<<<<<<< HEAD
 
 // Fonction pour généré le numéro client
 function genererNumeroClient()
@@ -11,6 +12,8 @@ function genererNumeroClient()
     return $lettres . $chiffres;
 }
 
+=======
+>>>>>>> feature/page_catalogue_globale
 // si la methode http utilisé  de la requète est POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -89,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         // vérification des valeurs des variables
+<<<<<<< HEAD
         echo htmlspecialchars($nom);
         echo htmlspecialchars($prenom);
         echo htmlspecialchars($date_naissance);
@@ -100,6 +104,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo htmlspecialchars($pseudo);
         echo htmlspecialchars($pwd);
         echo htmlspecialchars($confirmation_pwd);
+=======
+        echo $nom;
+        echo $prenom;
+        echo $date_naissance;
+        echo $email;
+        echo $telephone;
+        echo $permis_b;
+        echo $adresse;
+        echo $code_postal;
+        echo $pseudo;
+        echo $pwd;
+        echo $confirmation_pwd;
+>>>>>>> feature/page_catalogue_globale
         die("Tous les champs doivent ètres saisies");
     }
 
@@ -111,6 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // pour le hashage du mot de pass
     $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
 
+<<<<<<< HEAD
     // génération du numéro client
     $numero_client = genererNumeroClient();
 
@@ -126,6 +144,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $stmt->execute([
             ":numero_client" => $numero_client,
+=======
+
+    // Insertion en base (SANS hash)
+    $insertionBD = "INSERT INTO users
+            (nom, prenom, date_naissance, email, telephone, permis_b, adresse, code_postal, pseudo, pwd_hash)
+            VALUES
+            (:nom, :prenom, :date_naissance, :email, :telephone, :permis_b, :adresse, :code_postal, :pseudo, :pwd_hash)";
+
+    $stmt = $pdo->prepare($insertionBD);
+
+    try {
+        $stmt->execute([
+>>>>>>> feature/page_catalogue_globale
             ":nom" => $nom,
             ":prenom" => $prenom,
             ":date_naissance" => $date_naissance,

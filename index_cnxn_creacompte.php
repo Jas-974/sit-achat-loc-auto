@@ -24,7 +24,11 @@
       </li>
       </li>
       <li>
+<<<<<<< HEAD
        <!--  <a href="index.php" class="btn-nav">Recherche de véhicule</a>-->
+=======
+        <a href="index.php" class="btn-nav">Recherche de véhicule</a>
+>>>>>>> feature/page_catalogue_globale
       </li>
       </li>
     </ul>
@@ -104,7 +108,11 @@
           <label for="pwd">Mot de passe* :</label><br>
           <input type="password" id="pwd" name="pwd" required><br><br>
           <button type="submit"
+<<<<<<< HEAD
             style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Connecter</button>
+=======
+            style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Envoyer</button>
+>>>>>>> feature/page_catalogue_globale
           <!--Fin formulaire-->
         </form>
 

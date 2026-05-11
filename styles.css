@@ -6,10 +6,16 @@ header {
     background-color: white;
     color: white;
     display: flex;
+<<<<<<< HEAD
+=======
+    /*align-items: center;*/
+    /*justify-content: center;*/
+>>>>>>> feature/page_catalogue_globale
     z-index: 1000;
     display : flex;
   }
 
+<<<<<<< HEAD
 .barre-recherche{
     display: flex;
     align-items: center;
@@ -18,6 +24,8 @@ header {
     border-radius: 12px;
     padding: 8px 12px;
 }
+=======
+>>>>>>> feature/page_catalogue_globale
 /*les boutons dans le head*/
   .btn-nav {
   display: inline-block;

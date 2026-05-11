@@ -57,6 +57,10 @@ header {
   display: flex;/*Flexbox */
   min-height: 50px;
   border-radius: 10px;
+<<<<<<< HEAD
+=======
+  border: 2px solid #595959;
+>>>>>>> feature/page_catalogue_globale
   margin: 20px;/* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
   padding: 20px;/* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
   justify-content: center;
@@ -88,17 +92,28 @@ header {
   justify-content: center;
   gap: 20px;
   padding: 20px;
+<<<<<<< HEAD
+=======
+  border: 2px solid #595959;
+>>>>>>> feature/page_catalogue_globale
 }
 
 /* la carte qui entoure la photo de voiture */
 .card {
+<<<<<<< HEAD
   text-decoration: none;
   display: block;   
+=======
+>>>>>>> feature/page_catalogue_globale
   background: #FFC000;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
+<<<<<<< HEAD
 
+=======
+  color: white;
+>>>>>>> feature/page_catalogue_globale
 }
 /*le footer*/
 .footer {

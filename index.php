@@ -2,6 +2,7 @@
 session_start();
 ?>
 
+<<<<<<< HEAD
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -39,12 +40,19 @@ if (!$donnee_vehicule) {
 }
 ?>
 
+=======
+>>>>>>> feature/page_catalogue_globale
 <!DOCTYPE html>
 <html>
 
 <head>
+<<<<<<< HEAD
   <meta charset="utf-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+=======
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+>>>>>>> feature/page_catalogue_globale
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -60,6 +68,7 @@ if (!$donnee_vehicule) {
   <div class="container_bouton_cnxn_creacompte">
     <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap: 10px;">
       <li>
+<<<<<<< HEAD
         <!-- la barre de recherche-->
         <form method="GET" action="index_catalogue_globale.php">
           <div class="barre-recherche">
@@ -95,6 +104,8 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
 
       <li>
+=======
+>>>>>>> feature/page_catalogue_globale
         <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -111,12 +122,20 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
         <li>
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
+<<<<<<< HEAD
       <?php else: ?>
 
         <li>
           <a href="espace_client_news.php" class="btn-nav">Espace client</a>
         </li>
       <?php endif; ?>
+=======
+      <?php endif; ?>
+
+      <li>
+        <a href="/dev_web_locachat/pages/recherche.php" class="btn-nav">Recherche de véhicule</a>
+      </li>
+>>>>>>> feature/page_catalogue_globale
     </ul>
   </div>
 
@@ -150,18 +169,28 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
     <div class="container_one">
       <!--<p> je suis dans conteneur one</p>-->
       <!--Ajout du bouton dans la box-->
+<<<<<<< HEAD
 
+=======
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
+>>>>>>> feature/page_catalogue_globale
       <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
     </div>
 
     <div class="card-titre-photo-voiture">
+<<<<<<< HEAD
       <p>Les voitures et Offres du moments</p>
+=======
+      <p>Les voitures du moments</p>
+>>>>>>> feature/page_catalogue_globale
     </div>
 
     <!--La gallery des photos du parc de voiture-->
     <div class="box_body">
       <!--<p>box_body</p>-->
 
+<<<<<<< HEAD
       <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
         <?php foreach ($donnee_vehicule as $image_vehicule): ?>
@@ -194,6 +223,60 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
   <!--<p>je suis sortie de  la box_body</p>-->
 
+=======
+
+      <div class="gallery">
+        <div class="card">
+          <img src="voiture 1.png" alt="">
+          <p>Ceci est un petit texte sous l'image 0</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+        <div class="card">
+          <img src="voiture 2.png" alt="">
+          <p>Ceci est un petit texte sous l'image 1</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+
+
+
+  <!--<p>je suis sortie de  la box_body</p>-->
+
+  <br>
+>>>>>>> feature/page_catalogue_globale
 
   <footer style="background-color: #595959; borde-radius: 10px; padding: 10px; text-align: center; color: yellow;">
     <p>&copy; 2026 Tous droits réservés. LocAchat</p>

@@ -3,6 +3,7 @@ session_start();
 require "config.php";
 
 
+<<<<<<< HEAD
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -28,6 +29,30 @@ if (!empty($_GET['champ_recherche'])) {
     $stmt = $pdo->query($sql);
     $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+=======
+
+// récupère le bouton cliqué
+
+if (isset($_GET["filtre"])) {
+    $filtre = $_GET["filtre"];
+} else {
+    $filtre = "tous";
+}
+
+if ($filtre == "achat") {
+    $sql = "SELECT * FROM image_galerie WHERE locachat = 'A l\'achat'";
+} 
+elseif ($filtre == "location") {
+    $sql = "SELECT * FROM image_galerie WHERE locachat = 'location'";
+} 
+else {
+    $sql = "SELECT * FROM image_galerie";
+}
+
+$stmt = $pdo->query($sql);
+$vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+>>>>>>> feature/page_catalogue_globale
 ?>
 
 
@@ -37,7 +62,11 @@ if (!empty($_GET['champ_recherche'])) {
 <head>
   <meta charset="utf-8" />
   <!-- appel au fichier CSS-->
+<<<<<<< HEAD
   <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
+=======
+  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
+>>>>>>> feature/page_catalogue_globale
 </head>
 
 <header>
@@ -58,6 +87,7 @@ if (!empty($_GET['champ_recherche'])) {
       </li>
       </li>
       <li>
+<<<<<<< HEAD
          <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -69,6 +99,10 @@ if (!empty($_GET['champ_recherche'])) {
 
         <?php endif; ?>
        
+=======
+        <a href="index_cnxn_creacompte.php"
+          class="btn-nav">Connexion</a>
+>>>>>>> feature/page_catalogue_globale
       </li>
       </li>
     </ul>
@@ -88,6 +122,7 @@ if (!empty($_GET['champ_recherche'])) {
     <div class="gallery">
       <!-- Affiche la gallerie-->
       <?php foreach ($vehicules as $vehicule): ?>
+<<<<<<< HEAD
         
          <?php
           // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
@@ -110,6 +145,14 @@ if (!empty($_GET['champ_recherche'])) {
           <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
         </div>
     
+=======
+        <div class="card">
+          <img src="<?= htmlspecialchars($vehicule['fichier']) ?>" alt="">
+          <p><?= htmlspecialchars($vehicule['titre']) ?></p>
+          <p><?= htmlspecialchars($vehicule['description']) ?></p>
+          <p><?= htmlspecialchars($vehicule['locachat']) ?></p>
+        </div>
+>>>>>>> feature/page_catalogue_globale
       <?php endforeach; ?>
     </div>
   </div>

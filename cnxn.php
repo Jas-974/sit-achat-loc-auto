@@ -3,6 +3,7 @@
 require "config.php";
 session_start();
 
+<<<<<<< HEAD
 
 
 
@@ -10,6 +11,12 @@ session_start();
 //  header("Location: index.php");
  // exit;
 //}
+=======
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+  header("Location: cnxn.php");
+  exit;
+}
+>>>>>>> feature/page_catalogue_globale
 
 
  if (isset($_POST["email"])) {
@@ -29,11 +36,14 @@ if ($identifiant === "" || $pwd === "") {
 }
 
 
+<<<<<<< HEAD
 if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
     echo "<p>Veuillez vous connecter pour accéder à votre espace client.</p>";
 }
 
 
+=======
+>>>>>>> feature/page_catalogue_globale
 //Chercher l'utilisateur par email OU pseudo
 $sql = "SELECT id, pseudo, email, pwd_hash
         FROM users
@@ -55,7 +65,12 @@ if (!password_verify($pwd, $user["pwd_hash"])) {
 //Connexion à la session OK
 $_SESSION["user_id"] = $user["id"];
 $_SESSION["pseudo"] = $user["pseudo"];
+<<<<<<< HEAD
 $_SESSION["email"] = $user["email"];
 // je revien a la page d'accueil
 header("Location: espace_client_news.php?login=1");
+=======
+// je revien a la page d'accueil
+header("Location: index.php?login=1");
+>>>>>>> feature/page_catalogue_globale
 exit;
