@@ -4,6 +4,7 @@ session_start();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -45,10 +46,13 @@ if (!$donnee_vehicule) {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 <!DOCTYPE html>
 <html>
 
 <head>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   <meta charset="utf-8" >
@@ -61,13 +65,21 @@ if (!$donnee_vehicule) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+>>>>>>> feature/page_detail_vehicule
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <header>
   <!-- Image du logo-->
+<<<<<<< HEAD
   <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
+=======
+  <img src="logo.png" alt="Logo"
+>>>>>>> feature/page_detail_vehicule
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
 
@@ -76,6 +88,7 @@ if (!$donnee_vehicule) {
   <div class="container_bouton_cnxn_creacompte">
     <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap: 10px;">
       <li>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         <!-- la barre de recherche-->
@@ -117,6 +130,8 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
         <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -128,6 +143,7 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
         <?php endif; ?>
       </li>
+<<<<<<< HEAD
 
 
        <li>
@@ -141,11 +157,14 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
 
 
+=======
+>>>>>>> feature/page_detail_vehicule
       <!-- si la session est ouvert on affiche pas le bouton-->
       <?php if (!isset($_SESSION["user_id"])): ?>
         <li>
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -170,6 +189,14 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+      <?php else: ?>
+
+      <li>
+        <a href="index_espace_client.php" class="btn-nav">Espace client</a>
+      </li>
+      <?php endif; ?>
+>>>>>>> feature/page_detail_vehicule
     </ul>
   </div>
 
@@ -205,6 +232,7 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
       <!--Ajout du bouton dans la box-->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
       <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
@@ -214,10 +242,15 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
       <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
       <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
+>>>>>>> feature/page_detail_vehicule
       <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
     </div>
 
     <div class="card-titre-photo-voiture">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <p>Les voitures et Offres du moments</p>
@@ -227,12 +260,16 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 =======
       <p>Les voitures du moments</p>
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+      <p>Les voitures du moments</p>
+>>>>>>> feature/page_detail_vehicule
     </div>
 
     <!--La gallery des photos du parc de voiture-->
     <div class="box_body">
       <!--<p>box_body</p>-->
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <!--affichage des image dans les diffèrentes vignettes-->
@@ -270,6 +307,8 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 =======
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 
       <div class="gallery">
         <div class="card">
@@ -323,9 +362,12 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
   <br>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 
   <footer style="background-color: #595959; borde-radius: 10px; padding: 10px; text-align: center; color: yellow;">
     <p>&copy; 2026 Tous droits réservés. LocAchat</p>

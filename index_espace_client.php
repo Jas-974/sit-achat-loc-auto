@@ -9,7 +9,11 @@ if (!isset($_SESSION["user_id"])) {
  header("Location: cnxn.php?message=connexion_necessaire");
     exit;
 }
+<<<<<<< HEAD
 
+=======
+// reqête de recupération des informations dans la base de donnée
+>>>>>>> feature/page_detail_vehicule
 $sql = "SELECT numero_client, pseudo, email FROM users WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([":id" => $_SESSION["user_id"]]);

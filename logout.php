@@ -11,6 +11,7 @@ session_destroy();
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 header("Location: /index_cnxn_creacompte.php");
 =======
 header("Location: /dev_web_locachat/index_cnxn_creacompte.php");
@@ -21,4 +22,7 @@ header("Location: /dev_web_locachat/index_cnxn_creacompte.php");
 =======
 header("Location: index_cnxn_creacompte.php");
 >>>>>>> feature/page_commande_voiture_location
+=======
+header("Location: /dev_web_locachat/index_cnxn_creacompte.php");
+>>>>>>> feature/page_detail_vehicule
 exit;

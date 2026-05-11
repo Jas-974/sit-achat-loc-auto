@@ -5,6 +5,7 @@ require "config.php";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -33,6 +34,8 @@ if (!empty($_GET['champ_recherche'])) {
 =======
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 
 // récupère le bouton cliqué
 
@@ -56,9 +59,12 @@ $stmt = $pdo->query($sql);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 ?>
 
 
@@ -70,6 +76,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- appel au fichier CSS-->
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
 =======
   <link rel="stylesheet" href="styles_page_catalogue_globale.css">
@@ -77,6 +84,9 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 =======
   <link rel="stylesheet" href="styles_page_catalogue_globale.css">
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
+>>>>>>> feature/page_detail_vehicule
 </head>
 
 <header>
@@ -99,6 +109,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <li>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
          <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -118,6 +129,10 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="index_cnxn_creacompte.php"
           class="btn-nav">Connexion</a>
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+        <a href="index_cnxn_creacompte.php"
+          class="btn-nav">Connexion</a>
+>>>>>>> feature/page_detail_vehicule
       </li>
       </li>
     </ul>
@@ -137,6 +152,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="gallery">
       <!-- Affiche la gallerie-->
       <?php foreach ($vehicules as $vehicule): ?>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         
@@ -164,6 +180,8 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 =======
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
         <div class="card">
           <img src="<?= htmlspecialchars($vehicule['fichier']) ?>" alt="">
           <p><?= htmlspecialchars($vehicule['titre']) ?></p>
@@ -171,9 +189,12 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <p><?= htmlspecialchars($vehicule['locachat']) ?></p>
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
       <?php endforeach; ?>
     </div>
   </div>

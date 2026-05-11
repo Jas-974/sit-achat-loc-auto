@@ -59,12 +59,16 @@ header {
   border-radius: 10px;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   border: 2px solid #595959;
 >>>>>>> feature/page_catalogue_globale
 =======
   border: 2px solid #595959;
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+  border: 2px solid #595959;
+>>>>>>> feature/page_detail_vehicule
   margin: 20px;/* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
   padding: 20px;/* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
   justify-content: center;
@@ -98,16 +102,21 @@ header {
   padding: 20px;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   border: 2px solid #595959;
 >>>>>>> feature/page_catalogue_globale
 =======
   border: 2px solid #595959;
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+  border: 2px solid #595959;
+>>>>>>> feature/page_detail_vehicule
 }
 
 /* la carte qui entoure la photo de voiture */
 .card {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   text-decoration: none;
@@ -116,10 +125,13 @@ header {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
   background: #FFC000;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -129,6 +141,9 @@ header {
 =======
   color: white;
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+  color: white;
+>>>>>>> feature/page_detail_vehicule
 }
 /*le footer*/
 .footer {

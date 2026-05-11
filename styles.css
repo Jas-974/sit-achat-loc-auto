@@ -8,6 +8,7 @@ header {
     display: flex;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     /*align-items: center;*/
     /*justify-content: center;*/
@@ -16,10 +17,15 @@ header {
     /*align-items: center;*/
     /*justify-content: center;*/
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+    /*align-items: center;*/
+    /*justify-content: center;*/
+>>>>>>> feature/page_detail_vehicule
     z-index: 1000;
     display : flex;
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 .barre-recherche{
@@ -34,6 +40,8 @@ header {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 /*les boutons dans le head*/
   .btn-nav {
   display: inline-block;

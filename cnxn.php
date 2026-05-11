@@ -5,6 +5,9 @@ session_start();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature/page_detail_vehicule
 
 
 
@@ -12,6 +15,7 @@ session_start();
 //  header("Location: index.php");
  // exit;
 //}
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> feature/page_cnxn_crea_compte
@@ -23,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
+=======
+>>>>>>> feature/page_detail_vehicule
 
 
  if (isset($_POST["email"])) {
@@ -38,6 +44,7 @@ if (isset($_POST["pwd"])) {
 
  // vérification si les champs sont vides   
 if ($identifiant === "" || $pwd === "") {
+<<<<<<< HEAD
   //pour test PHPUnit
   //die("Veuillez remplir tous les champs.");
 }
@@ -49,17 +56,28 @@ if ($identifiant === "" || $pwd === "") {
 =======
 // vérifie si l'utilisateur est dirigé vers la page avce le bon message
 >>>>>>> feature/page_commande_voiture_location
+=======
+  die("Veuillez remplir tous les champs.");
+}
+
+
+>>>>>>> feature/page_detail_vehicule
 if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
     echo "<p>Veuillez vous connecter pour accéder à votre espace client.</p>";
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> feature/page_catalogue_globale
 =======
 >>>>>>> feature/page_cnxn_crea_compte
 //Chercher l'utilisateur par email OU pseudo
 $sql = "SELECT id, pseudo, email, pwd_hash, role
+=======
+//Chercher l'utilisateur par email OU pseudo
+$sql = "SELECT id, pseudo, email, pwd_hash
+>>>>>>> feature/page_detail_vehicule
         FROM users
         WHERE email = :id OR pseudo = :id
         LIMIT 1";
@@ -76,6 +94,7 @@ if (!password_verify($pwd, $user["pwd_hash"])) {
   die("Identifiants incorrects.");
 }
 
+<<<<<<< HEAD
 
 
 
@@ -110,3 +129,12 @@ if ($user["role"] === "admin") {
     exit;
 }
 >>>>>>> feature/page_commande_voiture_location
+=======
+//Connexion à la session OK
+$_SESSION["user_id"] = $user["id"];
+$_SESSION["pseudo"] = $user["pseudo"];
+$_SESSION["email"] = $user["email"];
+// je revien a la page d'accueil
+header("Location: index_espace_client.php?login=1");
+exit;
+>>>>>>> feature/page_detail_vehicule

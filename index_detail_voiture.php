@@ -4,6 +4,7 @@ require "config.php";
 ?>
 
 
+<<<<<<< HEAD
 <?php
 //$id = 1;
 if (!isset($_GET['id'])) {
@@ -18,6 +19,23 @@ $id = (int) $_GET['id'];
 // récupere les informations caractéristique de la voiture
 // reqête de recupération des informations dans la base de donnée
 $sql = "SELECT id, marque, modele, prix, annee, kilometrage, boite, carburant, type_offre, prix_loc_jour, statut, image, forfait_par_mois
+=======
+
+
+
+<?php
+
+//pour test 
+$id = 3;
+//$id = $_GET["id"] ?? null;
+
+if ($id === null) {
+  die("ID manquant");
+}
+// récupere les informations caractéristique de la voiture
+// reqête de recupération des informations dans la base de donnée
+$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, image 
+>>>>>>> feature/page_detail_vehicule
 FROM vehicule 
 WHERE id = :id";
 $stmt = $pdo->prepare($sql);
@@ -39,7 +57,11 @@ if (!$donnee_vehicule) {
   <!--Responsive-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- appel au fichier CSS-->
+<<<<<<< HEAD
   <link rel="stylesheet" href="styles_page_detail_voiture_news.css">
+=======
+  <link rel="stylesheet" href="styles_page_detail_voiture.css">
+>>>>>>> feature/page_detail_vehicule
 
   <style>
     .btn-comm {
@@ -73,7 +95,11 @@ if (!$donnee_vehicule) {
   <header>
     <!-- Image du logo-->
     <div class="logo">
+<<<<<<< HEAD
       <img src="logo.png" alt="Logo">
+=======
+      <img src="Logo.png" alt="Logo">
+>>>>>>> feature/page_detail_vehicule
     </div>
 
     <!-- contener  qui abrite les boutons Connexion et création de compte-->
@@ -92,9 +118,14 @@ if (!$donnee_vehicule) {
         </li>
       </ul>
     </div>
+<<<<<<< HEAD
 
 
   </header>
+=======
+  </header>
+
+>>>>>>> feature/page_detail_vehicule
   <div class="containertitre"><?= htmlspecialchars($donnee_vehicule["marque"] . " " . $donnee_vehicule["modele"]) ?></div>
   <!--container globale image et le descriptif-->
   <div class="container_img_descriptif">
@@ -106,6 +137,7 @@ if (!$donnee_vehicule) {
     <!--grande box du descriptif du véhicule -->
     <div class="container_descriptif">
       <div class="box_descriptif" style="text-align : left" ;>
+<<<<<<< HEAD
 <!--pour test-->
 
       
@@ -122,12 +154,28 @@ if (isset($_SESSION["user_id"])) {
     echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
     Passer Commande
 </a>';
+=======
+        <H1 style="color:#595959; display:inline" ;><?= htmlspecialchars($donnee_vehicule["prix"]) ?>&euro;</H1>
+        <H2 style="color:#588888; display:inline" ;><?= htmlspecialchars($donnee_vehicule["statut"]) ?></H2>
+
+    
+<?php
+//vérifie si le user est conncté
+if (isset($_SESSION["user_id"])) {
+    echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
+>>>>>>> feature/page_detail_vehicule
 } else {
     echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a><br><br>';
 }
 ?>
 
+<<<<<<< HEAD
 <br><br>     
+=======
+
+
+      
+>>>>>>> feature/page_detail_vehicule
         
         <strong>Informations du véhicule</strong><br>
         Marques : <?= htmlspecialchars($donnee_vehicule["marque"]) ?><br>
@@ -151,6 +199,7 @@ if (isset($_SESSION["user_id"])) {
         <?php
 //vérifie si le user est conncté
 if (isset($_SESSION["user_id"])) {
+<<<<<<< HEAD
     //echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
     echo '<a class="btn-comm" href="car_sale.php?id=' . $donnee_vehicule['id'] . '">
     Passer Commande
@@ -160,6 +209,13 @@ if (isset($_SESSION["user_id"])) {
 }
 ?>
 <br><br>
+=======
+    echo '<a class="btn-comm" href="page_exemple.php">Passer Commande</a><br><br>';
+} else {
+    echo '<a class="btn-comm" href="index_cnxn_creacompte.php">Passer Commande</a><br><br>';
+}
+?>
+>>>>>>> feature/page_detail_vehicule
         <span>&#10003;Garanti 12 mois</span><br>
         <span>&#10003;Historique vérifié</span><br>
         <span>&#10003;Kilométrage certifié</span><br><br>
