@@ -3,6 +3,7 @@ session_start();
 ?>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -42,10 +43,13 @@ if (!$donnee_vehicule) {
 
 =======
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 <!DOCTYPE html>
 <html>
 
 <head>
+<<<<<<< HEAD
 <<<<<<< HEAD
   <meta charset="utf-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -53,6 +57,10 @@ if (!$donnee_vehicule) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 >>>>>>> feature/page_catalogue_globale
+=======
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+>>>>>>> feature/page_cnxn_crea_compte
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -68,6 +76,7 @@ if (!$donnee_vehicule) {
   <div class="container_bouton_cnxn_creacompte">
     <ul style="display: flex; justify-content: flex-end; list-style: none; padding: 80px; margin: 0; gap: 10px;">
       <li>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <!-- la barre de recherche-->
         <form method="GET" action="index_catalogue_globale.php">
@@ -106,6 +115,8 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
       <li>
 =======
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
         <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -123,6 +134,7 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
           <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
         </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <?php else: ?>
 
         <li>
@@ -130,12 +142,17 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
         </li>
       <?php endif; ?>
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
       <?php endif; ?>
 
       <li>
         <a href="/dev_web_locachat/pages/recherche.php" class="btn-nav">Recherche de véhicule</a>
       </li>
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
     </ul>
   </div>
 
@@ -170,26 +187,36 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
       <!--<p> je suis dans conteneur one</p>-->
       <!--Ajout du bouton dans la box-->
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
       <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
       <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
 >>>>>>> feature/page_catalogue_globale
+=======
+      <a href="index_catalogue_globale.php?filtre=achat" class="btn-nav">Catalogue à Achat</a>
+      <a href="index_catalogue_globale.php?filtre=location" class="btn-nav">Catalogue Location</a>
+>>>>>>> feature/page_cnxn_crea_compte
       <a href="index_catalogue_globale.php?filtre=tous" class="btn-nav">Voir le catalogue</a>
     </div>
 
     <div class="card-titre-photo-voiture">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>Les voitures et Offres du moments</p>
 =======
       <p>Les voitures du moments</p>
 >>>>>>> feature/page_catalogue_globale
+=======
+      <p>Les voitures du moments</p>
+>>>>>>> feature/page_cnxn_crea_compte
     </div>
 
     <!--La gallery des photos du parc de voiture-->
     <div class="box_body">
       <!--<p>box_body</p>-->
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
@@ -224,6 +251,8 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
   <!--<p>je suis sortie de  la box_body</p>-->
 
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 
       <div class="gallery">
         <div class="card">
@@ -276,7 +305,10 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
   <!--<p>je suis sortie de  la box_body</p>-->
 
   <br>
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 
   <footer style="background-color: #595959; borde-radius: 10px; padding: 10px; text-align: center; color: yellow;">
     <p>&copy; 2026 Tous droits réservés. LocAchat</p>

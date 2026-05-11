@@ -4,6 +4,7 @@ require "config.php";
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -30,6 +31,8 @@ if (!empty($_GET['champ_recherche'])) {
     $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 
 // récupère le bouton cliqué
 
@@ -52,7 +55,10 @@ else {
 $stmt = $pdo->query($sql);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 ?>
 
 
@@ -63,10 +69,14 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="utf-8" />
   <!-- appel au fichier CSS-->
 <<<<<<< HEAD
+<<<<<<< HEAD
   <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
 =======
   <link rel="stylesheet" href="styles_page_catalogue_globale.css">
 >>>>>>> feature/page_catalogue_globale
+=======
+  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
+>>>>>>> feature/page_cnxn_crea_compte
 </head>
 
 <header>
@@ -88,6 +98,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </li>
       <li>
 <<<<<<< HEAD
+<<<<<<< HEAD
          <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
@@ -103,6 +114,10 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="index_cnxn_creacompte.php"
           class="btn-nav">Connexion</a>
 >>>>>>> feature/page_catalogue_globale
+=======
+        <a href="index_cnxn_creacompte.php"
+          class="btn-nav">Connexion</a>
+>>>>>>> feature/page_cnxn_crea_compte
       </li>
       </li>
     </ul>
@@ -122,6 +137,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="gallery">
       <!-- Affiche la gallerie-->
       <?php foreach ($vehicules as $vehicule): ?>
+<<<<<<< HEAD
 <<<<<<< HEAD
         
          <?php
@@ -146,13 +162,18 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
         <div class="card">
           <img src="<?= htmlspecialchars($vehicule['fichier']) ?>" alt="">
           <p><?= htmlspecialchars($vehicule['titre']) ?></p>
           <p><?= htmlspecialchars($vehicule['description']) ?></p>
           <p><?= htmlspecialchars($vehicule['locachat']) ?></p>
         </div>
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
       <?php endforeach; ?>
     </div>
   </div>

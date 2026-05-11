@@ -1,6 +1,7 @@
 <?php
 require "config.php";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // Fonction pour généré le numéro client
 function genererNumeroClient()
@@ -14,6 +15,8 @@ function genererNumeroClient()
 
 =======
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 // si la methode http utilisé  de la requète est POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -93,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // vérification des valeurs des variables
 <<<<<<< HEAD
+<<<<<<< HEAD
         echo htmlspecialchars($nom);
         echo htmlspecialchars($prenom);
         echo htmlspecialchars($date_naissance);
@@ -105,6 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo htmlspecialchars($pwd);
         echo htmlspecialchars($confirmation_pwd);
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
         echo $nom;
         echo $prenom;
         echo $date_naissance;
@@ -116,7 +122,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo $pseudo;
         echo $pwd;
         echo $confirmation_pwd;
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
         die("Tous les champs doivent ètres saisies");
     }
 
@@ -128,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // pour le hashage du mot de pass
     $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // génération du numéro client
     $numero_client = genererNumeroClient();
@@ -145,6 +155,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([
             ":numero_client" => $numero_client,
 =======
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 
     // Insertion en base (SANS hash)
     $insertionBD = "INSERT INTO users
@@ -156,7 +168,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         $stmt->execute([
+<<<<<<< HEAD
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
             ":nom" => $nom,
             ":prenom" => $prenom,
             ":date_naissance" => $date_naissance,

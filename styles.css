@@ -7,14 +7,20 @@ header {
     color: white;
     display: flex;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     /*align-items: center;*/
     /*justify-content: center;*/
 >>>>>>> feature/page_catalogue_globale
+=======
+    /*align-items: center;*/
+    /*justify-content: center;*/
+>>>>>>> feature/page_cnxn_crea_compte
     z-index: 1000;
     display : flex;
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 .barre-recherche{
     display: flex;
@@ -26,6 +32,8 @@ header {
 }
 =======
 >>>>>>> feature/page_catalogue_globale
+=======
+>>>>>>> feature/page_cnxn_crea_compte
 /*les boutons dans le head*/
   .btn-nav {
   display: inline-block;
