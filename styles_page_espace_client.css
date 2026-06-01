@@ -6,8 +6,6 @@ header {
   background-color: white;
   color: white;
   display: flex;
-  /*align-items: center;*/
-  /*justify-content: center;*/
   z-index: 1000;
   display: flex;
 }
@@ -25,11 +23,11 @@ header {
   display: inline-block;
   width: 200px;
   height: 50px;
-  line-height: 50px;          /* centre le texte verticalement */
+  line-height: 50px;  
   background-color: #595959;
   color: white;
   text-align: center;
-  text-decoration: none;     /* enlève le soulignement du lien */
+  text-decoration: none;  
   border-radius: 10px;
   font-weight: 500;
   transition: 0.2s ease;
@@ -68,7 +66,6 @@ header {
  /*Fin CSS Recherche*/
 
 .container_bouton_cnxn_creacompte {
-  /*display: flex;*/
   flex: 1;
   justify-content: flex-end;
   list-style: none;
@@ -76,14 +73,6 @@ header {
   margin: 10px;
   margin-right: 10px;
   margin-left: auto;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  /*border: 2px solid yellowgreen;*/
->>>>>>> feature/index_espace_client
-=======
-  /*border: 2px solid yellowgreen;*/
->>>>>>> feature/page_detail_vehicule
 }
 
 .box_titre {
@@ -115,14 +104,6 @@ header {
   margin: 10px;
   margin-right: 10px;
   margin-left: auto;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 2px solid yellowgreen;
->>>>>>> feature/index_espace_client
-=======
-  border: 2px solid yellowgreen;
->>>>>>> feature/page_detail_vehicule
   gap: 20px;
 }
 
@@ -130,14 +111,6 @@ header {
 
   /* chaque formulaire prend la moitié de l'espace disponible */
   display: flex;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 5px solid #ccc;
->>>>>>> feature/index_espace_client
-=======
-  border: 5px solid #ccc;
->>>>>>> feature/page_detail_vehicule
   padding: 10px;
   box-sizing: border-box;
   gap: 20px;
@@ -145,14 +118,6 @@ header {
 
 .box_body_mes_commandes{
   flex: 2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/index_espace_client
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/page_detail_vehicule
   padding: 20px;
   background: #ccc;
   border-radius: 10px;
@@ -161,14 +126,6 @@ header {
 
 .box_body_mes_documents{
   flex: 2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/index_espace_client
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/page_detail_vehicule
   padding: 20px;
   background: #E0E0E0;
   border-radius: 10px;
@@ -178,14 +135,6 @@ header {
 
 .box_body_mes_info{
   flex: 2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/index_espace_client
-=======
-  border: 1px solid #ccc;
->>>>>>> feature/page_detail_vehicule
   padding: 20px;
   background: #ccc;
   border-radius: 10px;
@@ -197,14 +146,6 @@ header {
   border: 1px solid #ccc;
   padding: 10px;
   box-sizing: border-box;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 5px solid yellowgreen;
->>>>>>> feature/index_espace_client
-=======
-  border: 5px solid yellowgreen;
->>>>>>> feature/page_detail_vehicule
   gap: 20px;
 }
 
@@ -213,28 +154,12 @@ header {
 
 .box_body {
   display: flex;
-  /* Utilise Flexbox */
   min-height: 50px;
   border-radius: 10px;
-  /*arrondir le bord */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  border: 2px solid #595959;
-  /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
->>>>>>> feature/index_espace_client
-=======
-  border: 2px solid #595959;
-  /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
->>>>>>> feature/page_detail_vehicule
   padding: 20px;
-  /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
   justify-content: center;
-  /* center les élement de la box*/
   margin: 20px;
-  /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
   gap: 20px;
-  /* Espace entre les boîtes, optionnel */
 }
 
 /* la galerie pour afficher le photos de voiture */
@@ -255,8 +180,6 @@ header {
   text-align: center;
   color: white;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* rendre les image de meme taille*/
 .gallery img {
   width: 100%;
@@ -264,14 +187,6 @@ header {
   object-fit: cover;
   display: block;
 }
-=======
-
-
->>>>>>> feature/index_espace_client
-=======
-
-
->>>>>>> feature/page_detail_vehicule
 
 /* Fin de la galerie pour afficher le photos de voiture */
 .footer {

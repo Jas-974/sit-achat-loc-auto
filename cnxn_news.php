@@ -43,11 +43,13 @@ $sql = "SELECT id, pseudo, email, pwd_hash, role
 $stmt = $pdo->prepare($sql);
 $stmt->execute([":id" => $identifiant]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
 //je vérifie l'identifiant
 if (!$user) {
  return false;
 }
 
+    
 //Vérification du mot de pass haché
 if (!password_verify($pwd, $user["pwd_hash"])) {
   die("Identifiants incorrects.");
@@ -62,16 +64,34 @@ $_SESSION["pseudo"] = $user["pseudo"];
 $_SESSION["email"] = $user["email"];
 $_SESSION["role"] = $user["role"];
 
- return true;
+ //return true;
 
- 
-if ($user["role"] === "admin") {
+ if ($user["role"] === "admin") {
   // si c'est l'admin on ouvre la page admin
     header("Location: dashboard_admin.php");
     exit;
 } else {
   // si non je revien a la page d'accueil
-    header("Location: espace_client_news.php?login=1");
+    header("Location: index.php");
     exit;
 }
 }
+
+
+if (isset($_POST["email"])){
+$identifiant = $_POST["email"];
+
+}
+else{
+
+$identifiant ="";
+}
+if (isset($_POST["pwd"])){
+$pwd = $_POST["pwd"];
+}
+else{
+
+$pwd ="";
+}
+
+ConnexUser($pdo, $identifiant, $pwd);

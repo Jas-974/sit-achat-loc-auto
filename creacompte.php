@@ -1,10 +1,5 @@
 <?php
 require "config.php";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/page_detail_vehicule
 
 // Fonction pour généré le numéro client
 function genererNumeroClient()
@@ -16,13 +11,6 @@ function genererNumeroClient()
     return $lettres . $chiffres;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> feature/page_catalogue_globale
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
 // si la methode http utilisé  de la requète est POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -101,11 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         // vérification des valeurs des variables
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/page_detail_vehicule
         echo htmlspecialchars($nom);
         echo htmlspecialchars($prenom);
         echo htmlspecialchars($date_naissance);
@@ -117,27 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo htmlspecialchars($pseudo);
         echo htmlspecialchars($pwd);
         echo htmlspecialchars($confirmation_pwd);
-<<<<<<< HEAD
-=======
-=======
->>>>>>> feature/page_cnxn_crea_compte
-        echo $nom;
-        echo $prenom;
-        echo $date_naissance;
-        echo $email;
-        echo $telephone;
-        echo $permis_b;
-        echo $adresse;
-        echo $code_postal;
-        echo $pseudo;
-        echo $pwd;
-        echo $confirmation_pwd;
-<<<<<<< HEAD
->>>>>>> feature/page_catalogue_globale
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
         die("Tous les champs doivent ètres saisies");
     }
 
@@ -149,11 +111,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // pour le hashage du mot de pass
     $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> feature/page_detail_vehicule
     // génération du numéro client
     $numero_client = genererNumeroClient();
 
@@ -169,27 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $stmt->execute([
             ":numero_client" => $numero_client,
-<<<<<<< HEAD
-=======
-=======
->>>>>>> feature/page_cnxn_crea_compte
-
-    // Insertion en base (SANS hash)
-    $insertionBD = "INSERT INTO users
-            (nom, prenom, date_naissance, email, telephone, permis_b, adresse, code_postal, pseudo, pwd_hash)
-            VALUES
-            (:nom, :prenom, :date_naissance, :email, :telephone, :permis_b, :adresse, :code_postal, :pseudo, :pwd_hash)";
-
-    $stmt = $pdo->prepare($insertionBD);
-
-    try {
-        $stmt->execute([
-<<<<<<< HEAD
->>>>>>> feature/page_catalogue_globale
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
             ":nom" => $nom,
             ":prenom" => $prenom,
             ":date_naissance" => $date_naissance,
@@ -207,10 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         //echo "Compte créé et enregistré en base !";
     } catch (PDOException $e) {
-<<<<<<< HEAD
-=======
-        // Cas classique : doublon email/pseudo/permis_b (UNIQUE)
->>>>>>> feature/page_detail_vehicule
         echo "Erreur : " . $e->getMessage();
     }
 }

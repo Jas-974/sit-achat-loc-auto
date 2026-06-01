@@ -1,6 +1,6 @@
 <?php
 require "config.php";
-require "gPostvalue.php";
+require "gPostValue.php";
 
 
 // Requète est POST

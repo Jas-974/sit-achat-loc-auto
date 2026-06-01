@@ -5,7 +5,7 @@ require "config.php";
 
 <?php
 // Extraction des véhicules pour affichages
-$req = "SELECT id, marque, modele, statut FROM vehicule WHERE type_offre ='location'";
+$req = "SELECT id, marque, modele, statut, type_offre FROM vehicule WHERE type_offre ='location'";
 $stat = $pdo->query($req);
 $vehicules_loc = $stat->fetchAll(PDO::FETCH_ASSOC);
 ?>

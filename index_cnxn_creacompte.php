@@ -11,12 +11,8 @@
   <!-- Image du logo-->
 
   <div class="logo">
-<<<<<<< HEAD
-    <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
+    <img src="logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
-=======
-    <img src="logo.png" alt="Logo">
->>>>>>> feature/page_detail_vehicule
   </div>
 
 
@@ -29,19 +25,7 @@
       </li>
       </li>
       <li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
        <!--  <a href="index.php" class="btn-nav">Recherche de véhicule</a>-->
-=======
-        <a href="index.php" class="btn-nav">Recherche de véhicule</a>
->>>>>>> feature/page_catalogue_globale
-=======
-        <a href="index.php" class="btn-nav">Recherche de véhicule</a>
->>>>>>> feature/page_cnxn_crea_compte
-=======
-       <!--  <a href="index.php" class="btn-nav">Recherche de véhicule</a>-->
->>>>>>> feature/page_detail_vehicule
       </li>
       </li>
     </ul>
@@ -114,27 +98,14 @@
     <div class="grand_box_formulaire-connexion">
       <div class="box_body_formulaire-connexion">
 
-        <form action="cnxn.php" method="post">
+        <form action="cnxn_news.php" method="post">
           <label for="email">Email :</label><br>
           <input type="email" id="email" name="email" required><br><br>
 
           <label for="pwd">Mot de passe* :</label><br>
           <input type="password" id="pwd" name="pwd" required><br><br>
           <button type="submit"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Connecter</button>
-=======
-            style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Envoyer</button>
->>>>>>> feature/page_catalogue_globale
-=======
-            style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Envoyer</button>
->>>>>>> feature/page_cnxn_crea_compte
-=======
-            style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Envoyer</button>
->>>>>>> feature/page_detail_vehicule
-          <!--Fin formulaire-->
         </form>
 
       </div>
@@ -149,40 +120,6 @@
 
   </div>
 
-<<<<<<< HEAD
-=======
-  <div class="box_body">
-    <div class="gallery">
-      <div class="card">
-        <img src="voiture 1.png" alt="">
-        <p>Ceci est un petit texte sous l'image 0</p>
-      </div>
-
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-      <div class="card">
-        <img src="voiture 2.png" alt="">
-        <p>Ceci est un petit texte sous l'image 1</p>
-      </div>
-    </div>
-  </div>
-
->>>>>>> feature/page_detail_vehicule
   <br>
   <div class="footer">
     <footer>

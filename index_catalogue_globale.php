@@ -1,72 +1,73 @@
 <?php
 session_start();
 require "config.php";
-
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-$pdo = new PDO('mysql:host=localhost;dbname=bd_locachat', 'root', '');
-
-if (!empty($_GET['champ_recherche'])) {
-
-    $search = '%' . $_GET['champ_recherche'] . '%';
-
-    $sql = "SELECT * FROM vehicule 
-            WHERE marque LIKE ? 
-            OR modele LIKE ? 
-            OR type_offre LIKE ?";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$search, $search, $search]);
-
-    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// affichage par defaut
-} else {
-    $sql = "SELECT * FROM vehicule";
-    $stmt = $pdo->query($sql);
-    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-=======
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
-
-// récupère le bouton cliqué
-
-if (isset($_GET["filtre"])) {
-    $filtre = $_GET["filtre"];
-} else {
-    $filtre = "tous";
-}
-
-if ($filtre == "achat") {
-    $sql = "SELECT * FROM image_galerie WHERE locachat = 'A l\'achat'";
-} 
-elseif ($filtre == "location") {
-    $sql = "SELECT * FROM image_galerie WHERE locachat = 'location'";
-} 
-else {
-    $sql = "SELECT * FROM image_galerie";
-}
-
-$stmt = $pdo->query($sql);
-$vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> feature/page_catalogue_globale
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
 ?>
 
+
+
+<?php
+// select des veihcule en base
+
+$pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_41302948_bd_locachat;charset=utf8", "if0_41302948", "B7jc5nTtIiq");
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$vehicules = AffichagecatalogueVehicule($pdo);
+
+function AffichagecatalogueVehicule($pdo)
+{
+
+  if (!empty($_GET['champ_recherche'])) {
+
+    $rech = '%' . $_GET['champ_recherche'] . '%';
+
+    $sql = "select image, modele, marque , type_offre
+FROM vehicule
+WHERE marque LIKE ?
+OR modele LIKE ?
+OR type_offre LIKE ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$rech, $rech, $rech]);
+    return  $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } else {
+
+    $sql = "SELECT * FROM vehicule";
+    $stmt = $pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+}
+?>
+
+      <?php
+      //Fonction affichage de la galerie dns la vignette
+      function AfficheVehiculesGalerie($vehicules)
+      {
+        foreach ($vehicules as $vehicule) {
+
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+      ?>
+
+
+          <div class="card">
+            <a href="<?= $detail_v ?>" class="card-link">
+
+              <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+            </a>
+            <p><?= htmlspecialchars($vehicule['marque']) ?></p>
+            <p><?= htmlspecialchars($vehicule['modele']) ?></p>
+            <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
+          </div>
+
+      <?php
+        }
+      }
+      ?>
 
 <!DOCTYPE html>
 <html>
@@ -74,19 +75,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="utf-8" />
   <!-- appel au fichier CSS-->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   <link rel="stylesheet" href="styles_page_catalogue_globale_news.css">
-=======
-  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
->>>>>>> feature/page_catalogue_globale
-=======
-  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
->>>>>>> feature/page_cnxn_crea_compte
-=======
-  <link rel="stylesheet" href="styles_page_catalogue_globale.css">
->>>>>>> feature/page_detail_vehicule
 </head>
 
 <header>
@@ -107,10 +96,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </li>
       </li>
       <li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-         <!-- si la session est ouvert on affiche "Déconnexion"-->
+        <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
           <a href="logout.php" class="btn-nav">Déconnexion</a>
@@ -120,19 +106,7 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
 
         <?php endif; ?>
-       
-=======
-        <a href="index_cnxn_creacompte.php"
-          class="btn-nav">Connexion</a>
->>>>>>> feature/page_catalogue_globale
-=======
-        <a href="index_cnxn_creacompte.php"
-          class="btn-nav">Connexion</a>
->>>>>>> feature/page_cnxn_crea_compte
-=======
-        <a href="index_cnxn_creacompte.php"
-          class="btn-nav">Connexion</a>
->>>>>>> feature/page_detail_vehicule
+
       </li>
       </li>
     </ul>
@@ -151,51 +125,10 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="box_body">
     <div class="gallery">
       <!-- Affiche la gallerie-->
-      <?php foreach ($vehicules as $vehicule): ?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        
-         <?php
-          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
-          if ($vehicule['type_offre'] == 'location') {
 
-            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
-          } else {
-            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
-          }
-          ?>
+<!--Apple a la fonction d'affichage du catalogue dans des vignettes-->
+<?php AfficheVehiculesGalerie($vehicules) ?>
 
-
-        <div class="card">
-          <a href="<?=  $detail_v ?>" class="card-link">
-              
-          <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
-          </a>
-          <p><?= htmlspecialchars($vehicule['marque']) ?></p>
-          <p><?= htmlspecialchars($vehicule['modele']) ?></p>
-          <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
-        </div>
-    
-=======
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
-        <div class="card">
-          <img src="<?= htmlspecialchars($vehicule['fichier']) ?>" alt="">
-          <p><?= htmlspecialchars($vehicule['titre']) ?></p>
-          <p><?= htmlspecialchars($vehicule['description']) ?></p>
-          <p><?= htmlspecialchars($vehicule['locachat']) ?></p>
-        </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> feature/page_catalogue_globale
-=======
->>>>>>> feature/page_cnxn_crea_compte
-=======
->>>>>>> feature/page_detail_vehicule
-      <?php endforeach; ?>
     </div>
   </div>
 
