@@ -57,10 +57,11 @@ header {
   display: flex;/*Flexbox */
   min-height: 50px;
   border-radius: 10px;
-  margin: 20px;
-  padding: 20px;
+  border: 2px solid #595959;
+  margin: 20px;/* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+  padding: 20px;/* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
   justify-content: center;
-  gap: 20px;
+  gap: 20px; /* Espace entre les boîtes, optionnel */
 }
 
 /*box qui contient la galerie de voiture disponible*/
@@ -88,6 +89,7 @@ header {
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  border: 2px solid #595959;
 }
 
 /* la carte qui entoure la photo de voiture */
@@ -98,6 +100,7 @@ header {
   border-radius: 15px;
   padding: 15px;
   text-align: center;
+  color: white;
 
 }
 /*le footer*/

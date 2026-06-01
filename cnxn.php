@@ -3,6 +3,10 @@
 require "config.php";
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+  header("Location: cnxn.php");
+  exit;
+}
 
 
 
@@ -26,9 +30,10 @@ if (isset($_POST["pwd"])) {
  // vérification si les champs sont vides   
 if ($identifiant === "" || $pwd === "") {
   die("Veuillez remplir tous les champs.");
+  //pour test PHPUnit
+  //die("Veuillez remplir tous les champs.");
 }
-
-
+// vérifie si l'utilisateur est dirigé vers la page avce le bon message
 if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
     echo "<p>Veuillez vous connecter pour accéder à votre espace client.</p>";
 }
@@ -36,18 +41,13 @@ if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
 
 //Chercher l'utilisateur par email OU pseudo
 $sql = "SELECT id, pseudo, email, pwd_hash
+$sql = "SELECT id, pseudo, email, pwd_hash, role
         FROM users
         WHERE email = :id OR pseudo = :id
         LIMIT 1";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([":id" => $identifiant]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-var_dump($identifiant);
-var_dump($user);
-exit;
-
-
 //je vérifie l'identifiant
 if (!$user) {
   die("Identifiants incorrects.");
@@ -61,7 +61,24 @@ if (!password_verify($pwd, $user["pwd_hash"])) {
 //Connexion à la session OK
 $_SESSION["user_id"] = $user["id"];
 $_SESSION["pseudo"] = $user["pseudo"];
-$_SESSION["email"] = $user["email"];
 // je revien a la page d'accueil
-header("Location: espace_client_news.php?login=1");
+header("Location: index.php?login=1");
 exit;
+
+
+
+//Connexion à la session OK
+$_SESSION["user_id"] = $user["id"];
+$_SESSION["pseudo"] = $user["pseudo"];
+$_SESSION["email"] = $user["email"];
+$_SESSION["role"] = $user["role"];
+
+if ($user["role"] === "admin") {
+  // si c'est l'admin on ouvre la page admin
+    header("Location: dashboard_admin.php");
+    exit;
+} else {
+  // si non je revien a la page d'accueil
+    header("Location: espace_client_news.php?login=1");
+    exit;
+}
