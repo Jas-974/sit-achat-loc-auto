@@ -23,11 +23,11 @@ header {
   display: inline-block;
   width: 200px;
   height: 50px;
-  line-height: 50px;          /* centre le texte verticalement */
+  line-height: 50px;         
   background-color: #595959;
   color: white;
   text-align: center;
-  text-decoration: none;     /* enlève le soulignement du lien */
+  text-decoration: none;   
   border-radius: 10px;
   font-weight: 500;
   transition: 0.2s ease;
@@ -48,7 +48,6 @@ display: flex;
   margin: 10px;
   margin-right: 10px;
   margin-left: auto;
-  /*border: 2px solid yellowgreen; */
 }
 
 /* Style pour la liste */
@@ -76,12 +75,11 @@ display: flex;
 
 
 .box_body {
-  display: flex; /* Utilise Flexbox */
+  display: flex; 
   border-radius: 10px; /*arrondir le bord */
-  /*border: 2px solid #595959;  La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
-  padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
-  justify-content: center; /* center les élement de la box*/
-  margin: 20px 0; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
+  padding: 20px; 
+  justify-content: center;
+  margin: 20px 0; 
   gap: 20px; /* Espace entre les boîtes*/
 }
 
@@ -90,27 +88,25 @@ display: flex;
 .container_presentation {
     background-color: white;
     font-family: Arial, sans-serif;
-    border-radius: 10px; /*arrondir le bord*/
-    /*border: 2px solid #000; /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
-    text-align: center;
-    width: 100%; /* La boîte occupe toute la largeur du conteneur parent */
-    box-sizing: border-box; /* Inclut la bordure et le padding dans la largeur totale */
-    padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
+    border-radius: 10px;
+        text-align: center;
+    width: 100%; 
+    box-sizing: border-box; 
+    padding: 20px; 
     padding-top: 150px;
-    margin: 20px; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
-    /*gap: 20px;*/ /* Espace entre les boîtes, optionnel */
+    margin: 20px; 
+   
 }
 
 
 /* Style pour le conteneur */
 .container_one {
-  display: flex; /* Utilise Flexbox */
-  border-radius: 10px; /*arrondir le bord */
-  /*border: 2px solid #000; /* La boîte possède une bordure solide de 10 pixels de large, de couleur noire (#000) */
-  padding: 20px; /* Il y a un espace intérieur de 20 pixels entre le contenu et la bordure */
-  justify-content: center; /* center les élement de la box*/
-  margin: 20px; /* Il y a un espace extérieur de 20 pixels autour de la boîte, séparant cette boîte des autres éléments */
-  gap: 20px; /* Espace entre les boîtes, optionnel */
+  display: flex; 
+  border-radius: 10px;
+  padding: 20px;
+  justify-content: center;
+  margin: 20px; 
+  gap: 20px;
 }
 
 /* la galerie pour afficher le photos de voiture */
@@ -140,7 +136,7 @@ display: flex;
 /*définition de la taille des images de la page d'accueil */
 .taille_image_voiture_page_accueil{
   width: 150px;
-  height: 95px; /* ou une hauteur fixe si besoin */
+  height: 95px; 
 }
 
 /* box du titre des images de la page d'accueil*/

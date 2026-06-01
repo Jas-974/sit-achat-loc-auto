@@ -2,7 +2,7 @@
 session_start();
 require "config.php";
 
-$pdo = new PDO("mysql:host=localhost;dbname=bd_locachat;charset=utf8", "root", "");
+$pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_41302948_bd_locachat;charset=utf8", "if0_41302948", "B7jc5nTtIiq");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 ?>
@@ -85,13 +85,16 @@ if (isset($_POST['maj_status_command'])) {
   ':id' => $id
   ]);
 
+    //génération du numero de command
+    $num_command ='CMD' . date('Ymd') . str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
   
     // insertion des donnée de la validation de la commande dans la table table_statu_command
-$sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command, user_id)
-VALUES (:nom, :prenom, :email, :type_offre, :status_command, :user_id)";
+$sql_insert_status_command =" INSERT INTO table_statu_command (numero_command, nom, prenom, email, type_offre, status_command, user_id)
+VALUES (:numero_command, :nom, :prenom, :email, :type_offre, :status_command, :user_id)";
 
 $stmt_status_command  = $pdo->prepare($sql_insert_status_command);
 $stmt_status_command ->execute([
+    ":numero_command" => $num_command,
   ":nom" => $donnee_user["nom"],
   ":prenom" => $donnee_user["prenom"],
   ":email" => $donnee_user["email"],

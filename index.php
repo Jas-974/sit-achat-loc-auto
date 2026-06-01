@@ -1,41 +1,84 @@
 <?php
 session_start();
 ?>
-
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ?>
 
 <?php
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
-$host = "localhost";
-$dbname = "bd_locachat";   
-$username = "root";
-$password = "";
-$dsn = "mysql:host=$host;dbname=$dbname";
+$host = "sql305.infinityfree.com";
+$dbname = "if0_41302948_bd_locachat";
+$username = "if0_41302948";
+$password = "B7jc5nTtIiq";
 
+//fonction connexion a la base de donnée
+function ConnexBD($host, $dbname, $username, $password)
+{
+  try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $pdo;
+  } catch (PDOException $e) {
+    throw new Exception("Erreur connexion BDD : " . $e->getMessage());
+  }
+}
+//appel de la fonction avec le bonne variable
+$pdo = ConnexBD($host, $dbname, $username, $password);
 
-try {
-  $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-  die("Erreur connexion BDD : " . $e->getMessage());
+?>
+
+<?php
+//Fonction pour recupérer les informations véhicules
+function selectImageEtInformation(PDO $pdo): array
+{
+  // récupere les images et les informations
+  $sql = "SELECT id, image, marque, modele, type_offre, statut 
+FROM vehicule LIMIT 5";
+
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  // recupérer plusieur ligne avec fetchAll
+  $donnee_vehicule = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  return $donnee_vehicule ?: [];
 }
 ?>
 
 <?php
-// récupere les images et les informations
-$sql = "SELECT id, image, marque, modele, type_offre, statut 
-FROM vehicule LIMIT 5" ;
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-// recupérer plusieur ligne avec fetchAll
-$donnee_vehicule = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//fonction affichage connexion/deconnexion
+function AffichagebtnConnexdeconnex()
+{
+  if (isset($_SESSION["user_id"])) {
+    return '<a href="logout.php" class="btn-nav">Déconnexion</a>';
+  } else {
+    return '<a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>';
+  }
+}
+?>
 
-if (!$donnee_vehicule) {
-  die("Véhicule introuvable");
+<?php
+//fonction affichage bouton dashboard admin si session admin ouvert
+function AffichageBtnDashboardAdminIndex()
+{
+  if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin") {
+    return '<a href="dashboard_admin.php" class="btn-nav">Dashboard Admin</a>';
+  } else {
+
+    return '';
+  }
+}
+?>
+
+<?php
+function AffichageBtnEspaceClientIndex()
+{
+  if (!isset($_SESSION["user_id"])) {
+    return '<a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>';
+  } elseif ($_SESSION["role"] !== "admin") {
+    return '<a href="espace_client_news.php" class="btn-nav">Espace client</a>';
+  }
 }
 ?>
 
@@ -43,15 +86,15 @@ if (!$donnee_vehicule) {
 <html>
 
 <head>
-  <meta charset="utf-8" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- appel au fichier CSS-->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <header>
   <!-- Image du logo-->
-  <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
+  <img src="logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
 
 
@@ -69,67 +112,60 @@ if (!$donnee_vehicule) {
         </form>
         <!--Gestion du champs de la recherche-->
 
-      <?php
-if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
-  try {
-    $search = $_GET['champ_recherche'] . '%';
-    $sql = "SELECT image, modele, marque, type_offre 
-            FROM vehicule 
-            WHERE marque LIKE ? OR modele LIKE ? OR type_offre LIKE ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$search, $search, $search]);
+        <?php
 
-    while ($recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      echo htmlspecialchars($recherche['image']) . ' '
-         . htmlspecialchars($recherche['modele']) . ' '
-         . htmlspecialchars($recherche['marque']) . ' '
-         . htmlspecialchars($recherche['type_offre']) . '<br>';
-    }
-  } catch (PDOException $e) {
-    echo "Erreur SQL : " . $e->getMessage();
-  }
-}
-?>
+        //champs faire une recherche véhicule
+        function RechVehicule($pdo, $Champ_recherche)
+        {
+
+          if (!empty($champ_recherche)) {
+
+            try {
+
+              $Rech = $champ_recherche . '%';
+
+              $sql = "select image, modele, marque , type_offre
+FROM vehicule
+WHERE marque LIKE ?
+OR modele LIKE ?
+OR type_offre LIKE ?";
+
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute([$rech, $rech, $rech]);
+              while ($Res_recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                echo htmlspecialchars($Res_recherche['image']) . '' .
+                  htmlspecialchars($Res_recherche['modele']) . '' .
+                  htmlspecialchars($Res_recherche['marque']) . '' .
+                  htmlspecialchars($Res_recherche['type_offre']) . '' . '<br>';
+              }
+            } catch (PDOException $e) {
+
+              echo "Erreur SQL / " . $e->getMessage();
+            }
+          }
+        }
+        ?>
 
       </li>
 
 
       <li>
         <!-- si la session est ouvert on affiche "Déconnexion"-->
-        <?php if (isset($_SESSION["user_id"])): ?>
+        <?php echo AffichagebtnConnexdeconnex(); ?>
 
-          <a href="logout.php" class="btn-nav">Déconnexion</a>
-
-        <?php else: ?>
-
-          <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
-
-        <?php endif; ?>
       </li>
+      <li>
+        <!-- si session admin ouverte alors afficher bouton dashboard appel de la focntion-->
+        <?= AffichageBtnDashboardAdminIndex(); ?>
 
 
-       <li>
-        <!-- si la session admin est ouvert on affiche "Dashboard Admin"-->
-        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin"): ?>
-
-          <a href="dashboard_admin.php" class="btn-nav">Dashboard Admin</a>
-
-        <?php endif; ?>
       </li>
-
-
-
-      <!-- si la session est ouvert on affiche pas le bouton-->
-      <?php if (!isset($_SESSION["user_id"])): ?>
-        <li>
-          <a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>
-        </li>
-      <?php elseif ($_SESSION["role"] !== "admin"): ?>
-
-        <li>
-          <a href="espace_client_news.php" class="btn-nav">Espace client</a>
-        </li>
-      <?php endif; ?>
+      <!-- si la session est ouvert on affiche le bouton espace client-->
+      <li>
+        <?= AffichageBtnEspaceClientIndex(); ?>
+     
+      </li>
     </ul>
   </div>
 
@@ -177,7 +213,11 @@ if (isset($_GET['champ_recherche']) && !empty($_GET['champ_recherche'])) {
 
       <!--affichage des image dans les diffèrentes vignettes-->
       <div class="gallery">
-        <?php foreach ($donnee_vehicule as $image_vehicule): ?>
+
+        <?php
+        $donnee_vehicule = selectImageEtInformation($pdo);
+
+        foreach ($donnee_vehicule as $image_vehicule): ?>
 
           <?php
           // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat

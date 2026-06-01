@@ -1,35 +1,73 @@
 <?php
 session_start();
 require "config.php";
+?>
 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-$pdo = new PDO('mysql:host=localhost;dbname=bd_locachat', 'root', '');
+<?php
+// select des veihcule en base
 
-if (!empty($_GET['champ_recherche'])) {
+$pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_41302948_bd_locachat;charset=utf8", "if0_41302948", "B7jc5nTtIiq");
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $search = '%' . $_GET['champ_recherche'] . '%';
+$vehicules = AffichagecatalogueVehicule($pdo);
 
-    $sql = "SELECT * FROM vehicule 
-            WHERE marque LIKE ? 
-            OR modele LIKE ? 
-            OR type_offre LIKE ?";
+function AffichagecatalogueVehicule($pdo)
+{
+
+  if (!empty($_GET['champ_recherche'])) {
+
+    $rech = '%' . $_GET['champ_recherche'] . '%';
+
+    $sql = "select image, modele, marque , type_offre
+FROM vehicule
+WHERE marque LIKE ?
+OR modele LIKE ?
+OR type_offre LIKE ?";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$search, $search, $search]);
+    $stmt->execute([$rech, $rech, $rech]);
+    return  $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } else {
 
-    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// affichage par defaut
-} else {
     $sql = "SELECT * FROM vehicule";
     $stmt = $pdo->query($sql);
-    $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 }
 ?>
 
+      <?php
+      //Fonction affichage de la galerie dns la vignette
+      function AfficheVehiculesGalerie($vehicules)
+      {
+        foreach ($vehicules as $vehicule) {
+
+          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
+          if ($vehicule['type_offre'] == 'location') {
+
+            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
+          } else {
+            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
+          }
+      ?>
+
+
+          <div class="card">
+            <a href="<?= $detail_v ?>" class="card-link">
+
+              <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
+            </a>
+            <p><?= htmlspecialchars($vehicule['marque']) ?></p>
+            <p><?= htmlspecialchars($vehicule['modele']) ?></p>
+            <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
+          </div>
+
+      <?php
+        }
+      }
+      ?>
 
 <!DOCTYPE html>
 <html>
@@ -58,7 +96,7 @@ if (!empty($_GET['champ_recherche'])) {
       </li>
       </li>
       <li>
-         <!-- si la session est ouvert on affiche "Déconnexion"-->
+        <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php if (isset($_SESSION["user_id"])): ?>
 
           <a href="logout.php" class="btn-nav">Déconnexion</a>
@@ -68,7 +106,7 @@ if (!empty($_GET['champ_recherche'])) {
           <a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>
 
         <?php endif; ?>
-       
+
       </li>
       </li>
     </ul>
@@ -87,30 +125,10 @@ if (!empty($_GET['champ_recherche'])) {
   <div class="box_body">
     <div class="gallery">
       <!-- Affiche la gallerie-->
-      <?php foreach ($vehicules as $vehicule): ?>
-        
-         <?php
-          // si le type d'offre est location on ouvre la page location sinon on ouvre la page détail achat
-          if ($vehicule['type_offre'] == 'location') {
 
-            $detail_v = "index_detail_voiture_location.php?id=" . $vehicule['id'];
-          } else {
-            $detail_v = "index_detail_voiture.php?id=" . $vehicule['id'];
-          }
-          ?>
+<!--Apple a la fonction d'affichage du catalogue dans des vignettes-->
+<?php AfficheVehiculesGalerie($vehicules) ?>
 
-
-        <div class="card">
-          <a href="<?=  $detail_v ?>" class="card-link">
-              
-          <img src="<?= htmlspecialchars($vehicule['image']) ?>" alt="">
-          </a>
-          <p><?= htmlspecialchars($vehicule['marque']) ?></p>
-          <p><?= htmlspecialchars($vehicule['modele']) ?></p>
-          <p><?= htmlspecialchars($vehicule['type_offre']) ?></p>
-        </div>
-    
-      <?php endforeach; ?>
     </div>
   </div>
 

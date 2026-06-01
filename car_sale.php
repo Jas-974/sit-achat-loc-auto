@@ -138,7 +138,7 @@ $stmt_status_command ->execute([
           <form method="GET" action="">
             <div class="barre-recherche">
               <input type="text" name="champ_recherche" placeholder="Rechercher un véhicule, achat, location...">
-              <button type="submit">🔍</button>
+              <button type="submit">&#128269;</button>
             </div>
           </form>
         </li>
@@ -248,4 +248,3 @@ $stmt_status_command ->execute([
 </body>
 
 </html>
-<!--Notes site pour HTML, CSS,...:https://www.w3schools.com/-->

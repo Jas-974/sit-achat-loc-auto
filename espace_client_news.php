@@ -52,13 +52,15 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 // Requête pour récupérer les information dans la table table_status_command et afficher dans la rubrique "mes commandes"
-$sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, date, numero_command FROM table_statu_command WHERE email = :email";
+$sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, date, numero_command, code_status_command FROM table_statu_command WHERE email = :email";
 $stmtTcommand = $pdo->prepare($sqlTcommand);
 $stmtTcommand->execute(['email' => $user['email']]);
 
 $info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -130,18 +132,25 @@ $info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
         <!--parcours la table pour trouver s'il y a des commande en cours-->
         <?php if (!empty($info_command)) : ?>
 
-      
-          <?php foreach ($info_command as $info_commands) : ?>
-    
-              <p><strong>Numero de commande: </strong><?= htmlspecialchars($info_commands["numero_command"]) ?></p>
 
-              <p><strong>Date: </strong><?= htmlspecialchars($info_commands["date"]) ?></p>
-              <p><strong>La commande: </strong><?= htmlspecialchars($info_commands["type_offre"]) ?></p>
-              
+          <?php foreach ($info_command as $info_commands) :?>
 
-              <p><strong>Status de la commande: </strong><?= htmlspecialchars($info_commands["status_command"]) ?></p>
+            <p><strong>Numero de commande: </strong><?= htmlspecialchars($info_commands["numero_command"]) ?></p>
 
-         
+            <p><strong>Date: </strong><?= htmlspecialchars($info_commands["date"]) ?></p>
+            <p><strong>La commande: </strong><?= htmlspecialchars($info_commands["type_offre"]) ?></p>
+
+
+            <p><strong>Status de la commande: </strong><?= htmlspecialchars($info_commands["status_command"]) ?></p>
+
+
+            <?php if ($info_commands['code_status_command'] == '2') : ?>
+
+              <p><a href="page_paiement.php?numero_command=<?= htmlspecialchars($info_commands["numero_command"]) ?>">Procéder au paiement</a></p>
+              <p><a href="annul_commandes.php?numero_command=<?= htmlspecialchars($info_commands["numero_command"]) ?>">Annuler la commande</a></p>
+            <?php endif; ?>
+
+
           <?php endforeach; ?>
         <?php else : ?>
           <p>Aucune commande en cours.</p>
@@ -150,39 +159,39 @@ $info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
       </div>
 
       <!--<a>BOX D</a>-->
-      <div class="box_body_mes_documents">
+      <div class=" box_body_mes_documents">
 
 
-        <h1>Mes documents</h1>
-        <p></p>
+                  <h1>Mes documents</h1>
+                  <p></p>
 
-        <?php
-        $conn = new mysqli("localhost", "root", "", "bd_locachat");
-        //Connexion à la base de donnée
-        if ($conn->connect_error) {
-          die("Erreur connexion BDD : " . $conn->connect_error);
-        }
-        // recupère le fichier téléverser et l'enregistre sur le serveur
-        if (isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
+                  <?php
+                  $conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
+                  //Connexion à la base de donnée
+                  if ($conn->connect_error) {
+                    die("Erreur connexion BDD : " . $conn->connect_error);
+                  }
+                  // recupère le fichier téléverser et l'enregistre sur le serveur
+                  if (isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
 
-          $tmp = $_FILES['document']['tmp_name'];
-          $nom = $_FILES['document']['name'];
-          $chemin = "uploads/" . $nom;
-          if (move_uploaded_file($tmp, $chemin)) {
+                    $tmp = $_FILES['document']['tmp_name'];
+                    $nom = $_FILES['document']['name'];
+                    $chemin = "uploads/" . $nom;
+                    if (move_uploaded_file($tmp, $chemin)) {
 
-            $sql = "INSERT INTO documents_locachat (nom, chemin) VALUES ('$nom', '$chemin')";
+                      $sql = "INSERT INTO documents_locachat (nom, chemin) VALUES ('$nom', '$chemin')";
 
-            if ($conn->query($sql) === TRUE) {
-              echo "Fichier envoyé avec succès";
-            } else {
-              echo "Erreur SQL : " . $conn->error;
-            }
-          } else {
-            echo "Erreur lors du téléversement du fichier.";
-          }
-        }
-        ?>
-        <h3>Facture_5676.pdf</h3>
+                      if ($conn->query($sql) === TRUE) {
+                        echo "Fichier envoyé avec succès";
+                      } else {
+                        echo "Erreur SQL : " . $conn->error;
+                      }
+                    } else {
+                      echo "Erreur lors du téléversement du fichier.";
+                    }
+                  }
+                  ?>
+                  <h3>Facture_5676.pdf</h3>
 
       </div>
       <div class="box_body_mes_commandes">

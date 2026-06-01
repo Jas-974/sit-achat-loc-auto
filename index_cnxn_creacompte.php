@@ -11,7 +11,7 @@
   <!-- Image du logo-->
 
   <div class="logo">
-    <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo"
+    <img src="logo.png" alt="Logo"
     style="height: 60px; margin-right: 20px; margin-left: 10px; margin-top: 10px;">
   </div>
 
@@ -98,7 +98,7 @@
     <div class="grand_box_formulaire-connexion">
       <div class="box_body_formulaire-connexion">
 
-        <form action="cnxn.php" method="post">
+        <form action="cnxn_news.php" method="post">
           <label for="email">Email :</label><br>
           <input type="email" id="email" name="email" required><br><br>
 
@@ -106,7 +106,6 @@
           <input type="password" id="pwd" name="pwd" required><br><br>
           <button type="submit"
             style="width: 200px; height: 50px;background-color: #595959; color: white; border: none; border-radius: 10px;">Connecter</button>
-          <!--Fin formulaire-->
         </form>
 
       </div>

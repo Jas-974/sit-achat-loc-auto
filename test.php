@@ -5,7 +5,7 @@ require "config.php";
 
 <?php
 // Extraction des véhicules pour affichages
-$req = "SELECT id, marque, modele, statut FROM vehicule WHERE type_offre = 'achat'";
+$req = "SELECT id, marque, modele, statut FROM vehicule WHERE type_offre ='achat'";
 $stat = $pdo->query($req);
 $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -59,7 +59,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
     <div class="box_formulaire">
       <h1>Saisi de véhicule de location</h1>
       <!--formulaire de saisie de vehicule de location-->
-      <form action="insert_v_achat.php" method="post">
+      <form action="test_a.php" method="post">
 
         <label for="marque">Marque :</label><br>
         <input type="text" id="marque" name="marque" required><br><br>
@@ -114,7 +114,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
     <div class="box_formulaire">
       <h1>Suppression de véhicule à la location en base</h1>
       <!--Affichage des véhcules à l'achat-->
-      <form method="post" action="supp_vehicule.php">
+      <form method="post" action="delete_cara.php">
 
         <?php foreach ($vehicules_achat as $vehicule_achat): ?>
           <label>
