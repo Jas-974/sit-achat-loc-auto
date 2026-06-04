@@ -1,10 +1,16 @@
 <?php
 // connexion au serveur et à la base de donnée
 //déclaration de variable
-$host = "sql305.infinityfree.com";
-$dbname = "if0_41302948_bd_locachat";   
-$user = "if0_41302948";
-$pass = "B7jc5nTtIiq";
+//identifiant pour mise en ligne
+//$host = "sql305.infinityfree.com";
+//$dbname = "if0_41302948_bd_locachat";   
+//$user = "if0_41302948";
+//$pass = "B7jc5nTtIiq";
+
+$host = "localhost";
+$dbname = "bd_locachat";
+$user = "root";
+$pass = "";
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
 

@@ -1,86 +1,40 @@
 <?php
 session_start();
 ?>
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
+
 
 <?php
+require_once 'fonctions_index.php';
+
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
-$host = "sql305.infinityfree.com";
-$dbname = "if0_41302948_bd_locachat";
-$username = "if0_41302948";
-$password = "B7jc5nTtIiq";
+$host = "localhost";
+$dbname = "bd_locachat";
+$username = "root";
+$password = "";
 
-//fonction connexion a la base de donnée
-function ConnexBD($host, $dbname, $username, $password)
-{
-  try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    return $pdo;
-  } catch (PDOException $e) {
-    throw new Exception("Erreur connexion BDD : " . $e->getMessage());
-  }
-}
+
 //appel de la fonction avec le bonne variable
 $pdo = ConnexBD($host, $dbname, $username, $password);
-
 ?>
 
 <?php
 //Fonction pour recupérer les informations véhicules
-function selectImageEtInformation(PDO $pdo): array
-{
-  // récupere les images et les informations
-  $sql = "SELECT id, image, marque, modele, type_offre, statut 
-FROM vehicule LIMIT 5";
-
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  // recupérer plusieur ligne avec fetchAll
-  $donnee_vehicule = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  return $donnee_vehicule ?: [];
-}
+$donnee_vehicule = selectImageEtInformation($pdo);
 ?>
 
-<?php
-//fonction affichage connexion/deconnexion
-function AffichagebtnConnexdeconnex()
-{
-  if (isset($_SESSION["user_id"])) {
-    return '<a href="logout.php" class="btn-nav">Déconnexion</a>';
-  } else {
-    return '<a href="index_cnxn_creacompte.php" class="btn-nav">Connexion</a>';
-  }
-}
-?>
 
-<?php
-//fonction affichage bouton dashboard admin si session admin ouvert
-function AffichageBtnDashboardAdminIndex()
-{
-  if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin") {
-    return '<a href="dashboard_admin.php" class="btn-nav">Dashboard Admin</a>';
-  } else {
+<!--fonction affichage connexion/deconnexion-->
+<?= AffichagebtnConnexdeconnex(); ?>
 
-    return '';
-  }
-}
-?>
 
-<?php
-function AffichageBtnEspaceClientIndex()
-{
-  if (!isset($_SESSION["user_id"])) {
-    return '<a href="index_cnxn_creacompte.php" class="btn-nav">Créer un compte</a>';
-  } elseif ($_SESSION["role"] !== "admin") {
-    return '<a href="espace_client_news.php" class="btn-nav">Espace client</a>';
-  }
-}
-?>
+
+<!--fonction affichage bouton dashboard admin si session admin ouvert-->
+<?= AffichageBtnDashboardAdminIndex() ?>
+
+
+<!--Fonction affichage bouton espace client-->
+<?= AffichageBtnEspaceClientIndex() ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -113,38 +67,8 @@ function AffichageBtnEspaceClientIndex()
         <!--Gestion du champs de la recherche-->
 
         <?php
-
-        //champs faire une recherche véhicule
-        function RechVehicule($pdo, $Champ_recherche)
-        {
-
-          if (!empty($champ_recherche)) {
-
-            try {
-
-              $Rech = $champ_recherche . '%';
-
-              $sql = "select image, modele, marque , type_offre
-FROM vehicule
-WHERE marque LIKE ?
-OR modele LIKE ?
-OR type_offre LIKE ?";
-
-              $stmt = $pdo->prepare($sql);
-              $stmt->execute([$rech, $rech, $rech]);
-              while ($Res_recherche = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                echo htmlspecialchars($Res_recherche['image']) . '' .
-                  htmlspecialchars($Res_recherche['modele']) . '' .
-                  htmlspecialchars($Res_recherche['marque']) . '' .
-                  htmlspecialchars($Res_recherche['type_offre']) . '' . '<br>';
-              }
-            } catch (PDOException $e) {
-
-              echo "Erreur SQL / " . $e->getMessage();
-            }
-          }
-        }
+        //appel à la fonction faire une recherche véhicule
+        $rec_vehicule = RechVehicule($pdo, $_GET['champ_recherche'] ?? '');
         ?>
 
       </li>
@@ -153,18 +77,15 @@ OR type_offre LIKE ?";
       <li>
         <!-- si la session est ouvert on affiche "Déconnexion"-->
         <?php echo AffichagebtnConnexdeconnex(); ?>
-
       </li>
       <li>
         <!-- si session admin ouverte alors afficher bouton dashboard appel de la focntion-->
         <?= AffichageBtnDashboardAdminIndex(); ?>
-
-
       </li>
       <!-- si la session est ouvert on affiche le bouton espace client-->
       <li>
         <?= AffichageBtnEspaceClientIndex(); ?>
-     
+
       </li>
     </ul>
   </div>
