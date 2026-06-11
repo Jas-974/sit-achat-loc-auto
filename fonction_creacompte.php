@@ -1,0 +1,140 @@
+<?php
+
+
+// Fonction pour généré le numéro client
+function genererNumeroClient()
+{
+
+    $lettres = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 2);
+    $chiffres = rand(1000, 9999);
+
+    return $lettres . $chiffres;
+}
+
+function CreerUnCompte(PDO $pdo): array
+{
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // Récupération de la valeur du champ dans une variable, on enlève les espaces avec "trim"
+    if (isset($_POST["nom"])) {
+        $nom = trim($_POST["nom"]);
+    } else {
+        $nom = "";
+    }
+
+    if (isset($_POST["prenom"])) {
+        $prenom = trim($_POST["prenom"]);
+    } else {
+        $prenom = "";
+    }
+    if (isset($_POST["email"])) {
+        $email = trim($_POST["email"]);
+    } else {
+        $email = "";
+    }
+
+    if (isset($_POST["telephone"])) {
+        $telephone = trim($_POST["telephone"]);
+    } else {
+        $telephone = "";
+    }
+
+    if (isset($_POST["date_naissance"])) {
+        $date_naissance = trim($_POST["date_naissance"]);
+    } else {
+        $date_naissance = "";
+    }
+
+    if (isset($_POST["permis_b"])) {
+        $permis_b = trim($_POST["permis_b"]);
+    } else {
+        $permis_b = "";
+    }
+    if (isset($_POST["adresse"])) {
+        $adresse = trim($_POST["adresse"]);
+    } else {
+        $adresse = "";
+    }
+    if (isset($_POST["code_postal"])) {
+        $code_postal = trim($_POST["code_postal"]);
+    } else {
+        $code_postal = "";
+    }
+
+    if (isset($_POST["pseudo"])) {
+        $pseudo = trim($_POST["pseudo"]);
+    } else {
+        $pseudo = "";
+    }
+
+    if (isset($_POST["pwd"])) {
+        $pwd = trim($_POST["pwd"]);
+    } else {
+        $pwd = "";
+    }
+
+    if (isset($_POST["confirmation_pwd"])) {
+        $confirmation_pwd = trim($_POST["confirmation_pwd"]);
+    } else {
+        $confirmation_pwd = "";
+    }
+
+
+    // On vérifie si tous les champs sont vides
+    if (
+        $nom === "" || $prenom === "" || $date_naissance === "" || $email === "" ||
+        $telephone === "" || $permis_b === "" || $adresse === "" || $code_postal === "" ||
+        $pseudo === "" || $pwd === "" || $confirmation_pwd === ""
+    ) {
+
+return [
+    "success" => false, "message" => "Tous les champs doivent être saisies"
+];
+    }
+
+    if ($pwd !== $confirmation_pwd) {
+        return ["success" => false, "message" => "Les mots de passe de correspond  pas"];
+
+    }
+
+
+    // pour le hashage du mot de pass
+    $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT);
+
+    // génération du numéro client
+    $numero_client = genererNumeroClient();
+
+
+    // Insertion en base (SANS hash)
+    $insertionBD = "INSERT INTO users
+            (numero_client,nom, prenom, date_naissance, email, telephone, permis_b, adresse, code_postal, pseudo, pwd_hash)
+            VALUES
+            (:numero_client, :nom, :prenom, :date_naissance, :email, :telephone, :permis_b, :adresse, :code_postal, :pseudo, :pwd_hash)";
+
+    $stmt = $pdo->prepare($insertionBD);
+    //execute le code 
+    try {
+        $stmt->execute([
+            ":numero_client" => $numero_client,
+            ":nom" => $nom,
+            ":prenom" => $prenom,
+            ":date_naissance" => $date_naissance,
+            ":email" => $email,
+            ":telephone" => $telephone,
+            ":permis_b" => $permis_b,
+            ":adresse" => $adresse,
+            ":code_postal" => $code_postal,
+            ":pseudo" => $pseudo,
+            ":pwd_hash" => $pwd_hash
+        ]);
+        
+        return [ "success" => true,
+        "redirect" => "index.php?success=1"];
+
+        //echo "Compte créé et enregistré en base !";
+    } catch (PDOException $e) {
+         return [ "success" => false,
+        "message" => "Erreur : " . $e->getMessage()];
+    }
+}
+}

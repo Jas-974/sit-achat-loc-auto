@@ -7,7 +7,7 @@ session_start();
 require_once 'fonctions_index.php';
 
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
-$host = "localhost";
+$host = "localhost;port=3307";
 $dbname = "bd_locachat";
 $username = "root";
 $password = "";

@@ -1,65 +1,33 @@
 <?php
 session_start();
+require_once 'fonction_espace_client.php';
 require "config.php";
+
 ?>
 
 <?php
-// récupere les informations de l'utilisateur connecté
-if (!isset($_SESSION["user_id"])) {
-  header("Location: cnxn.php?message=connexion_necessaire");
+// appel a la fonction :récupere les informations de l'utilisateur connecté
+$res_fonction = RecupInformationUtilisateurConnecte($pdo);
+
+if (!$res_fonction["success"]) {
+
+  if (!$res_fonction["message"] == "Connexion nécessaire") {
+
+    header("Location: cnxn.php?message=connexion_necessaire");
+    exit;
+  }
+  echo ($res_fonction["message"]);
   exit;
 }
-// reqête de recupération des informations dans la base de donnée
-$sql = "SELECT numero_client, pseudo, email FROM users WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $_SESSION["user_id"]]);
 
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$user = $res_fonction["user"];
 
-if (!$user) {
-  die("Utilisateur introuvable.");
-}
+//fonction affichage liste de 6 vehicules dans l'espace client
+$vehicules = RecherchePourAfficheVehiculesEspaceClient($pdo);
 
-
-
-// le champs recherche
-if (isset($_GET["champ_recherche"])) {
-  $recherche = $_GET["champ_recherche"];
-} else {
-  $recherche = "";
-}
-// on créé un tableau vide pour stocker le résultat des recherches
-$vehicules = [];
-
-$sql = "SELECT * FROM vehicule";
-$params = [];
-
-if (!empty($recherche)) {
-  $sql .= " WHERE (titre LIKE :recherche 
-              OR locachat LIKE :recherche)";
-  $params['recherche'] = '%' . $recherche . '%';
-} else {
-  $sql = "SELECT * FROM vehicule LIMIT 6";
-}
-// pour test 
-//echo $sql;
-//exit;
-
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-// Requête pour récupérer les information dans la table table_status_command et afficher dans la rubrique "mes commandes"
-$sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, date, numero_command, code_status_command FROM table_statu_command WHERE email = :email";
-$stmtTcommand = $pdo->prepare($sqlTcommand);
-$stmtTcommand->execute(['email' => $user['email']]);
-
-$info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
+//Appel de la fonction affichage de la rubrique Command
+$info_command = AffichageDeLaRubriqueCommand($pdo, $user["email"]);
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -133,7 +101,7 @@ $info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($info_command)) : ?>
 
 
-          <?php foreach ($info_command as $info_commands) :?>
+          <?php foreach ($info_command as $info_commands) : ?>
 
             <p><strong>Numero de commande: </strong><?= htmlspecialchars($info_commands["numero_command"]) ?></p>
 
@@ -162,36 +130,17 @@ $info_command = $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
       <div class=" box_body_mes_documents">
 
 
-                  <h1>Mes documents</h1>
-                  <p></p>
+        <h1>Mes documents</h1>
+        <p></p>
 
-                  <?php
-                  $conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
-                  //Connexion à la base de donnée
-                  if ($conn->connect_error) {
-                    die("Erreur connexion BDD : " . $conn->connect_error);
-                  }
-                  // recupère le fichier téléverser et l'enregistre sur le serveur
-                  if (isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
-
-                    $tmp = $_FILES['document']['tmp_name'];
-                    $nom = $_FILES['document']['name'];
-                    $chemin = "uploads/" . $nom;
-                    if (move_uploaded_file($tmp, $chemin)) {
-
-                      $sql = "INSERT INTO documents_locachat (nom, chemin) VALUES ('$nom', '$chemin')";
-
-                      if ($conn->query($sql) === TRUE) {
-                        echo "Fichier envoyé avec succès";
-                      } else {
-                        echo "Erreur SQL : " . $conn->error;
-                      }
-                    } else {
-                      echo "Erreur lors du téléversement du fichier.";
-                    }
-                  }
-                  ?>
-                  <h3>Facture_5676.pdf</h3>
+        <?php
+        $conn = new mysqli("localhost", "root", "", "bd_locachat", 3307);
+        //$conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
+        //appel de la fonction enreg document
+        $enreg_doc = enregDocument($conn);
+        echo $enreg_doc;
+        ?>
+        <h3>Facture_5676.pdf</h3>
 
       </div>
       <div class="box_body_mes_commandes">

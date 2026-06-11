@@ -7,7 +7,7 @@
 //$user = "if0_41302948";
 //$pass = "B7jc5nTtIiq";
 
-$host = "localhost";
+$host = "localhost;port=3307";
 $dbname = "bd_locachat";
 $user = "root";
 $pass = "";

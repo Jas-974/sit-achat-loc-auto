@@ -70,19 +70,45 @@ if (isset($_POST['maj_status_command'])) {
   ':id' => $id
   ]);
     
+// insertion dans la table table_commandes
+$sql_insert_table_command =" INSERT INTO table_commandes (user_id, car_id, order_type, documents, adate)
+VALUES (:user_id, :car_id, :order_type, :documents, NOW())";
+
+$stmt_table_command  = $pdo->prepare($sql_insert_table_command);
+$stmt_table_command ->execute([
+  ":car_id" => $donnee_vehicule["id"],
+  ":order_type" => $donnee_vehicule["type_offre"],
+  ":user_id" => $user_id,
+  ":documents" => null
+]);
+
+$id_commande = $pdo->lastInsertId();
+
+
+
+
     // insertion des donnée de la validation de la commande dans la table table_statu_command
-$sql_insert_status_command =" INSERT INTO table_statu_command (nom, prenom, email, type_offre, status_command )
-VALUES (:nom, :prenom, :email, :type_offre, :status_command)";
+$sql_insert_status_command =" INSERT INTO table_statu_command (commande_id, user_id, nom, prenom, email, type_offre, status_command )
+VALUES (:commande_id, :user_id, :nom, :prenom, :email, :type_offre, :status_command)";
 
 $stmt_status_command  = $pdo->prepare($sql_insert_status_command);
 $stmt_status_command ->execute([
+  ":commande_id" => $id_commande,
+  ":user_id" => $user_id, 
   ":nom" => $donnee_user["nom"],
   ":prenom" => $donnee_user["prenom"],
   ":email" => $donnee_user["email"],
   ":type_offre" => $donnee_vehicule["type_offre"],
   ":status_command" => $_POST["maj_status_command"]
 ]);
+
+
+//retour vers la page commande
+header("Location: car_sale.php?id=" . $donnee_vehicule["id"]);
+exit;
+
 }
+
 ?>
 
 <!DOCTYPE html>
