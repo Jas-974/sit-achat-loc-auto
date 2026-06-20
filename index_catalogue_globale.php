@@ -1,7 +1,7 @@
 <?php
 session_start();
-require "config.php";
-require_once "fonction_catalogue_globale.php";
+require __DIR__ . "/config.php";
+require_once __DIR__ . "/fonction_catalogue_globale.php";
 ?>
 
 

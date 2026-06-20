@@ -1,33 +1,18 @@
 <?php
 session_start();
 require "config.php";
+require_once __DIR__ . "/fonction_recup_detail_vehicule.php";
 ?>
 
 
 <?php
-//$id = 1;
-if (!isset($_GET['id'])) {
-  die("ID manquant");
-}
-
-$id = (int) $_GET['id'];
-?>
-
-
-<?php
-// récupere les informations caractéristique de la voiture
-// reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, marque, modele, prix, annee, kilometrage, boite, carburant, type_offre, prix_loc_jour, statut, image, forfait_par_mois
-FROM vehicule 
-WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $id]);
-
-$donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$donnee_vehicule) {
-  die("Véhicule introuvable");
-}
+//appel de la fonction récuperation détail véhicule
+$res_recup_detail_vehicule = RecupInformationVehicule($pdo);
+ if (!$res_recup_detail_vehicule["success"]){
+ echo $res_recup_detail_vehicule["message"];
+ exit;
+ }
+$donnee_vehicule = $res_recup_detail_vehicule["donnee_vehicule"];
 
 ?>
 
