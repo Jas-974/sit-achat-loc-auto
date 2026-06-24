@@ -1,10 +1,14 @@
 <?php
 session_start();
 require "config.php";
-require "fonction_ supression_VehiculeLoc.php"
 // se connecte a la base et éxécute la requete de suprression
 if(!empty($_POST['vehicules_loc'])){
-supressionVehiculeLoc($pdo, $_POST['vehicule_loc']);
+$id_vehicule = $_POST['vehicules_loc'];
+foreach ($id_vehicule as $id_v) {
+    $req = $pdo->prepare("DELETE FROM vehicule WHERE id = ?");
+    $req->execute([$id_v]); 
+}
+}
 header("location: test.php");
 exit;
 ?>

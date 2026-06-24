@@ -74,10 +74,12 @@ body {
   border: 2px solid #FFC000;
   font-family: Arial, sans-serif;
   font-size: 24px;
-  height: 1000px;
+    min-height:1000px.
+  height: auto;
   padding: 10px;
   margin: 10px;
   color: black;
+    overflow:visible.
 }
 
 .box_info, .box_info_command_in_progress, .box_véhicule_management {
@@ -112,11 +114,14 @@ text-align: center;
   background-color: lightgray;
  }
 
+footer,
 .footer {
-  background-color: #595959;
-  borde-radius: 10px;
-  padding: 10px;
+  position: static;
+  width: 100%;
+  margin-top: 40px;
+  padding: 20px;
   text-align: center;
-  color: yellow;
+  background-color: #555;
+  color: white;
 
 }

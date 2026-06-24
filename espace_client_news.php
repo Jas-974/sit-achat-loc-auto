@@ -134,8 +134,8 @@ $info_command = AffichageDeLaRubriqueCommand($pdo, $user["email"]);
         <p></p>
 
         <?php
-        $conn = new mysqli("localhost", "root", "", "bd_locachat", 3307);
-        //$conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
+        //$conn = new mysqli("sqlXXX.infinityfree.com", "if0_41302948", "", "bd_locachat", 3307);
+        $conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
         //appel de la fonction enreg document
         $enreg_doc = enregDocument($conn);
         echo $enreg_doc;

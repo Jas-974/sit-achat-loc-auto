@@ -7,10 +7,10 @@ session_start();
 require_once 'fonctions_index.php';
 
 //connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
-$host = "localhost;port=3307";
-$dbname = "bd_locachat";
-$username = "root";
-$password = "";
+$host = "sql305.infinityfree.com";
+$dbname = "if0_41302948_bd_locachat";
+$username = "if0_41302948";
+$password = "B7jc5nTtIiq";
 
 
 //appel de la fonction avec le bonne variable

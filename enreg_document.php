@@ -3,6 +3,7 @@ session_start();
 
 // se connecte à la BDD
 $pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_41302948_bd_locachat;charset=utf8", "if0_41302948", "B7jc5nTtIiq");
+//$pdo = new PDO("mysql:host=localhost;port=3307;dbname=bd_locachat;charset=utf8", "root", "");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 

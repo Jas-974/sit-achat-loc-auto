@@ -27,7 +27,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
   <header>
     <!-- Image du logo-->
     <div class="logo">
-      <img src="logo.png" alt="Logo">
+      <img src="/dev_web_locachat/src/dev/images/logo/logo.png" alt="Logo">
     </div>
 
     <!--affichage des boutons-->
@@ -57,7 +57,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
   <div class="grande_box_formulaire_ajout_location">
 
     <div class="box_formulaire">
-      <h1>Saisi de véhicule d'achat</h1>
+      <h1>Saisi de véhicule de location</h1>
       <!--formulaire de saisie de vehicule de location-->
       <form action="insert_v_achat.php" method="post">
 
@@ -87,7 +87,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
         <input type="text" id="couleur" name="couleur" required><br><br>
 
         <label for="type_offre">Type d'offre :</label><br>
-        <input type="text" id="type_offre" name="type_offre" value="achat"><br><br>
+        <input type="text" id="type_offre" name="type_offre" required><br><br>
 
         <label for="prix">Prix :</label><br>
         <input type="text" id="prix" name="prix" required><br><br>
@@ -112,9 +112,9 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="box_formulaire">
-      <h1>Suppression de véhicule à la vente en base</h1>
+      <h1>Suppression de véhicule à la location en base</h1>
       <!--Affichage des véhcules à l'achat-->
-      <form method="post" action="delete_cara.php">
+      <form method="post" action="supp_vehicule.php">
 
         <?php foreach ($vehicules_achat as $vehicule_achat): ?>
           <label>
