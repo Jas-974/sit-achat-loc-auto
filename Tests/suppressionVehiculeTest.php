@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_suppression_vehiculeLoc.php';
+require_once __DIR__ . '/../src/dev/fonction_suppression_vehiculeLoc.php';
 
 class suppressionVehiculeTest extends TestCase
 {

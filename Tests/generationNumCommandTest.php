@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_commande_voiture_location.php';
+require_once __DIR__ . '/../src/dev/fonction_commande_voiture_location.php';
 
 class generationNumCommandTest extends TestCase
 {

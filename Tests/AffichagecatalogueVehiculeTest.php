@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_catalogue_globale.php';
+require_once __DIR__ . '/../src/dev/fonction_catalogue_globale.php';
 
 class AffichagecatalogueVehiculeTest extends TestCase
 {

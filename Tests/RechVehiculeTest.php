@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonctions_index.php';
+require_once __DIR__ . '/../src/dev/fonctions_index.php';
 
 class RechVehiculeTest extends TestCase
 

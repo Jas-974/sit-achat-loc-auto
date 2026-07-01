@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonctions_index.php';
+require_once __DIR__ . '/../src/dev/fonctions_index.php';
 
 class ConnexionBDTest extends TestCase
 {
@@ -11,7 +11,7 @@ public function testConnexionBD()
 
 {
 
-$host ="localhost";
+$host ="localhost;port=3307";
 $dbname ="bd_locachat";
 $username ="root";
 $password = "";

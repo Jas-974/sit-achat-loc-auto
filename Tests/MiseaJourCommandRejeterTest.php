@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_dashboard_administrateur.php';
+require_once __DIR__ . '/../src/dev/fonction_dashboard_administrateur.php';
 
 class MiseaJourCommandRejeterTest extends TestCase
 {
@@ -37,7 +37,7 @@ $_GET["id"] = 1;
 $_GET["rejeter"] = "rejeter";
 
 MiseaJourCommandRejeter($this->pdo);
- $stmt = $this->pdo->query("SELECT * FROM table_statu_command WHERE id = 1", $commande["status_command"]);
+ $stmt = $this->pdo->query("SELECT * FROM table_statu_command WHERE id = 1");
   $commande = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $this->assertEquals ("Commande Rejeter merci de vous rapprocher du Service Client au +262 46 78 24", $commande["status_command"]);

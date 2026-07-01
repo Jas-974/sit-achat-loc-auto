@@ -2,11 +2,12 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_insert_location_admin.php';
+require_once __DIR__ . '/../src/dev/fonction_insert_location_admin.php';
 
 class insertionVehiculeLocationTest extends TestCase
 {
   private PDO $pdo;
+  private array $infoVehicule;
 
 
   protected function setUp(): void

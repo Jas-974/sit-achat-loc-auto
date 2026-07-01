@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_dashboard_administrateur.php';
+require_once __DIR__ . '/../src/dev/fonction_dashboard_administrateur.php';
 
 class MiseaJourCommandValiderTest extends TestCase
 {

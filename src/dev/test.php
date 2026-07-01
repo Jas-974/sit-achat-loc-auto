@@ -112,7 +112,7 @@ $vehicules_achat = $stat->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="box_formulaire">
-      <h1>Suppression de véhicule à la vente en base</h1>
+      <h1>Suppression de véhicule à la location en base</h1>
       <!--Affichage des véhcules à l'achat-->
       <form method="post" action="delete_cara.php">
 

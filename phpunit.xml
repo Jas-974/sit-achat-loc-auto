@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Tests">
+            <directory>Tests</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+    <include>
+<file>src/dev/fonction_catalogue_globale.php</file>
+<file>src/dev/fonction_cnxn.php</file>
+<file>src/dev/fonction_commande_voiture_location.php</file>
+<file>src/dev/fonction_creacompte.php</file>
+<file>src/dev/fonction_dashboard_administrateur.php</file>
+<file>src/dev/fonction_espace_client.php</file>
+<file>src/dev/fonction_insert_achat_admin.php</file>
+<file>src/dev/fonction_insert_location_admin.php</file>
+<file>src/dev/fonction_recup_detail_vehicule.php</file>
+<file>src/dev/fonction_suppression_VehiculeLoc.php</file>
+<file>src/dev/fonctions_index.php</file>
+    </include>
+    </source>
+</phpunit>

@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_cnxn.php';
+require_once __DIR__ . '/../src/dev/fonction_cnxn.php';
 
 class ConnexUserTest extends TestCase
 {

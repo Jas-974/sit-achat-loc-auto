@@ -60,7 +60,7 @@ function RecherchePourAfficheVehiculesEspaceClient($pdo): array
 function AffichageDeLaRubriqueCommand($pdo, $email): array
 {
     // Requête pour récupérer les information dans la table table_status_command et afficher dans la rubrique "mes commandes"
-    $sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, date, numero_command, code_status_command FROM table_statu_command WHERE email = :email";
+    $sqlTcommand = "SELECT nom, prenom, type_offre, status_command, email, `date`, numero_command, code_status_command FROM table_statu_command WHERE email = :email";
     $stmtTcommand = $pdo->prepare($sqlTcommand);
     $stmtTcommand->execute([":email" => $email]);
 

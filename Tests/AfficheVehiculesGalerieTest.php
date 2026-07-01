@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_catalogue_globale.php';
+require_once __DIR__ . '/../src/dev/fonction_catalogue_globale.php';
 
 class AfficheVehiculesGalerieTest extends TestCase
 {
@@ -20,7 +20,7 @@ $vignette_galerie = [
 ];
  ob_start();
 
- AfficheVehiculesGalerie($vehicules);
+ AfficheVehiculesGalerie($vignette_galerie);
 
  $affich_html = ob_get_clean();
 

@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/fonction_commande_voiture_location.php';
+require_once __DIR__ . '/../src/dev/fonction_commande_voiture_location.php';
 
 class recupVehiculeDeLaCommandeTest extends TestCase
 {
@@ -59,7 +59,7 @@ $_GET["id"]= 5;
 $res_recup_vehicule  = recupVehiculeDeLaCommande($this->pdo);
 
 $this->assertFalse($res_recup_vehicule["success"]);
-$this->assertEquals("ID manquant", $res_recup_vehicule["message"]);
+$this->assertEquals("Véhicule introuvable", $res_recup_vehicule["message"]);
 
 }
 
@@ -71,7 +71,7 @@ $_GET["id"]= 1;
 $res_recup_vehicule  = recupVehiculeDeLaCommande($this->pdo);
 
 $this->assertTrue($res_recup_vehicule["success"]);
-$this->assertEquals("peugeot", $res_recup_vehicule["vehicule"]["marque"]);
+$this->assertEquals("Peugeot", $res_recup_vehicule["vehicule"]["marque"]);
 $this->assertEquals("208", $res_recup_vehicule["vehicule"]["modele"]);
 $this->assertEquals("location", $res_recup_vehicule["vehicule"]["type_offre"]);
 $this->assertEquals("2020", $res_recup_vehicule["vehicule"]["annee"]);

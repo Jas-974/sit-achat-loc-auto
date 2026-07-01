@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../src/dev/gPostvalue.php';
-require_once __DIR__ . '/../../src/dev/fonction_insert_location_admin.php';
+require_once __DIR__ . '/../src/dev/gPostvalue.php';
+require_once __DIR__ . '/../src/dev/fonction_insert_location_admin.php';
 
 class VerifFormChampsVideLocTest extends TestCase
 {
