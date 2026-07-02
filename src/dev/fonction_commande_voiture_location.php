@@ -112,7 +112,7 @@ if (!isset($_POST['maj_status_command'])) {
     return false;
 }
 $status_command = $_POST['maj_status_command'];
-
+//génération du numero de commande
 $num_command = generationNumCommand();
 
  // insertion des donnée de la validation de la commande dans la table table_statu_command
@@ -129,6 +129,22 @@ VALUES (:numero_command, :nom, :prenom, :email, :type_offre, :status_command, :u
     ":status_command" => $status_command,
     ":user_id" => $user_id
   ]);
+
+  //extration du document uploadé avant création de la commande
+$sql_document = "SELECT documents 
+FROM documents_upload 
+WHERE user_id = :user_id
+AND car_id = :car_id
+ORDER BY id DESC
+LIMIT 1";
+
+$stmt_doc = $pdo->prepare($sql_document);
+$stmt_doc->execute([ ":user_id" => $user_id,
+":car_id" => $donnee_vehicule["id"]]);
+
+//recup chemin des documents uploadé
+$documents_upload = $stmt_doc->fetchColumn();
+
   // insertion dans la table table_commandes
   $sql_insert_table_command = " INSERT INTO table_commandes (user_id, car_id, order_type, documents, adate)
 VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
@@ -138,10 +154,28 @@ VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
     ":car_id" => $donnee_vehicule["id"],
     ":order_type" => $donnee_vehicule["type_offre"],
     ":user_id" => $user_id,
-    ":documents" => null
+    ":documents" => $documents_upload ?: null
   ]);
 
-  return true;
+
+//suppression du document temporaire apres ratachement à la commande
+$sql_supp = "DELETE FROM documents_upload
+WHERE  user_id = :user_id
+AND car_id = :car_id";
+
+$stmt_supp = $pdo->prepare($sql_supp);
+$stmt_supp->execute([
+":user_id" => $user_id,
+":car_id" => $donnee_vehicule["id"]
+]);
+
+
+  $commande_id = $pdo->lastInsertId();
+  return $commande_id;
+
+
+
+
 }
 
 

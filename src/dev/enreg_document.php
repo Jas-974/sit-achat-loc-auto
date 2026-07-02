@@ -43,11 +43,10 @@ $rename_nom = time() . "_" . uniqid() . "_" . $nom . "_" . $user_id;
 $adress_fichier = $rep_upload . $rename_nom;
 
 
-            move_uploaded_file($tmp_name, $rep_upload . $nom);
-
-
-
-            echo "Fichier enregistré : " . htmlspecialchars($nom) . "<br>";
+           if( move_uploaded_file($tmp_name, $adress_fichier)){
+            $fichier_doc[] = $adress_fichier;
+            echo "Fichier enregistré : " . htmlspecialchars($rename_nom) . "<br>";
+        }
         }
     }
 } else {
@@ -56,10 +55,8 @@ $adress_fichier = $rep_upload . $rename_nom;
 // on concatene les documents
 if (!empty($fichier_doc)){
 $doc = implode(",", $fichier_doc);
-$sql = "UPDATE table_commandes SET documents :documents
-WHERE user_id = :user_id
-ORDER_BY id DESC
-LIMIT 1";
+$sql = "INSERT INTO documents_upload (user_id, car_id, documents)
+VALUES (:user_id, :car_id, :documents)";
 
 $stmt = $pdo->prepare($sql);
     $stmt->execute([
