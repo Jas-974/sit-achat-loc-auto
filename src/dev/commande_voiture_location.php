@@ -155,6 +155,7 @@ miseAjourStatusVehiculeReserve($pdo);
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
           style="display: flex; flex-direction: column; gap: 15px;">
           <input type="hidden" name="id" value="<?= $donnee_vehicule['id'] ?>">
+          <input type="hidden" name="page_retour" value="commande_voiture_location.php">
           <label for="files">Choisissez des fichiers à téléverser :</label>
           <input type="file" id="files" name="files[]" multiple required>
           <button type="submit">Téléverser</button><br>

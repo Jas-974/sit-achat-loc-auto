@@ -1,112 +1,45 @@
 <?php
 session_start();
 require "config.php";
+require_once __DIR__ . '/fonction_commande_voiture_achat.php';
 
 
 ?>
 <?php
-if (!isset($_SESSION["user_id"])) {
+//appel a la fonction pour récupérér les donnéee utilisateur qui passe la commande
+$recup_user = recupdonneeUtilisateurCommandeAchat($pdo);
+if (!$recup_user["success"]) {
+
   header("Location: cnxn_news.php?message=connexion_necessaire");
   exit;
 }
-// Je recupère les données de l'utilisateur
-$user_id =$_SESSION["user_id"];
-// récupere les informations du user
-// reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, nom, prenom, email 
-FROM users 
-WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $user_id]);
-$donnee_user = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$donnee_user) {
-  die("utilisateur introuvable");
-}
+$donnee_user = $recup_user["user"];
+$user_id = $_SESSION["user_id"];
 ?>
 
 <?php
-//je recupére l'Id de la page détail_véhicule
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-  die("ID manquant");
+//appel a la fonction recup donnee vehicule de la commande
+$recup_vehicule = recupVehiculeCommandeAchat($pdo);
+if (!$recup_vehicule["success"]) {
+
+  return;
 }
-
-$id = (int) $_GET['id'];
-?>
-
-<?php
-
-// récupere les informations caractéristique de la voiture
-// reqête de recupération des informations dans la base de donnée
-$sql = "SELECT id, marque, modele, annee, kilometrage, boite, carburant, type_offre, prix, statut, status_command, image, loyer_mois, apport 
-FROM vehicule 
-WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $id]);
-
-$donnee_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$donnee_vehicule) {
-  die("Véhicule introuvable");
-}
+$donnee_vehicule = $recup_vehicule["vehicule"];
 ?>
 
 
-
 <?php
-//mise a jours de la table vehicule avec la reservation en cours
+
 if (isset($_POST['maj_status_command'])) {
-  $id = (int) $_POST['id'];
-  $status_command = $_POST['maj_status_command'];
 
-  $sql = "UPDATE vehicule 
-            SET status_command = :status_command,
-            statut = :statut
-            WHERE id = :id";
+  //appel a la fonction de maj de la table status commande avec la reservation en cours si clique sur "valider la prise en charge"
+  majStatusVehiculeReserveAchat($pdo);
 
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute([
-  ':status_command' => $status_command,
-  ':statut' => 'reserve', 
-  ':id' => $id
-  ]);
-    
-// insertion dans la table table_commandes
-$sql_insert_table_command =" INSERT INTO table_commandes (user_id, car_id, order_type, documents, adate)
-VALUES (:user_id, :car_id, :order_type, :documents, NOW())";
+  $commande_id =  enregCommandVehiculeAchat($pdo, $donnee_user, $donnee_vehicule, $user_id);
 
-$stmt_table_command  = $pdo->prepare($sql_insert_table_command);
-$stmt_table_command ->execute([
-  ":car_id" => $donnee_vehicule["id"],
-  ":order_type" => $donnee_vehicule["type_offre"],
-  ":user_id" => $user_id,
-  ":documents" => null
-]);
-
-$id_commande = $pdo->lastInsertId();
-
-
-
-
-    // insertion des donnée de la validation de la commande dans la table table_statu_command
-$sql_insert_status_command =" INSERT INTO table_statu_command (commande_id, user_id, nom, prenom, email, type_offre, status_command )
-VALUES (:commande_id, :user_id, :nom, :prenom, :email, :type_offre, :status_command)";
-
-$stmt_status_command  = $pdo->prepare($sql_insert_status_command);
-$stmt_status_command ->execute([
-  ":commande_id" => $id_commande,
-  ":user_id" => $user_id, 
-  ":nom" => $donnee_user["nom"],
-  ":prenom" => $donnee_user["prenom"],
-  ":email" => $donnee_user["email"],
-  ":type_offre" => $donnee_vehicule["type_offre"],
-  ":status_command" => $_POST["maj_status_command"]
-]);
-
-
-//retour vers la page commande
-header("Location: car_sale.php?id=" . $donnee_vehicule["id"]);
-exit;
-
+  //retour vers la page commande
+  header("Location: car_sale.php?id=" . $donnee_vehicule["id"]);
+  exit;
 }
 
 ?>
@@ -209,7 +142,8 @@ exit;
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
           style="display: flex; flex-direction: column; gap: 15px;">
-          <input type="hidden" name="id" value="<?= $id ?>">
+          <input type="hidden" name="id" value="<?= $donnee_vehicule['id'] ?>">
+          <input type="hidden" name="page_retour" value="car_sale.php">
           <label for="files">Choisissez des fichiers à téléverser :</label>
           <input type="file" id="files" name="files[]" multiple required>
           <button type="submit">Téléverser</button><br>

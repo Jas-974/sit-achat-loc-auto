@@ -21,6 +21,7 @@ $user_id = $_SESSION["user_id"];
 $id = (int) $_POST['id'];
 
 
+
 if (isset($_FILES['files'])) {
 
     $nom = $_FILES['files']['name'];
@@ -68,5 +69,8 @@ $stmt = $pdo->prepare($sql);
 }
 
 
-header("Location: commande_voiture_location.php?id=" . $id);
+$page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
+header("Location: ". $page_retour . "?id=" . $id);
 exit;
+
+?>
