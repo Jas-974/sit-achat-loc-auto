@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . "/log.php";
 
 function recupUtilisateurDeLaCommande(PDO $pdo): array
 {
@@ -157,6 +157,12 @@ VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
     ":documents" => $documents_upload ?: null
   ]);
 
+ $commande_id = $pdo->lastInsertId();
+ 
+  //gestion des logs commande achat créer 
+   GestionLog("INFO", "Commande location créée - commande_id = $commande_id" . " - utilisateur_id = $user_id" . " - véhicule_id =" . $donnee_vehicule["id"]);
+
+
 
 //suppression du document temporaire apres ratachement à la commande
 $sql_supp = "DELETE FROM documents_upload
@@ -169,10 +175,8 @@ $stmt_supp->execute([
 ":car_id" => $donnee_vehicule["id"]
 ]);
 
-
-  $commande_id = $pdo->lastInsertId();
-  return $commande_id;
-
+ return $commande_id;
+ 
 
 
 

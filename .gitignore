@@ -1,3 +1,4 @@
 coverage/
 .phpunit.result.cache
 /vendor/
+/src/dev/logs/*.log
