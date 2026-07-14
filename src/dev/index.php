@@ -4,17 +4,8 @@ session_start();
 
 
 <?php
+require_once __DIR__ . "/config.php";
 require_once 'fonctions_index.php';
-
-//connexion à la base de onndées pour extraire les images et affichage dans la section "les voiture du moment
-$host = "localhost;port=3307";
-$dbname = "bd_locachat";
-$username = "root";
-$password = "";
-
-
-//appel de la fonction avec le bonne variable
-$pdo = ConnexBD($host, $dbname, $username, $password);
 ?>
 
 <?php
@@ -136,7 +127,6 @@ $donnee_vehicule = selectImageEtInformation($pdo);
       <div class="gallery">
 
         <?php
-        $donnee_vehicule = selectImageEtInformation($pdo);
 
         foreach ($donnee_vehicule as $image_vehicule): ?>
 

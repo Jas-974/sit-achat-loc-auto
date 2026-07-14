@@ -2,10 +2,7 @@
 session_start();
 require_once __DIR__ . "/log.php";
 
-// se connecte à la BDD
-//$pdo = new PDO("mysql:host=sql305.infinityfree.com;dbname=if0_41302948_bd_locachat;charset=utf8", "if0_41302948", "B7jc5nTtIiq");
-$pdo = new PDO("mysql:host=localhost;port=3307;dbname=bd_locachat;charset=utf8", "root", "");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once __DIR__ . "/config.php";
 
 
 // vérification que l'utilisateur est connecté

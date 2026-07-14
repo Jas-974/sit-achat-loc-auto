@@ -30,10 +30,10 @@ if (isset($_GET["message"]) && $_GET["message"] === "connexion_obligatoire") {
 //Chercher l'utilisateur par email OU pseudo
 $sql = "SELECT id, pseudo, email, pwd_hash, role
         FROM users
-        WHERE email = :id OR pseudo = :id
+        WHERE email = :email OR pseudo = :pseudo
         LIMIT 1";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([":id" => $identifiant]);
+$stmt->execute([":email" => $identifiant, ":pseudo" => $identifiant] );
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 

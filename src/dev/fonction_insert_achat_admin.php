@@ -1,6 +1,9 @@
 
 <?php
 
+require_once __DIR__ . "/log.php";
+
+
 function recupDonneeFormVehiculeAchat(): array
 {
 // Requète est POST
@@ -78,7 +81,7 @@ function insertVehicule(PDO $pdo, array $info_vehicule): bool
     $stmt = $pdo->prepare($insertionBD);
     //execute le code 
     
-    return  $stmt->execute([
+    $result_insertion =  $stmt->execute([
             ":marque" => $info_vehicule["marque"],
             ":modele" => $info_vehicule["modele"],
             ":annee" => $info_vehicule["annee"],
@@ -96,7 +99,18 @@ function insertVehicule(PDO $pdo, array $info_vehicule): bool
 
         ]);
 
+        if ($result_insertion)
+            {
+$idVehicule = $pdo->lastInsertId();
+
+ //gestion des logs commande achat créer 
+   GestionLog("INFO", "Véhicule achat créée - vehicule_id = $idVehicule" . " - marque" . $info_vehicule["marque"] . " - modele" . $info_vehicule["modele"]);
+
+            }
+   return $result_insertion;
+
 }
 
+            
 
 ?>

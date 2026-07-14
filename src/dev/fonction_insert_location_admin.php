@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/log.php";
+
 
 function recupValeurChampsLocation(array $post): array
 {
@@ -152,7 +154,7 @@ VALUES
  $stmt = $pdo->prepare($insertionBD);
         //execute le code 
         
-        return $stmt->execute([
+        $result_insertion_location = $stmt->execute([
                 ":marque" =>  $infoVehicule["marque"],
                 ":modele" =>  $infoVehicule["modele"],
                 ":annee" =>  $infoVehicule["annee"],
@@ -167,5 +169,15 @@ VALUES
                 ":prix_loc_jour" =>  $infoVehicule["prix_loc_jour"],
                 ":forfait_par_mois" =>  $infoVehicule["forfait_par_mois"]
             ]);
+
+             if ($result_insertion_location)
+            {
+$idVehicule = $pdo->lastInsertId();
+
+ //gestion des logs commande achat créer 
+   GestionLog("INFO", "Véhicule location créée - vehicule_id = $idVehicule" . " - marque" . $infoVehicule["marque"] . " - modele" . $infoVehicule["modele"]);
+
+            }
+   return $result_insertion_location;
 
 }
