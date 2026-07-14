@@ -1,0 +1,223 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* En-tête */
+header {
+  width: 100%;
+  min-height: 150px;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+
+  padding: 20px;
+}
+
+.logo {
+  margin-left: 10px;
+}
+
+.logo img {
+  display: block;
+  height: 90px;
+  max-width: 100%;
+}
+
+/* Boutons du dashboard */
+.container_bouton_dashboard {
+  margin-left: auto;
+}
+
+.container_bouton_dashboard ul {
+  display: flex;
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 200px;
+  min-height: 50px;
+  padding: 10px;
+
+  background-color: #595959;
+  color: white;
+
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+
+  transition: 0.2s ease;
+}
+
+.btn-nav:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+}
+
+/* Barre de titre */
+.box_titre_location_admin {
+  border-radius: 10px;
+  background-color: #ffc000;
+
+  font-size: 24px;
+  text-align: center;
+
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Conteneur principal */
+.grande_box_formulaire_ajout_location {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+
+  gap: 30px;
+
+  width: calc(100% - 40px);
+  max-width: 1400px;
+
+  min-height: 300px;
+
+  border: 2px solid yellowgreen;
+  border-radius: 10px;
+
+  padding: 20px;
+  margin: 10px auto;
+}
+
+/* Blocs des listes */
+.box_formulaire {
+  flex: 1 1 420px;
+
+  width: 100%;
+  max-width: 600px;
+  min-height: 300px;
+
+  border: 2px solid #ffc000;
+  border-radius: 8px;
+
+  padding: 25px;
+  background-color: white;
+}
+
+.box_formulaire h1 {
+  margin-top: 0;
+  font-size: 26px;
+}
+
+/* Liens des véhicules */
+.box_formulaire a {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Pied de page */
+.footer {
+  width: calc(100% - 20px);
+
+  background-color: #595959;
+  border-radius: 10px;
+
+  padding: 15px;
+  margin: 20px auto 0;
+
+  text-align: center;
+  color: yellow;
+}
+
+.footer footer {
+  margin: 0;
+}
+
+.footer p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.footer nav a {
+  margin: 0 5px;
+}
+
+/* Version tablette et mobile */
+@media (max-width: 768px) {
+  header {
+    min-height: auto;
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  .container_bouton_dashboard {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .container_bouton_dashboard ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-nav {
+    width: 100%;
+  }
+
+  .box_titre_location_admin {
+    font-size: 20px;
+  }
+
+  .grande_box_formulaire_ajout_location {
+    width: calc(100% - 20px);
+
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    padding: 15px;
+  }
+
+  .box_formulaire {
+    flex: none;
+
+    width: 100%;
+    max-width: none;
+    min-height: auto;
+  }
+
+  .box_formulaire h1 {
+    font-size: 22px;
+  }
+}

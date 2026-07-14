@@ -117,11 +117,11 @@ require "config.php";
       </div>
       <div class="box_info_1" ;>
         <strong>Vente Vs Location</strong><br><br>
-        <a href="admin_ajout_location.php">
+        <a href="LocVsAchat.php">
           Location --> Vente
         </a>
         <br>
-        <a href="admin_ajout_location.php">
+        <a href="LocVsAchat.php">
           Vente --> Location
         </a>
       </div>
