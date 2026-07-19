@@ -74,13 +74,12 @@ body {
   border: 2px solid #FFC000;
   font-family: Arial, sans-serif;
   font-size: 24px;
-  height: 1000px;
   padding: 10px;
   margin: 10px;
   color: black;
 }
 
-.box_info, .box_info_command_in_progress, .box_véhicule_management {
+.box_info, .box_véhicule_management {
   display : flex;
   flex: 1;
   text-align: center;
@@ -89,22 +88,30 @@ body {
   clear: both;
 }
 
+.box_info_command_in_progress {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
 .box_info_1 {
 
  width: 25%;
  padding: 10px;
+ border-radius: 10px;
 }
 
 
 table{
   width: 100%;
-  borde-collapse: collapse;
+  border-collapse: collapse;
+  font-size: 18px;
 }
 
 th, td {
 border: 1px solid gray;
 padding: 8px;
 text-align: center;
+overflow-wrap: anywhere;
 }
 
  th{
@@ -114,7 +121,7 @@ text-align: center;
 
 .footer {
   background-color: #595959;
-  borde-radius: 10px;
+  border-radius: 10px;
   padding: 10px;
   text-align: center;
   color: yellow;

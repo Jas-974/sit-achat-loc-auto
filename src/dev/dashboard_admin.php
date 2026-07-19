@@ -50,17 +50,30 @@ require "config.php";
     <div class="box_info" ;>
       <div class="box_info_1" ;>
         <strong> Commande en cours</strong><br><br>
-        <a>12 commandes a valider</a><br>
-        <a>1 commandes rejeté</a><br>
-        <a>2 commandes valider</a><br>
+<a>Commandes en attente : 12</a><br>
+<a>Commandes validées : 2</a><br>
+<a>Commandes rejetées : 1</a><br>
+<a>Total des commandes : 15</a><br>
+<a>------------------------------------------</a><br>
+<a>Commandes Achat : 10</a><br>
+<a>Commandes Location : 5</a><br>
+<a>------------------------------------------</a><br>
+
       </div>
       <div class="box_info_1" ;>
-        <strong> Dashboard</strong><br><br>
-        <a>Nombre d'utilisateur connecté : XXXXX</a><br>
-        <a>Nombre d'utilisateur inscrit : XXXXXX</a>
+        <strong>UTILISATEURS & PARC</strong><br><br>
+        <a>Utilisateurs inscrits : 25</a><br>
+        <a>Véhicules disponibles : 14</a><br>
+        <a>Véhicules réservés : 8</a><br>
+        <a>Total des véhicules : 22</a><br>
+
       </div>
       <div class="box_info_1" ;>
-        <strong> Accés au Log</strong><br><br>
+        <strong>LOGS & ALERTES</strong><br><br>
+        <a>Logs INFO : 24</a><br>
+<a>Logs WARNING : 2</a><br>
+<a>Logs ERROR : 0</a><br>
+
       </div>
 
     </div>

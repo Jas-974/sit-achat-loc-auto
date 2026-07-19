@@ -59,9 +59,10 @@ $vehicules_location = ExtractVehiculeLocation($pdo);
   <div class="grande_box_formulaire_ajout_location">
     <div class="box_formulaire">
       <h1>Liste de véhicule en location en base</h1>
-      <!--Affichage des véhcules à l'achat-->
+      <h2>Bascule véhicule location vers vente</h2>
+      <!--bascule des véhicules à l'achat-->
       <?php foreach ($vehicules_location as $vehicule_location): ?>
-        <a href="gestion_vehicule.php?id=<?= $vehicule_location['id']; ?>">
+        <a href="gestion_vehicule_locachat_admin.php?id=<?= $vehicule_location['id']; ?>">
           <?= htmlspecialchars($vehicule_location['id']); ?>
           <?= htmlspecialchars($vehicule_location['marque']); ?>
           <?= htmlspecialchars($vehicule_location['modele']); ?>
@@ -74,11 +75,12 @@ $vehicules_location = ExtractVehiculeLocation($pdo);
 
     <div class="box_formulaire">
       <h1>Liste de véhicule à la vente en base</h1>
-      <!--Affichage des véhcules à l'achat-->
+      <h2>Bascule véhicule vente vers location</h2>
+      <!--bascule des véhicules à la location-->
 
 
       <?php foreach ($vehicules_achat as $vehicule_achat): ?>
-        <a href="gestion_vehicule.php?id=<?= $vehicule_achat['id']; ?>">
+        <a href="gestion_vehicule_achatloc_admin.php?id=<?= $vehicule_achat['id']; ?>">
           <?= htmlspecialchars($vehicule_achat['id']); ?>
           <?= htmlspecialchars($vehicule_achat['marque']); ?>
           <?= htmlspecialchars($vehicule_achat['modele']); ?>
