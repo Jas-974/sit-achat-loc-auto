@@ -2,6 +2,30 @@
 session_start();
 require_once "fonction_dashboard_administrateur.php";
 require "config.php";
+$emplacementFichierLog = __DIR__ . "/logs/app.log";
+?>
+
+<?php
+//afichage information statistique
+$nbreCommandeAttente = NbreCommande($pdo, 1);
+$nbreCommandeValider = NbreCommande($pdo, 2);
+$nbreCommandeRejeter = NbreCommande($pdo, 3);
+$nbreTotalCommande = NbreTotalCommande($pdo);
+//nombre de commande en location et achat
+$nbreTotalCommandeLocation = NbreCommandeLocation($pdo,"location");
+$nbreTotalCommandeAchat = NbreCommandeAchat($pdo,"achat");
+
+//le pavet UTILISATEURS & PARC
+$nbreUtilisateurInscrit = NbreUtilisateurInscrit($pdo);
+$nbreVehiculeDisponible = NbreVehiculeDisponible($pdo,"disponible");
+$nbreVehiculeReserver = NbreVehiculeReserve($pdo,"reserve");
+$nbreTotalVehicule = NbreTotalVehicule($pdo);
+
+//Affichage info Log
+$totalLogInfo = VerifNombreLog($emplacementFichierLog, "INFO");
+$totalLogWarning = VerifNombreLog($emplacementFichierLog, "WARNING");
+$totalLogError  =VerifNombreLog($emplacementFichierLog, "ERROR");
+
 ?>
 
 <!DOCTYPE html>
@@ -50,29 +74,57 @@ require "config.php";
     <div class="box_info" ;>
       <div class="box_info_1" ;>
         <strong> Commande en cours</strong><br><br>
-<a>Commandes en attente : 12</a><br>
-<a>Commandes validées : 2</a><br>
-<a>Commandes rejetées : 1</a><br>
-<a>Total des commandes : 15</a><br>
+        <a>------------------------------------------</a><br>
+<a>Commandes en attente : 
+  <?= $nbreCommandeAttente ?></a><br>
+<a>Commandes validées : 
+ <?= $nbreCommandeValider ?>
+</a><br>
+<a>Commandes rejetées :
+  <?= $nbreCommandeRejeter ?>
+</a><br>
 <a>------------------------------------------</a><br>
-<a>Commandes Achat : 10</a><br>
-<a>Commandes Location : 5</a><br>
+<a>Total des commandes :
+  <?= $nbreTotalCommande ?>
+</a><br>
+
+<a>------------------------------------------</a><br>
+<a>Commandes Achat :
+  <?= $nbreTotalCommandeAchat ?>
+</a><br>
+<a>Commandes Location : 
+ <?=  $nbreTotalCommandeLocation ?>
+</a><br>
 <a>------------------------------------------</a><br>
 
       </div>
       <div class="box_info_1" ;>
         <strong>UTILISATEURS & PARC</strong><br><br>
-        <a>Utilisateurs inscrits : 25</a><br>
-        <a>Véhicules disponibles : 14</a><br>
-        <a>Véhicules réservés : 8</a><br>
-        <a>Total des véhicules : 22</a><br>
+        <a>Utilisateurs inscrits :
+         <?=  $nbreUtilisateurInscrit ?>
+        </a><br>
+        <a>Véhicules disponibles : 
+          <?=  $nbreVehiculeDisponible ?>
+        </a><br>
+        <a>Véhicules réservés : 
+         <?=  $nbreVehiculeReserver ?>
+        </a><br>
+        <a>Total des véhicules : 
+        <?=  $nbreTotalVehicule ?>
+        </a><br>
 
       </div>
       <div class="box_info_1" ;>
         <strong>LOGS & ALERTES</strong><br><br>
-        <a>Logs INFO : 24</a><br>
-<a>Logs WARNING : 2</a><br>
-<a>Logs ERROR : 0</a><br>
+<a>Logs INFO : 
+  <?=  $totalLogInfo ?>
+</a><br>
+<a>Logs WARNING : 
+  <?=  $totalLogWarning ?>
+</a><br>
+<a>Logs ERROR : 
+  <?=  $totalLogError ?>
+</a><br>
 
       </div>
 
