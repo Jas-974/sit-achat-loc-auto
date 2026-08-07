@@ -18,13 +18,14 @@ class MiseaJourCommandValiderTest extends TestCase
 
 CREATE TABLE table_statu_command (
 id INTEGER PRIMARY KEy,
+commande_id INTEGER,
 status_command TEXT,
 code_status_command TEXT)"
 );
 
 
         $this->pdo->exec("
-INSERT INTO table_statu_command(id, status_command, code_status_command)
+INSERT INTO table_statu_command(commande_id, status_command, code_status_command)
 VALUES
 (1, 'Réservation en cours', '1')
 ");

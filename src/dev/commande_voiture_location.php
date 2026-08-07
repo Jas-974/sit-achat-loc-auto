@@ -3,7 +3,6 @@ session_start();
 
 require "config.php";
 require_once __DIR__ . '/fonction_commande_voiture_location.php';
-require __DIR__ . "/config.php";
 
 ?>
 

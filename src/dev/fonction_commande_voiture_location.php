@@ -115,22 +115,8 @@ $status_command = $_POST['maj_status_command'];
 //génération du numero de commande
 $num_command = generationNumCommand();
 
- // insertion des donnée de la validation de la commande dans la table table_statu_command
-  $sql_insert_status_command = " INSERT INTO table_statu_command (numero_command, nom, prenom, email, type_offre, status_command, user_id)
-VALUES (:numero_command, :nom, :prenom, :email, :type_offre, :status_command, :user_id)";
 
-  $stmt_status_command  = $pdo->prepare($sql_insert_status_command);
-  $stmt_status_command->execute([
-    ":numero_command" => $num_command,
-    ":nom" => $donnee_user["nom"],
-    ":prenom" => $donnee_user["prenom"],
-    ":email" => $donnee_user["email"],
-    ":type_offre" => $donnee_vehicule["type_offre"],
-    ":status_command" => $status_command,
-    ":user_id" => $user_id
-  ]);
-
-  //extration du document uploadé avant création de la commande
+ //extration du document uploadé avant création de la commande
 $sql_document = "SELECT documents 
 FROM documents_upload 
 WHERE user_id = :user_id
@@ -145,6 +131,8 @@ $stmt_doc->execute([ ":user_id" => $user_id,
 //recup chemin des documents uploadé
 $documents_upload = $stmt_doc->fetchColumn();
 
+
+
   // insertion dans la table table_commandes
   $sql_insert_table_command = " INSERT INTO table_commandes (user_id, car_id, order_type, documents, adate)
 VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
@@ -158,8 +146,26 @@ VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
   ]);
 
  $commande_id = $pdo->lastInsertId();
- 
-  //gestion des logs commande achat créer 
+
+ // insertion des donnée de la validation de la commande dans la table table_statu_command
+  $sql_insert_status_command = " INSERT INTO table_statu_command (numero_command, nom, prenom, 
+  email, type_offre, status_command, user_id, code_status_command, commande_id)
+VALUES (:numero_command, :nom, :prenom, :email, :type_offre, :status_command, :user_id, :code_status_command, :commande_id)";
+
+  $stmt_status_command  = $pdo->prepare($sql_insert_status_command);
+  $stmt_status_command->execute([
+    ":numero_command" => $num_command,
+    ":nom" => $donnee_user["nom"],
+    ":prenom" => $donnee_user["prenom"],
+    ":email" => $donnee_user["email"],
+    ":type_offre" => $donnee_vehicule["type_offre"],
+    ":status_command" => $status_command,
+    ":user_id" => $user_id,
+    ":code_status_command" => 1,
+     ":commande_id" => $commande_id
+  ]);
+
+  //gestion des logs commande location créer 
    GestionLog("INFO", "Commande location créée - commande_id = $commande_id" . " - utilisateur_id = $user_id" . " - véhicule_id =" . $donnee_vehicule["id"]);
 
 
