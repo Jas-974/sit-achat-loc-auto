@@ -26,7 +26,7 @@ AND user_id = '$user_id'";
 
 $stmt = $pdo->prepare($sql);
     $stmt->execute();
- header("Location: /dev_web_locachat/src/dev/espace_client_news.php");
+ header("Location: espace_client_news.php");
  exit;
 
 

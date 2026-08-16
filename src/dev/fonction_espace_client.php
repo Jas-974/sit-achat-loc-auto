@@ -67,32 +67,55 @@ function AffichageDeLaRubriqueCommand($pdo, $email): array
     return $stmtTcommand->fetchAll(PDO::FETCH_ASSOC);
 }
 //fonction enregistrement de document
-function enregDocument($conn)
+function enregDocument(PDO $pdo)
 {
-    //Connexion à la base de donnée
-    if ($conn->connect_error) {
-        return "Erreur connexion BDD : " . $conn->connect_error;
-    }
+  
     // recupère le fichier téléverser et l'enregistre sur le serveur
-    if (isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
+    if (isset($_FILES['document']) && $_FILES['document']['error'] === UPLOAD_ERR_OK) 
+        {
 
         $tmp = $_FILES['document']['tmp_name'];
         $nom = $_FILES['document']['name'];
         $chemin = "uploads/" . $nom;
+
+        //met le fichier dans le dossier Upload
         if (move_uploaded_file($tmp, $chemin)) {
 
-            $sql = "INSERT INTO documents_locachat (nom, chemin) VALUES ('$nom', '$chemin')";
+            $sql = "INSERT INTO documents_locachat (nom, chemin) VALUES (:nom, :chemin)";
 
-            if ($conn->query($sql) === TRUE) {
-                return "Fichier envoyé avec succès";
+
+            $stmt = $pdo->prepare($sql);
+
+   if ($stmt->execute([
+    ":nom" => $nom,
+    ":chemin" => $chemin
+   ])) {
+             return "Fichier envoyé avec succès";
             } else {
-                return "Erreur SQL : " . $conn->error;
+                return "Erreur SQL";
             }
         } else {
             return "Erreur lors du téléversement du fichier.";
         }
     }
     return "Aucun fichier selectionné.";
+}
+
+
+// fonction affichage document utilisateur dans l'espace client
+function AffichDocUtilisateurEspaceClient(PDO $pdo, int $user_id): array
+{
+$sql = "SELECT documents, adate
+FROM table_commandes
+WHERE user_id = :user_id
+AND documents IS NOT NULL
+AND documents != ''
+ORDER BY adate DESC";
+
+$stmtAff = $pdo->prepare($sql);
+$stmtAff->execute([":user_id" => $user_id]);
+
+return $stmtAff->fetchAll(PDO::FETCH_ASSOC);
 }
 
 

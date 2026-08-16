@@ -27,6 +27,9 @@ $vehicules = RecherchePourAfficheVehiculesEspaceClient($pdo);
 
 //Appel de la fonction affichage de la rubrique Command
 $info_command = AffichageDeLaRubriqueCommand($pdo, $user["email"]);
+
+//Appel de la fonction affichage de la rubrique mes documents
+$info_document = AffichDocUtilisateurEspaceClient($pdo, (int) $_SESSION["user_id"]);
 ?>
 
 
@@ -133,14 +136,24 @@ $info_command = AffichageDeLaRubriqueCommand($pdo, $user["email"]);
         <h1>Mes documents</h1>
         <p></p>
 
-        <?php
-        $conn = new mysqli("localhost", "root", "", "bd_locachat", 3307);
-        //$conn = new mysqli("sql305.infinityfree.com", "if0_41302948", "B7jc5nTtIiq", "if0_41302948_bd_locachat");
-        //appel de la fonction enreg document
-        $enreg_doc = enregDocument($conn);
-        echo $enreg_doc;
-        ?>
-        <h3>Facture_5676.pdf</h3>
+ 
+
+        <?php if (!empty($info_document)): ?>
+
+        <?php foreach ($info_document as $info_documents): ?>
+          <p>
+            <a href="<?= htmlspecialchars($info_documents["documents"]) ?>"
+            target="_blank">
+            Consulter le documents
+        </a>
+          </p>
+
+          <?php endforeach; ?>
+
+          <?php else : ?>
+            <p>Aucun document enregistrer.</p>
+            <?php endif; ?>
+     
 
       </div>
       <div class="box_body_mes_commandes">
