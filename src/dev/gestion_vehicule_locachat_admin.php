@@ -57,7 +57,7 @@ $vehicules_location = RecupVehculeIdLocation($pdo, $idvehicule);
     <div class="grande_box_formulaire_ajout_location">
 
         <div class="box_formulaire">
-            <h1>Saisi des données du vehicule pour la vente</h1>
+            <h1>Saisi des données du vehicule pour la location</h1>
             <!--formulaire de saisie de vehicule de location-->
             <form action="update_vehicule_loc_achat_admin.php" method="post">
                 <input type="hidden" name="id" value="<?= htmlspecialchars((string) $vehicules_location['id']); ?>">

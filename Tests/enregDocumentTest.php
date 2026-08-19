@@ -7,6 +7,7 @@ require_once __DIR__ . '/../src/dev/fonction_espace_client.php';
 class enregDocumentTest extends TestCase
 {
 
+
     protected function setUp(): void
     {
         $_FILES =[];
@@ -14,17 +15,27 @@ class enregDocumentTest extends TestCase
 
     public function testPasDeFichierSelectionner()
     {
-        $conn = new mysqli();
+        
+    $pdo = new PDO('sqlite::memory:');
 
-        $res_enreg_doc = enregDocument($conn);
+
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$_FILES = [];
+
+
+        $res_enreg_doc = enregDocument($pdo);
 
         $this->assertEquals('Aucun fichier selectionné.', $res_enreg_doc);
     }
 
+    
+// test si aucun fichier
 public function testErreurFichier()
 {
 
- $conn = new mysqli();
+$pdo = new PDO('sqlite::memory:');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
  $_FILES["document"] = [
     "name" => "fichier_test.pdf",
@@ -32,7 +43,7 @@ public function testErreurFichier()
     "error" => 1
  ];
 
-        $res_enreg_doc = enregDocument($conn);
+        $res_enreg_doc = enregDocument($pdo);
 
         $this->assertEquals('Aucun fichier selectionné.', $res_enreg_doc);
 
