@@ -1,6 +1,6 @@
 <?php
 require "config.php";
-require "gPostvalue.php";
+require "gPostValue.php";
 require "fonction_insert_achat_admin.php";
 
 // Requète est POST

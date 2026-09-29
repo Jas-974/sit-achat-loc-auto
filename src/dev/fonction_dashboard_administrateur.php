@@ -26,17 +26,40 @@ function MiseaJourCommandRejeter($pdo)
   if (isset($_GET['id']) && isset($_GET['rejeter'])) {
 
 
-    $id = $_GET['id'];
+    $id = (int) $_GET['id'];
     $act_rejeter = $_GET['rejeter'];
 
     if ($act_rejeter == "rejeter") {
       $maj_table = "UPDATE table_statu_command
 SET status_command = 'Commande Rejeter merci de vous rapprocher du Service Client au +262 46 78 24',
 code_status_command = '3'
-WHERE commande_id = '$id'";
+WHERE commande_id = :commande_id";
+
 
       $stmt = $pdo->prepare($maj_table);
-      $stmt->execute();
+      $stmt->execute([':commande_id' => $id]);
+
+// recup id du vehicule de la commande
+
+$sql_vehicule ="SELECT car_id 
+FROM table_commandes 
+WHERE id = :commande_id";
+
+   $stmt_vehicule = $pdo->prepare($sql_vehicule);
+      $stmt_vehicule->execute([':commande_id' => $id]);
+
+
+      $card_id = $stmt_vehicule->fetchColumn();
+
+      //on met a jour le status initial du véhicule
+      if ($card_id) {
+
+        $sql_lib_vehicule = "UPDATE vehicule SET statut ='disponible', status_command = NULL
+WHERE id = :card_id";
+
+        $stmt_liberer = $pdo->prepare($sql_lib_vehicule);
+        $stmt_liberer->execute([':card_id' => $card_id]);
+      }
     }
   }
 }
@@ -70,7 +93,6 @@ ON table_commandes.id = table_statu_command.commande_id";
   $donnee_command = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
   return $donnee_command ?: [];
-
 }
 ?>
 
@@ -102,18 +124,15 @@ function affichTableauComValidRejet($app_command)
       echo '<td>' . $ligne_affich_command['order_type'] . '</td>';
       echo '<td>' . $ligne_affich_command['status_command'] . '</td>';
 
-     
 
-if (!empty($ligne_affich_command['documents']))
-  {
-    echo '<td>
+
+      if (!empty($ligne_affich_command['documents'])) {
+        echo '<td>
     <a href="' . htmlspecialchars($ligne_affich_command['documents']) . '"
     target="_blank">Voir le document</a></td>';
-    
-  } else {
-     echo '<td>Aucun document</td>';
-
-  }
+      } else {
+        echo '<td>Aucun document</td>';
+      }
 
       echo '<td>' . $ligne_affich_command['adate'] . '</td>';
       //afficher les boutons de validation/rejet de dossier
@@ -133,144 +152,133 @@ if (!empty($ligne_affich_command['documents']))
 
 //stat des données du dashboard
 
-function NbreCommande (PDO $pdo, int $code_status_command): int
+function NbreCommande(PDO $pdo, int $code_status_command): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM table_statu_command
 WHERE code_status_command = :code_status_command";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute(["code_status_command" => $code_status_command]);
 
   return (int) $stmt->fetchColumn();
-
 }
 //fonction calcule commande total
 function NbreTotalCommande(PDO $pdo): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM table_commandes";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute();
 
   return (int) $stmt->fetchColumn();
-
 }
 
 //Fonction commande Location en cours
-function NbreCommandeLocation (PDO $pdo, string $tlcommande): int
+function NbreCommandeLocation(PDO $pdo, string $tlcommande): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM table_commandes
 WHERE order_type = :tlcommande";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute(["tlcommande" => $tlcommande]);
 
   return (int) $stmt->fetchColumn();
-
 }
+
 //Fonction commande Achat en cours
-function NbreCommandeAchat (PDO $pdo, string $tAcommande): int
+function NbreCommandeAchat(PDO $pdo, string $tAcommande): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM table_commandes
 WHERE order_type = :tAcommande";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute(["tAcommande" => $tAcommande]);
 
   return (int) $stmt->fetchColumn();
-
 }
 
 //fonction calcule commande total
 function NbreUtilisateurInscrit(PDO $pdo): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM users";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute();
 
   return (int) $stmt->fetchColumn();
-
 }
 
 //Fonction Vehicule disponible
-function NbreVehiculeDisponible (PDO $pdo, string $VehiculeDispo): int
+function NbreVehiculeDisponible(PDO $pdo, string $VehiculeDispo): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM vehicule
 WHERE statut = :VehiculeDispo";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute(["VehiculeDispo" => $VehiculeDispo]);
 
   return (int) $stmt->fetchColumn();
-
 }
 
 
 //Fonction Vehicule réservé
-function NbreVehiculeReserve (PDO $pdo, string $VehiculeRes): int
+function NbreVehiculeReserve(PDO $pdo, string $VehiculeRes): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM vehicule
 WHERE statut = :VehiculeRes";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute(["VehiculeRes" => $VehiculeRes]);
 
   return (int) $stmt->fetchColumn();
-
 }
 
 //fonction calcule total vehicule
 function NbreTotalVehicule(PDO $pdo): int
 {
 
-$sql ="SELECT COUNT(*)
+  $sql = "SELECT COUNT(*)
 FROM vehicule";
 
- $stmt = $pdo->prepare($sql);
+  $stmt = $pdo->prepare($sql);
   $stmt->execute();
 
   return (int) $stmt->fetchColumn();
-
 }
 
 // fonction pour vérifier le status des log
 
 function VerifNombreLog(string $emplacementFichierLog, string $typeLog): int
 {
-// vérif si fichier log existe
-if(!file_exists($emplacementFichierLog))
-  {
+  // vérif si fichier log existe
+  if (!file_exists($emplacementFichierLog)) {
     return 0;
   }
 
   $ligneFichierLog = file($emplacementFichierLog);
-//Initilaisation compteur
+  //Initilaisation compteur
   $compteur = 0;
-//lecture du fichier
-foreach ($ligneFichierLog as $ligneFichierLogs)
-  {
-if (str_contains($ligneFichierLogs, $typeLog))
-  {
+  //lecture du fichier
+  foreach ($ligneFichierLog as $ligneFichierLogs) {
+    if (str_contains($ligneFichierLogs, $typeLog)) {
 
-$compteur++;
+      $compteur++;
+    }
   }
-  }
-return $compteur;
-
+  return $compteur;
 }
 ?>

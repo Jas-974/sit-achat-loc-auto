@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../src/dev/gPostvalue.php';
+require_once __DIR__ . '/../src/dev/gPostValue.php';
 require_once __DIR__ . '/../src/dev/fonction_insert_achat_admin.php';
 
 class VerifFormChampsVideTest extends TestCase

@@ -78,7 +78,7 @@ return [
 
 }
 
-function miseAjourStatusVehiculeReserve(PDO $pdo):  void
+function miseAjourStatusVehiculeReserve(PDO $pdo):  bool
 {
 
 if (isset($_POST['maj_status_command'])) {
@@ -88,15 +88,19 @@ if (isset($_POST['maj_status_command'])) {
   $sql = "UPDATE vehicule 
             SET status_command = :status_command,
             statut = :statut
-            WHERE id = :id";
+            WHERE id = :id
+            AND statut = :statut_disponible";
 
   $stmt = $pdo->prepare($sql);
   $stmt->execute([
     ':status_command' => $status_command,
     ':statut' => 'reserve',
-    ':id' => $id
+    ':id' => $id,
+    ':statut_disponible' => 'disponible'
   ]);
+  return $stmt->rowCount() ===1;
 }
+return false;
 }
 
 

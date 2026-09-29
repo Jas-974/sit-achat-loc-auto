@@ -33,8 +33,12 @@ $donnee_vehicule = $recup_vehicule["vehicule"];
 if (isset($_POST['maj_status_command'])) {
 
   //appel a la fonction de maj de la table status commande avec la reservation en cours si clique sur "valider la prise en charge"
-  majStatusVehiculeReserveAchat($pdo);
+  $vehicule_res = majStatusVehiculeReserveAchat($pdo);
 
+if (!$vehicule_res) {
+echo "ce véhicule est déjà réservé.";
+exit;
+}
   $commande_id =  enregCommandVehiculeAchat($pdo, $donnee_user, $donnee_vehicule, $user_id);
 
   //retour vers la page commande
@@ -138,6 +142,13 @@ if (isset($_POST['maj_status_command'])) {
         &#10003;Votre permis de conduire<span style="color:#FFC000;">*</span><br>
         &#10003;Un Relevé d'Identité Bancaire<span style="color:#FFC000;">*</span><br>
         &#10003;Un justificatif d'adresse de mois de 3 mois<span style="color:#FFC000;">*</span><br>
+
+        <?php
+        //on refuse les fichiers autre que PDF, JPG, JPEG, et PNG
+        if (isset($_GET["erreur"]) && $_GET["erreur"] == "fichier") {
+          echo "<p><strong>Fichier refusé. Les fichiers outorisés PDF, JPG, JPEG, et PNG.</strong></p>";
+        }
+        ?>
 
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"

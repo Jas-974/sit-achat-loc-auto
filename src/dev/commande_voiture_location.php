@@ -36,10 +36,13 @@ if(isset($_POST["maj_status_command"])){
 
 
 //appel de la fonction de mise a jours du status reservé dans la table vehicule
-miseAjourStatusVehiculeReserve($pdo);
+$vehiculereserver = miseAjourStatusVehiculeReserve($pdo);
 
-  //appel de la fonction génération du numero de command
-  $num_command = generationNumCommand();
+if (!$vehiculereserver) {
+echo "ce véhicule est déjà réservé.";
+exit;
+}
+
 
   $Enreg_command_OK = enregCommandeVehiculeLocation($pdo, $donnee_user, $donnee_vehicule, $user_id);
 
@@ -146,6 +149,14 @@ miseAjourStatusVehiculeReserve($pdo);
         &#10003;Votre permis de conduire<span style="color:#FFC000;">*</span><br>
         &#10003;Un Relevé d'Identité Bancaire<span style="color:#FFC000;">*</span><br>
         &#10003;Un justificatif d'adresse de mois de 3 mois<span style="color:#FFC000;">*</span><br>
+
+
+<?php
+//on refuse les fichiers autre que PDF, JPG, JPEG, et PNG
+if (isset($_GET["erreur"]) && $_GET["erreur"] == "fichier") {
+echo "<p><strong>Fichier refusé. Les fichiers outorisés PDF, JPG, JPEG, et PNG.</strong></p>";
+}
+?>
 
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"

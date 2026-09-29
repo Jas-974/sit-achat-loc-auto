@@ -42,6 +42,27 @@ if (isset($_FILES['files'])) {
         if (!empty($tmp_name) && $_FILES['files']['error'][$index] === UPLOAD_ERR_OK) {
 
             $nom = $_FILES['files']['name'][$index];
+            //récupération du type de fichier
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $type_fic = $finfo->file($tmp_name);
+
+            //type fichier permi
+            $type_fic_permis = [
+                "application/pdf",
+                "image/jpeg",
+                "image/png"
+            ];
+            //vérif du type de fichier
+            if(!in_array($type_fic,$type_fic_permis)) {
+
+GestionLog("WARNING", "Type Fichier non autorisé : " . $type_fic);
+
+$page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
+
+header("Location: commande_voiture_location.php?id=" . $id . "&erreur=fichier");
+exit;
+            }
+
             $rename_nom = time() . "_" . uniqid() . "_" . $nom . "_" . $user_id;
             $adress_fichier = $rep_upload . $rename_nom;
 //pour test alerting
