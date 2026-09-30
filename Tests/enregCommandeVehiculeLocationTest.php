@@ -14,41 +14,31 @@ class enregCommandeVehiculeLocationTest extends TestCase
 
     $_POST = [];
 
-    $this->pdo = new PDO('sqlite::memory:');
-    $this->pdo->exec(
-      "
-CREATE TABLE table_statu_command (
-id INTEGER PRIMARY KEy,
-numero_command TEXT,
-nom TEXT,
-prenom TEXT, 
-email TEXT, 
-type_offre TEXT, 
-status_command TEXT, 
-user_id TEXT,
- code_status_command INTEGER,
-commande_id INTEGER
-)"
-    );
+    $port = getenv('DB_TEST_PORT') ?: '3307';
+    $user = getenv('DB_TEST_USER') ?: 'root';
+    $password = getenv('DB_TEST_PASSWORD') ?: '';
 
+    $this->pdo = new PDO("mysql:host=127.0.0.1;port=$port;dbname=locachat_test;charset=utf8mb4", $user, $password);
+    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    //néttoyage des tables
+    $this->pdo->exec("DELETE FROM table_statu_command");
+    $this->pdo->exec("DELETE FROM documents_upload");
+    $this->pdo->exec("DELETE FROM table_commandes");
+    $this->pdo->exec("DELETE FROM vehicule");
+    $this->pdo->exec("DELETE FROM users");
+
+    //insertion données de test
     $this->pdo->exec("
- CREATE TABLE table_commandes (
-id INTEGER PRIMARY KEy,
-user_id INTEGER, 
-car_id INTEGER, 
-order_type TEXT, 
-documents TEXT, 
-adate TEXT)
+INSERT INTO users(id, numero_client, nom, prenom,email, pseudo, pwd_hash, role)
+VALUES
+(4, 'TEST003', 'MrTestrois', 'John', 'mrjohntrois@orange.fr', 'mrtestrois', 'john', 'client')
 ");
 
-    $this->pdo->exec("
-CREATE TABLE documents_upload (
-id INTEGER PRIMARY KEy,
-user_id INTEGER, 
-car_id INTEGER, 
-documents TEXT,
-created_at TEXT)
-");
+
+    $this->pdo->exec("INSERT INTO vehicule (id, marque, modele, type_offre, statut, status_command)
+        VALUES
+        (1,'peugeot', '208', 'location', 'disponible', NULL)");
   }
 
   public function testEnregCommandeLocation()

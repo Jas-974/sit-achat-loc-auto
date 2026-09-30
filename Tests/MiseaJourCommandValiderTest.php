@@ -41,7 +41,7 @@ VALUES
 
   MiseaJourCommandValider($this->pdo);
 
-  $stmt = $this->pdo->query("SELECT * FROM table_statu_command WHERE id = 1");
+  $stmt = $this->pdo->query("SELECT * FROM table_statu_command WHERE commande_id = 1");
   $commande = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $this->assertEquals("Commande Validée , merci de proceder au paiement",
