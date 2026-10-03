@@ -12,26 +12,23 @@ class insertVehiculeTest extends TestCase
     protected function setUp(): void
     {
 
-        $this->pdo = new PDO('sqlite::memory:');
-        $this->pdo->exec("
-        CREATE TABLE vehicule ( 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        marque TEXT,
-modele TEXT,
-annee TEXT,
-kilometrage TEXT,
-boite TEXT,
-puissance TEXT,
-carburant TEXT,
-couleur TEXT,
-type_offre TEXT,
-prix TEXT,
-statut TEXT,
-description TEXT,
-apport TEXT,
-loyer_mois TEXT
-        )
-");
+        $port = getenv('DB_TEST_PORT') ?: '3307';
+    $user = getenv('DB_TEST_USER') ?: 'root';
+    $password = getenv('DB_TEST_PASSWORD') ?: '';
+
+    $this->pdo = new PDO("mysql:host=127.0.0.1;port=$port;dbname=locachat_test;charset=utf8mb4", $user, $password);
+
+    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+
+//néttoyage des tables
+    $this->pdo->exec("DELETE FROM table_statu_command");
+    $this->pdo->exec("DELETE FROM documents_upload");
+    $this->pdo->exec("DELETE FROM table_commandes");
+    $this->pdo->exec("DELETE FROM vehicule");
+    $this->pdo->exec("DELETE FROM users");
+
 
 
 
@@ -59,7 +56,7 @@ $this->vehicule = [
 
 $this->assertTrue(insertVehicule($this->pdo, $this->vehicule));
 //compte le nombre d'enreg dans la base
-$res_vehicule = $this->pdo->query("SELECT COUNT (*) FROM vehicule")->fetchColumn();
+$res_vehicule = $this->pdo->query("SELECT COUNT(*) FROM vehicule")->fetchColumn();
 
 $this->assertEquals(1, $res_vehicule);
     }

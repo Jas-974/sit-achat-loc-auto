@@ -14,21 +14,28 @@ protected function setUp(): void {
 
 $_SESSION = [];
 
-  $this->pdo = new PDO('sqlite::memory:');
-$this->pdo->exec("
-CREATE TABLE users (
-id INTEGER PRIMARY KEy,
-nom TEXT,
-prenom TEXT,
-email TEXT
-)
-");
+  $port = getenv('DB_TEST_PORT') ?: '3307';
+    $user = getenv('DB_TEST_USER') ?: 'root';
+    $password = getenv('DB_TEST_PASSWORD') ?: '';
+
+    $this->pdo = new PDO("mysql:host=127.0.0.1;port=$port;dbname=locachat_test;charset=utf8mb4", $user, $password);
+    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+    //néttoyage des tables
+    $this->pdo->exec("DELETE FROM table_statu_command");
+    $this->pdo->exec("DELETE FROM documents_upload");
+    $this->pdo->exec("DELETE FROM table_commandes");
+    $this->pdo->exec("DELETE FROM vehicule");
+    $this->pdo->exec("DELETE FROM users");
+
 
         $this->pdo->exec("
-INSERT INTO users (id, nom , prenom, email) VALUES
-(1,'Robert', 'Hélène','Rhel@orange.fr')
-
+INSERT INTO users (id, numero_client, nom, prenom,email, pseudo, pwd_hash, role)
+VALUES
+(1, 'TEST013', 'Mrpie', 'John', 'mrjohn.P@orange.fr', 'mrpie', 'john', 'client')
 ");
+
     }
 
 
@@ -39,9 +46,9 @@ public function testRecupInfoUtilisateur()
 
 
         $this->assertTrue($res_info_utilisateur["success"]);
-        $this->assertEquals("Robert", $res_info_utilisateur["user"]["nom"]);
-        $this->assertEquals("Hélène", $res_info_utilisateur["user"]["prenom"]);
-        $this->assertEquals("Rhel@orange.fr", $res_info_utilisateur["user"]["email"]);
+        $this->assertEquals("Mrpie", $res_info_utilisateur["user"]["nom"]);
+        $this->assertEquals("John", $res_info_utilisateur["user"]["prenom"]);
+        $this->assertEquals("mrjohn.P@orange.fr", $res_info_utilisateur["user"]["email"]);
     }
 
 }
