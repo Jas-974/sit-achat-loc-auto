@@ -59,7 +59,7 @@ GestionLog("WARNING", "Type Fichier non autorisé : " . $type_fic);
 
 $page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
 
-header("Location: commande_voiture_location.php?id=" . $id . "&erreur=fichier");
+header("Location: " . $page_retour . "?id=" . $id . "&erreur=fichier");
 exit;
             }
 

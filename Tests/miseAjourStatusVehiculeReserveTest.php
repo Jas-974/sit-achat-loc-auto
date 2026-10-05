@@ -14,7 +14,7 @@ class miseAjourStatusVehiculeReserveTest extends TestCase
 
     $_POST = [];
 
-   $port = getenv('DB_TEST_PORT') ?: '3307';
+    $port = getenv('DB_TEST_PORT') ?: '3307';
     $user = getenv('DB_TEST_USER') ?: 'root';
     $password = getenv('DB_TEST_PASSWORD') ?: '';
 
@@ -32,9 +32,29 @@ class miseAjourStatusVehiculeReserveTest extends TestCase
     $this->pdo->exec("INSERT INTO vehicule (id, marque, modele, type_offre, statut, status_command)
         VALUES
         (1,'peugeot', '208', 'location', 'disponible', NULL)");
-
   }
 
+
+  public function testReservationImpossibleSiVehiculeDejaReserv(): void
+  {
+    //Le vehicule est deja réservé
+    $this->pdo->exec("UPDATE vehicule
+    SET statut = 'reserve'
+    WHERE id =1");
+
+    //reserver une deuxieme fois
+    $_POST['id'] = 1;
+    $_POST['maj_status_command'] = 'Réservation en cours';
+    $res_reservation = miseAjourStatusVehiculeReserve($this->pdo);
+
+    //refus deuxieme reservation
+    $stmt = $this->pdo->query("
+SELECT statut FROM vehicule WHERE id= 1");
+
+    $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+    $this->assertEquals('reserve', $vehicule['statut']);
+    $this->assertFalse($res_reservation);
+  }
   public function testMiseAJourStatusVehicule()
   {
     $_POST['id'] = 1;

@@ -34,6 +34,50 @@ class majStatusVehiculeReserveAchatTest extends TestCase
         (1,'peugeot', '208', 'achat', 'disponible', 'aucune')");
     }
 
+public function testReservationImpossibleSiVehiculeDejaReserv(): void
+  {
+    //Le vehicule est deja réservé
+    $this->pdo->exec("UPDATE vehicule
+    SET statut = 'reserve'
+    WHERE id =1");
+
+    //reserver une deuxieme fois
+    $_POST['id'] = 1;
+    $_POST['maj_status_command'] = 'Réservation en cours';
+    $res_reservation = majStatusVehiculeReserveAchat($this->pdo);
+    //la reservation est refusé 
+    $this->assertFalse($res_reservation);
+
+    //vérification le satus du vehicule reservé
+    $stmt = $this->pdo->query("
+SELECT statut FROM vehicule WHERE id= 1");
+
+    $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+    $this->assertEquals('reserve', $vehicule['statut']);
+  }
+  public function testMiseAJourStatusVehicule()
+  {
+    $_POST['id'] = 1;
+    $_POST["maj_status_command"] = "réservation en cours";
+
+    majStatusVehiculeReserveAchat($this->pdo);
+
+    $stmt = $this->pdo->query("
+
+SELECT status_command, statut 
+FROM
+vehicule WHERE id= 1");
+
+    $res_vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $this->assertEquals('réservation en cours', $res_vehicule['status_command']);
+    $this->assertEquals("reserve", $res_vehicule["statut"]);
+  }
+
+
+
+
+
     //test bouton non cliqué donc pas de mise a jours
     public function testBoutonNonCliquer(): void
     {

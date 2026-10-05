@@ -41,7 +41,7 @@ function RecherchePourAfficheVehiculesEspaceClient($pdo): array
 
     if (!empty($recherche)) {
         $sql .= " WHERE (titre LIKE :recherche 
-              OR locachat LIKE :recherche)";
+              OR type_offre LIKE :recherche)";
         $params['recherche'] = '%' . $recherche . '%';
     } else {
         $sql = "SELECT * FROM vehicule LIMIT 6";
