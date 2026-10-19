@@ -6,7 +6,7 @@ function AffichagecatalogueVehicule($pdo)
 
     $rech = '%' . $_GET['champ_recherche'] . '%';
 
-    $sql = "select image, modele, marque , type_offre
+    $sql = "SELECT id, image, modele, marque, type_offre
 FROM vehicule
 WHERE marque LIKE ?
 OR modele LIKE ?
