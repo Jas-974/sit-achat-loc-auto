@@ -118,7 +118,14 @@ $info_document = AffichDocUtilisateurEspaceClient($pdo, (int) $_SESSION["user_id
             <?php if ($info_commands['code_status_command'] == '2') : ?>
 
               <p><a href="page_paiement.php?numero_command=<?= htmlspecialchars($info_commands["numero_command"]) ?>">Procéder au paiement</a></p>
-              <p><a href="annul_commandes.php?numero_command=<?= htmlspecialchars($info_commands["numero_command"]) ?>">Annuler la commande</a></p>
+
+
+              <form action="annul_commandes.php" method="POST">
+                <input type="hidden"
+                name="numero_command"
+                value="<?= htmlspecialchars($info_commands["numero_command"]) ?>">
+                <button type="submit">Annuler la commande</button>
+              </form>
             <?php endif; ?>
 
 

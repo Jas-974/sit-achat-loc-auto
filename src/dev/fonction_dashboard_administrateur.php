@@ -10,10 +10,11 @@ function MiseaJourCommandValider($pdo)
       $maj_table = "UPDATE table_statu_command
 SET status_command = 'Commande Validée , merci de proceder au paiement',
 code_status_command = '2'
-WHERE commande_id = '$id'";
+WHERE commande_id = :id
+AND code_status_command = 1";
 
       $stmt = $pdo->prepare($maj_table);
-      $stmt->execute();
+      $stmt->execute([':id' => $id]);
     }
   }
 }

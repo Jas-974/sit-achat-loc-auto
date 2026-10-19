@@ -154,8 +154,8 @@ VALUES (:user_id, :car_id, :order_type, :documents, CURRENT_TIMESTAMP)";
     GestionLog("INFO", "Commande achat créée - commande_id = $id_commande" . " - utilisateur_id = $user_id" . " - véhicule_id =" . $donnee_vehicule["id"]);
 
     // insertion des donnée de la validation de la commande dans la table table_statu_command
-    $sql_insert_status_command = " INSERT INTO table_statu_command (commande_id, user_id, nom, prenom, email, type_offre, status_command )
-VALUES (:commande_id, :user_id, :nom, :prenom, :email, :type_offre, :status_command)";
+    $sql_insert_status_command = " INSERT INTO table_statu_command (commande_id, user_id, nom, prenom, email, type_offre, status_command, code_status_command )
+VALUES (:commande_id, :user_id, :nom, :prenom, :email, :type_offre, :status_command, 1)";
 
     $stmt_status_command  = $pdo->prepare($sql_insert_status_command);
     $stmt_status_command->execute([

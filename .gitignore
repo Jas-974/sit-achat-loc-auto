@@ -3,3 +3,8 @@ coverage/
 /vendor/
 /src/dev/logs/*.log
 /.env
+
+# Rapport de couverture PHPUnit
+/coverage-linux/
+# Documents téléversés par les utilisateurs
+/src/dev/uploads/*
