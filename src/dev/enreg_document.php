@@ -22,7 +22,9 @@ if (!isset($_POST['id'])) {
 $user_id = $_SESSION["user_id"];
 $id = (int) $_POST['id'];
 
+unset($_SESSION['document_valide'][$id]);
 
+ $fichier_doc = [];
 
 if (isset($_FILES['files'])) {
 
@@ -35,7 +37,6 @@ if (isset($_FILES['files'])) {
         mkdir($rep_upload, 0777, true);
     }
 
-    $fichier_doc = [];
     // boucle pour traiter plusieurs fichiers
     foreach ($_FILES['files']['tmp_name'] as $index => $tmp_name) {
 
@@ -53,22 +54,21 @@ if (isset($_FILES['files'])) {
                 "image/png"
             ];
             //vérif du type de fichier
-            if(!in_array($type_fic,$type_fic_permis)) {
+            if (!in_array($type_fic, $type_fic_permis)) {
 
-GestionLog("WARNING", "Type Fichier non autorisé : " . $type_fic);
+                GestionLog("WARNING", "Type Fichier non autorisé : " . $type_fic);
 
-$page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
+                $page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
 
-header("Location: " . $page_retour . "?id=" . $id . "&erreur=fichier");
-exit;
+                header("Location: " . $page_retour . "?id=" . $id . "&erreur=fichier");
+                exit;
             }
 
             $rename_nom = time() . "_" . uniqid() . "_" . $nom . "_" . $user_id;
             $adress_fichier = $rep_upload . $rename_nom;
-//pour test alerting
-//if (false)
-            if (move_uploaded_file($tmp_name, $adress_fichier)) 
-                {
+            //pour test alerting
+            //if (false)
+            if (move_uploaded_file($tmp_name, $adress_fichier)) {
                 $fichier_doc[] = $adress_fichier;
                 //gestion des logs si upload réussi
                 GestionLog("INFO", "Upload réussi - utilisateur_id = $user_id - véhicule_id = $id - fichier = $rename_nom");
@@ -76,8 +76,8 @@ exit;
             } else {
                 //sinon error
                 GestionLog("ERROR", "Echec upload - utilisateur_id = $user_id - véhicule_id = $id - fichier = $rename_nom");
-               
-                 //Gestion d'alerting
+
+                //Gestion d'alerting
                 GestionAlerting("Echec upload - utilisateur_id = $user_id - véhicule_id = $id - fichier = $rename_nom");
             }
         }
@@ -87,6 +87,16 @@ exit;
     GestionLog("WARNING", "aucun fichier recu - utilisateur_id = $user_id - véhicule_id = $id");
     // echo "Aucun fichier reçu";
 }
+
+// on bloque la validation si aucun doc enregister
+if (empty($fichier_doc)) {
+    GestionLog("WARNING", "Aucun document valide enregistrer - utilisateur_id = $user_id");
+
+    $page_retour = $_POST["page_retour"] ?? "commande_voiture_location.php";
+    header("Location: " . $page_retour . "?id=" . $id . "&erreur=fichier");
+    exit;
+}
+
 // on concatene les documents
 if (!empty($fichier_doc)) {
     $doc = implode(",", $fichier_doc);
@@ -100,7 +110,10 @@ VALUES (:user_id, :car_id, :documents)";
         ":car_id" => $id
     ]);
 
-    //documents en attente
+    // document enregistrer avec succé
+    $_SESSION['document_valide'][$id] = true;
+
+  //documents en attente
     GestionLog("INFO", "Documents enregistrés en attente - utilisateur_id = $user_id - véhicule_id = $id");
 }
 

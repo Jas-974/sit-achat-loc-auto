@@ -32,25 +32,37 @@ $donnee_vehicule = $recVehicule["vehicule"];
 
 <?php
 
-if(isset($_POST["maj_status_command"])){
+if (isset($_POST["maj_status_command"])) {
+
+  // vérif qu'un document autorisé a étét téléversé
+  $id_vehicule = (int) $donnee_vehicule["id"];
+
+  if (empty($_SESSION['document_valide'][$id_vehicule])) {
+
+    header("location: commande_voiture_location.php?id=" . $id_vehicule . "&erreur=document_manquant");
+    exit;
+  }
 
 
-//appel de la fonction de mise a jours du status reservé dans la table vehicule
-$vehiculereserver = miseAjourStatusVehiculeReserve($pdo);
 
-if (!$vehiculereserver) {
-echo "ce véhicule est déjà réservé.";
-exit;
-}
+  //appel de la fonction de mise a jours du status reservé dans la table vehicule
+  $vehiculereserver = miseAjourStatusVehiculeReserve($pdo);
+
+  if (!$vehiculereserver) {
+    echo "ce véhicule est déjà réservé.";
+    exit;
+  }
 
 
   $Enreg_command_OK = enregCommandeVehiculeLocation($pdo, $donnee_user, $donnee_vehicule, $user_id);
 
-  if($Enreg_command_OK) {
+  if ($Enreg_command_OK) {
 
-  //retour vers la page commande
-  header("Location: commande_voiture_location.php?id=" . $donnee_vehicule["id"]);
-  exit;
+    //supprime la validation du document apres réservation
+    unset($_SESSION['document_valide'][$id_vehicule]);
+    //retour vers la page commande
+    header("Location: commande_voiture_location.php?id=" . $id_vehicule);
+    exit;
   }
 }
 ?>
@@ -151,12 +163,25 @@ exit;
         &#10003;Un justificatif d'adresse de mois de 3 mois<span style="color:#FFC000;">*</span><br>
 
 
-<?php
-//on refuse les fichiers autre que PDF, JPG, JPEG, et PNG
-if (isset($_GET["erreur"]) && $_GET["erreur"] == "fichier") {
-echo "<p><strong>Fichier refusé. Les fichiers outorisés PDF, JPG, JPEG, et PNG.</strong></p>";
-}
-?>
+        <?php
+        //on refuse les fichiers autre que PDF, JPG, JPEG, et PNG
+        if (isset($_GET["erreur"]) && $_GET["erreur"] == "fichier") {
+          echo "<p><strong>Fichier refusé. Les fichiers autorisés PDF, JPG, JPEG, et PNG.</strong></p>";
+        }
+        ?>
+
+
+        <?php
+
+        if (
+
+          isset($_GET["erreur"]) && $_GET["erreur"] === "document_manquant"
+        ) {
+
+          echo "<p style='color:blue;'>
+Téléverser au moin un document valide avant la réservation</p>";
+        }
+        ?>
 
         <!--televerser les fcihier-->
         <form action="enreg_document.php" method="post" enctype="multipart/form-data"
